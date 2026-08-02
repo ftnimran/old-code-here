@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+</head>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	//Plug-in to fetch page data 
+	jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
+		return {
+			"iStart" : oSettings._iDisplayStart,
+			"iEnd" : oSettings.fnDisplayEnd(),
+			"iLength" : oSettings._iDisplayLength,
+			"iTotal" : oSettings.fnRecordsTotal(),
+			"iFilteredTotal" : oSettings.fnRecordsDisplay(),
+			"iPage" : oSettings._iDisplayLength === -1 ? 0 : Math
+					.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+			"iTotalPages" : oSettings._iDisplayLength === -1 ? 0 : Math
+					.ceil(oSettings.fnRecordsDisplay()
+							/ oSettings._iDisplayLength)
+		};
+	};
+	
+	function fetchChiefOfficeWorkReportStatus(id) {
+
+		t = $("#dynamic-table")
+				.DataTable(
+						{
+							"footerCallback": function ( row, data, start, end, display ) {
+					            var api = this.api(), data;
+					 
+					            // converting to interger to find total
+					            var intVal = function ( i ) {
+					                return typeof i === 'string' ?
+					                    i.replace(/[\$,]/g, '')*1 :
+					                    typeof i === 'number' ?
+					                        i : 0;
+					            };
+							
+							// computing column Total of the complete result 
+				            var twoTotal = api
+				                .column( 2 )
+				                .data()
+				                .reduce( function (a, b) {
+				                    return intVal(a) + intVal(b);
+				                }, 0 );
+								
+					    var threeTotal = api
+				                .column( 3 )
+				                .data()
+				                .reduce( function (a, b) {
+				                    return intVal(a) + intVal(b);
+				                }, 0 );
+								
+				            var fourTotal = api
+				                .column( 4 )
+				                .data()
+				                .reduce( function (a, b) {
+				                    return intVal(a) + intVal(b);
+				                }, 0 );
+								
+					     var fiveTotal = api
+				                .column( 5 )
+				                .data()
+				                .reduce( function (a, b) {
+				                    return intVal(a) + intVal(b);
+				                }, 0 );
+								
+					     var sixTotal = api
+				                .column( 6 )
+				                .data()
+				                .reduce( function (a, b) {
+				                    return intVal(a) + intVal(b);
+				                }, 0 );
+					     
+					     var sevenTotal = api
+			                .column( 7 )
+			                .data()
+			                .reduce( function (a, b) {
+			                    return intVal(a) + intVal(b);
+			                }, 0 );
+							
+								
+				            // Update footer by showing the total with the reference of the column index 
+				            
+				         /*    $( api.column( 1 ).footer() ).html('Total');
+				            $( api.column( 2 ).footer() ).html('<a class="blue" href="#manageLegacyDataRouteDuringReport/total/1" >'+twoTotal+'</a>');
+				            $( api.column( 3 ).footer() ).html('<a class="blue" href="#manageLegacyDataRouteDuringReport/notStarted/1" >'+threeTotal+'</a>');
+				            $( api.column( 4 ).footer() ).html('<a class="blue" href="#manageLegacyDataRouteDuringReport/inProgress/1" >'+fourTotal+'</a>');
+				            $( api.column( 5 ).footer() ).html('<a class="blue" href="#manageLegacyDataRouteDuringReport/onHold/1" >'+fiveTotal+'</a>');
+				            $( api.column( 6 ).footer() ).html('<a class="blue" href="#manageLegacyDataRouteDuringReport/completed/1" >'+sixTotal+'</a>');
+				            $( api.column( 7 ).footer() ).html('<a class="blue" href="#manageLegacyDataRouteDuringReport/cancel/1" >'+sevenTotal+'</a>'); */
+					     $( api.column( 1 ).footer() ).html('Total');
+				            $( api.column( 2 ).footer() ).html(+twoTotal+'');
+				            $( api.column( 3 ).footer() ).html(+threeTotal+'');
+				            $( api.column( 4 ).footer() ).html(+fourTotal+'');
+				            $( api.column( 5 ).footer() ).html(+fiveTotal+'');
+				            $( api.column( 6 ).footer() ).html(+sixTotal+'');
+				            $( api.column( 7 ).footer() ).html(+sevenTotal+'');
+				            
+				            
+				        },
+							
+				        "bDestroy" : true,
+							"processing" : true,
+							"serverSide" : true,
+							"sort" : "position",
+							//bStateSave variable you can use to save state on client cookies: set value "true" 
+							"bStateSave" : false,
+							//Default: Page display length
+							"iDisplayLength" : 10,
+							//We will use below variable to track page number on server side(For more information visit: http://legacy.datatables.net/usage/options#iDisplayStart)
+							"iDisplayStart" : 0,
+							"pagingType" : "full_numbers",
+							"aaSorting" : [],
+							/* "dom" : 'Blrtip', */
+							"dom" : "<'row'<'col-md-6 dt-right'B>>"
+									+ "<'row'<'col-md-6'r><'col-md-6'>>"
+									+ "<'row'<'col-md-12't>>",
+							"buttons" : [
+									{
+										extend : 'excelHtml5',
+										title : 'Chief Offices Work Report',
+										text : '<span class="fa fa-file-excel-o"></span> Excel Export',
+										exportOptions : {
+											columns : [ 0, 1, 2, 3, 4 ,5,6,7]
+										}
+									}, ],
+							"lengthMenu" : [ [ 10, 25, 50, 100000 ],
+									[ 10, 25, 50, "All" ] ],
+
+							"fnDrawCallback" : function() {
+
+								angular.element('#StartOrFinishSpinnerId')
+										.scope().startOrStopSpinner(false);
+
+								//Get page numer on client. Please note: number start from 0 So
+								//for the first page you will see 0 second page 1 third page 2...
+								//Un-comment below alert to see page number
+								//alert("Current page number: "+this.fnPagingInfo().iPage);    
+							},
+							"fnServerParams" : function(aoData) {
+								
+							},
+							"fnRowCallback" : function(nRow, aData,
+									iDisplayIndex, iDisplayIndexFull) {
+								/* $('td:eq(0)', nRow)
+										.html(
+												(this.fnPagingInfo().iPage
+								 * this.fnPagingInfo().iLength + (iDisplayIndex + 1))); */
+							},
+							
+
+							"fnCreatedRow" : function(nRow, aData, iDataIndex) {
+								$('td:eq(2)', nRow)
+										.html(
+												'<a class="blue" href="#manageLegacyDataRouteDuringReportStatusSupdt/total/'+aData.officeId+'/'+id+'/'+$("#view").val()+'" >'
+														+ aData.totalWorkCount
+														+ '</a>');
+								$('td:eq(3)', nRow).html(
+										'<a class="blue" href="#manageLegacyDataRouteDuringReportStatusSupdt/notStarted/'+aData.officeId+'/'+id+'/'+$("#view").val()+'" >'
+												+ aData.notStartedWorkCount
+												+ '</a>');
+								$('td:eq(4)', nRow).html(
+										'<a class="blue" href="#manageLegacyDataRouteDuringReportStatusSupdt/inProgress/'+aData.officeId+'/'+id+'/'+$("#view").val()+'" >'
+												+ aData.inProgressWorkCount
+												+ '</a>');
+								$('td:eq(5)', nRow).html(
+										'<a class="blue" href="#manageLegacyDataRouteDuringReportStatusSupdt/onHold/'+aData.officeId+'/'+id+'/'+$("#view").val()+'" >'
+												+ aData.onHoldWorkCount
+												+ '</a>');
+								$('td:eq(6)', nRow).html(
+										'<a class="blue" href="#manageLegacyDataRouteDuringReportStatusSupdt/completed/'+aData.officeId+'/'+id+'/'+$("#view").val()+'" >'
+												+ aData.completedWorkCount
+												+ '</a>');
+								$('td:eq(7)', nRow).html(
+										'<a class="blue" href="#manageLegacyDataRouteDuringReportStatusSupdt/cancel/'+aData.officeId+'/'+id+'/'+$("#view").val()+'" >'
+												+ aData.cancelWorkCount
+												+ '</a>');
+							},
+							
+
+							"language" : {
+								searchPlaceholder : ""
+							},
+							"sAjaxSource" : "fetchChiefOfficeWorkReportStatus/"+id+"?isLegacy="+ $("#view").val(),
+
+							"columns" : [ {
+								"data" : "id",
+								"bSortable" : false
+							},  {
+								"data" : "officeName",
+								"bSortable" : false
+							}, {
+								"data" : "totalWorkCount",
+								"bSortable" : false
+							}, {
+								"data" : "notStartedWorkCount",
+								"bSortable" : false
+							}, {
+								"data" : "inProgressWorkCount",
+								"bSortable" : false
+							}, {
+								"data" : "onHoldWorkCount",
+								"bSortable" : false
+							}, {
+								"data" : "completedWorkCount",
+								"bSortable" : false
+							}, {
+								"data" : "cancelWorkCount",
+								"bSortable" : false
+							} ],
+
+						});
+	}
+	
+	
+	
+	$('#filter-btn').click(function() {
+		$('#filters').fadeToggle(300);
+	});
+	$('.filter-close').click(function(e) {
+		e.preventDefault();
+		$(this).parent('#filters').fadeOut(300);
+	});
+	/* $('#applyFilters').click(function(e) {
+		e.preventDefault();
+		$(this).parent('#filters').fadeOut(300);
+		$('#searchForm').submit();
+	}); */
+	var filter_box = $('#filters');
+	$(document).mouseup(function(e) {
+		if (!filter_box.is(e.target) && filter_box.has(e.target).length === 0) {
+			$('#filters:visible').fadeOut('300');
+		}
+	});
+
+	/*]]>*/
+</script>
+
+<div id="StartOrFinishSpinnerId"></div>
+
+<div id="page-div">
+	<!-- Breadcrumb -->
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item active"><span th:text="#{chiefOfficesReport}">Chief Offices Report</span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<i class="fa fa-folder-open-o"></i> <span
+								th:text="#{chiefOfficesReport}">Chief Offices Report</span>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div data-ng-if="responseObject.successMessage != null"
+										class="text-success">
+										<strong>Success!</strong>
+										<p>{{responseObject.successMessage}}</p>
+									</div>
+								</div>
+							</div>
+							<!-- Search By in this listing will be open later
+							
+							<div class="pr">
+								<a class="btn btn-secondary btn-add" href="#addUserForm">
+									<span th:text="#{addUser}">Add User</span>
+								</a>
+								<form name="searchForm" novalidate="novalidate" id="searchForm"
+									data-ng-submit="searchByNameEmailOrAnyFilters()">
+									<div class="row">
+										<div class="input-group mb-3 col-md-8 filter-box">
+											<input type="text" class="form-control" id="searchBox"
+												placeholder="Search by Name, Email [Please enter atleast four characters]"
+												data-ng-model="searchBox" maxlength="100" />
+											<div class="btn-group pr">
+												<button class="btn btn-secondary" type="submit"
+													title="Search">
+													<i class="fa fa-search"></i>
+												</button>
+												<button class="btn btn-secondary" type="reset"
+													data-ng-click="resetFunction()" title="Reset">
+													<i class="fa fa-refresh"></i>
+												</button>
+												<button class="btn btn-secondary" id="filter-btn"
+													title="Filter" type="button">
+													<i class="fa fa-filter"></i>
+												</button>
+												<div id="filters">
+													<a href="" class="filter-close"><i
+														class="icon-close icons"></i></a>
+													<div class="form-group">
+														<label><span th:text="#{designation}">Designation</span></label>
+														<select class="form-control"
+															data-ng-init="loadDesignations()"
+															data-ng-model="designation" name="designation"
+															id="designation">
+															<option value="">Select</option>
+															<option
+																data-ng-repeat="designation in designations | orderBy : 'designation'"
+																value="{{designation.designation}}">{{designation.designation}}</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label><span th:text="#{status}">Status</span></label> <select
+															class="form-control" data-ng-model="status" id="status">
+															<option value="">Select</option>
+															<option value="Active">Active</option>
+															<option value="InActive">InActive</option>
+															<option value="Pending">Pending</option>
+														</select>
+													</div>
+													<div class="form-group text-right">
+														<button class="btn btn-sm btn-success" type="submit"
+															id="applyFilters">
+															<span th:text="#{applyFilters}">Apply Filters</span>
+														</button>
+														&nbsp;
+														<button class="btn btn-sm btn-secondary" type="button"
+															data-ng-click="designation = '';status='';">
+															<span th:text="#{clear}">Clear </span>
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div> -->
+							
+							<div>
+								<div class="form-group">
+									<label><span th:text="#{View}">View</span></label> <select
+										class="form-control" id="view" data-ng-model="view"
+										data-ng-init="view='-1';loadChiefWorkList2()"
+							            data-ng-change="loadChiefWorkList2()">
+										<option value="-1" selected="selected">All Data</option>
+										<option value="0">New Data</option>
+										<option value="1">Legacy Data</option>
+									</select>
+								</div>
+							</div>
+							<div class="table-responsive" >
+								<table id="dynamic-table"
+									class="table table-striped table-bordered table-hover table-outline">
+									<thead class="thead-default">
+										<tr>
+											<th><span>#</span></th>
+											<th><span th:text="#{chiefOfficeName}">Chief Office Name</span></th>
+											<th><span th:text="#{totalWork}">Total Work</span></th>
+											<th><span th:text="#{notStartedWork}">Not Started Work</span></th>
+											<th><span th:text="#{inProgressWork}">In Progress Work</span></th>
+											<th><span th:text="#{onHoldWork}">On Hold Work</span></th>
+											<th><span th:text="#{completedWork}">Completed Work</span></th>
+											<th><span th:text="#{cancelledWork}">Cancelled Work</span></th>
+											
+										</tr>
+									</thead>
+									<tfoot align="right">
+									 <tr>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+									</tr> 
+									</tfoot>
+								</table>
+							</div>
+							
+							<!--<div class="table-responsive" data-ng-init="loadChiefWorkListForNewWork()">
+								<table id="dynamic-table2"
+									class="table table-striped table-bordered table-hover table-outline">
+									<thead class="thead-default">
+										<tr>
+											<th><span>#</span></th>
+											<th><span th:text="#{chiefOfficeName}">Chief Office Name</span></th>
+											<th><span th:text="#{totalWork}">Total Work</span></th>
+											<th><span th:text="#{notStartedWork}">Not Started Work</span></th>
+											<th><span th:text="#{inProgressWork}">In Progress Work</span></th>
+											<th><span th:text="#{onHoldWork}">On Hold Work</span></th>
+											<th><span th:text="#{completedWork}">Completed Work</span></th>
+											<th><span th:text="#{cancelledWork}">Cancelled Work</span></th>
+											
+										</tr>
+									</thead>
+									<tfoot align="right">
+									<tr>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+									</tr>
+									</tfoot>
+								</table>
+							</div>-->
+						</div>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+
+	</div>
+	<!-- /.container-fluid -->
+</div>
+</html>

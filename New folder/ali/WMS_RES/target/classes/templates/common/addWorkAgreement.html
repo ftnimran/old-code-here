@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+
+<script th:src="@{/js/datepicker/jquery.ui.datepicker.js}"></script>
+<script th:src="@{/js/datepicker/jquery-ui.min.js}"></script>
+<link th:href="@{/css/datepicker/jquery.ui.datepicker.css}" rel="stylesheet" />
+<link th:href="@{/css/datepicker/jquery-ui.min.css}" rel="stylesheet" />
+
+</head>
+<!-- <div th:replace="common/addEntrepreneurForm :: entrepreneurPopupScript" /> -->
+<script type="text/javascript">	
+	$(".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, yearRange: "-100:+50"});
+	$(".datepicker").keypress(function(event) {event.preventDefault();});
+</script>
+
+<div id="page-div">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item"><a href="#workAgreementList">View
+				Work Agreement List</a></li>
+		<li class="breadcrumb-item active">New Agreement Entry</li>
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" href="#" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+
+						<div class="card-header top-header">
+							<i class="fa fa-wpforms"></i> New Agreement Entry
+						</div>
+
+						<div class="col-md-12">
+							<div data-ng-if="responseObject.errorMessage != null"
+								class="text-danger">
+								<strong>Error!</strong>
+								<p>{{responseObject.errorMessage}}</p>
+							</div>
+						</div>
+
+						<div class="card-header">
+							<span th:text="#{workDetails}">Work Details</span>
+						</div>
+						<div class="card-body" data-ng-init="loadWorkDetailForNewWorkAgreement();">
+							<table style="width: 100%;">
+								<tr>
+									<td width="33.33%"><span style="font-weight: 700;">Work
+											Name: </span>{{workData.workName}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">Work
+											Type: </span>{{workData.workTypeBean.workTypeNameE}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">Work
+											Sub Type: </span>{{workData.workSubTypeBean.workSubTypeNameE ?
+										workData.workSubTypeBean.workSubTypeNameE : '-'}}</td>
+								</tr>
+								<tr>
+									<td width="33.33%"><span style="font-weight: 700;">Executed
+											By: </span>{{workData.agencyTypeBean.agencyTypeNameE ?
+										workData.agencyTypeBean.agencyTypeNameE : '-'}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">District
+											: </span>{{workData.districtName ? workData.districtName : '-'}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">Tehsil
+											: </span>{{workData.districtName ? workData.districtName : '-'}}</td>
+								</tr>
+								<tr>
+									<td width="33.33%"><span style="font-weight: 700;">Block
+											: </span>{{workData.districtName ? workData.blockName : '-'}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">Gram
+											Panchayat : </span>{{workData.gramPanchayatName ?
+										workData.gramPanchayatName : '-'}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">Village
+											: </span>{{workData.villageBean.villageName ?
+										workData.villageBean.villageName : '-'}}</td>
+								</tr>
+								<tr>
+									<td width="33.33%"><span style="font-weight: 700;">Technical
+											Sanction Amount : </span>Rs. {{workData.technicalSanctionAmount | indianCurrency}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">
+											{{workData.technicalSanctionType}}
+											/ Generated On : </span>{{workData.technicalSanctionDate ?
+											workData.technicalSanctionDate : '-'}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">Issued
+											By : </span>{{workData.tsIssuingAuthorityName ?
+											workData.tsIssuingAuthorityName : '-'}} [{{workData.districtName ? workData.districtName : '-'}}]</td>
+								</tr>
+								<tr>
+									<td width="33.33%"><span style="font-weight: 700;">Administrative
+											Sanction Amount : </span>Rs.
+										{{workData.administrationSanctionAmount | indianCurrency}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">
+											{{workData.administrationSanctionType}}
+											/ Generated On : </span>{{workData.administrationSanctionDate ?
+											workData.administrationSanctionDate : '-'}}</td>
+									<td width="33.33%">&nbsp;</td>
+								</tr>
+							</table>
+						</div>
+
+						<div class="card-header">
+							<span th:text="#{tenderDetails}">Tender Details</span>
+						</div>
+						<div class="card-body" data-ng-init="loadWorkTenders();">
+							<table style="width: 100%;">
+								<tr>
+									<td width="33.33%"><span style="font-weight: 700;">Tender
+											Number : </span>{{workTenderBean.tenderNumber ? workTenderBean.tenderNumber : '-'}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">Tender
+											Opening Date : </span>{{workTenderBean.tenderOpeningDate ? workTenderBean.tenderOpeningDate : '-'}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">PAC
+											Amount : </span>Rs. {{workTenderBean.amountOfContract ? workTenderBean.amountOfContract : '-' | indianCurrency }}</td>
+								</tr>
+								<tr>
+									<td width="33.33%" colspan="3"><span
+										style="font-weight: 700;">Successful Bidder : </span>{{workTenderBean.bidderName ? workTenderBean.bidderName : '-'}}</td>
+								</tr>
+								<tr>
+									<td width="33.33%"><span style="font-weight: 700;">Tendered
+											Rate : </span>{{workTenderBean.tenderedRate ? workTenderBean.tenderedRate : '-'}}% {{workTenderBean.tenderedRateSign=='+' ? 'Above' : 'Below'}}</td>
+									<td width="33.33%"><span style="font-weight: 700;">Tender
+											Cost : </span>Rs. {{workTenderBean.tenderCost ? workTenderBean.tenderCost : '-' | indianCurrency }}</td>
+									<td width="33.33%">&nbsp;</td>
+								</tr>
+							</table>
+						</div>
+
+						<form data-ng-submit="addWorkAgreement(workAgreementForm.$valid)"
+							name="workAgreementForm" novalidate="novalidate">
+							<div class="card-body">
+								<div class="">
+									<ul class="nav nav-pills nav-justified" role="tablist">
+										<li class="nav-item"><a class="nav-link active"
+											data-toggle="tab" href=".tab1" role="tab"
+											aria-controls="home">Agreement Details</a></li>
+
+										<li class="nav-item"><a class="nav-link disabled"
+											data-toggle="tab" href=".tab2" role="tab"
+											aria-controls="profile">Work Mile- Stones</a></li>
+									</ul>
+
+									<div class="tab-content">
+										<div class="tab-pane tab1 active" role="tabpanel">
+											<div class="row">
+												<div class="form-group col-sm-3">
+													<label><span th:text="#{agreementNumber}">Agreement
+															Number Number </span> <span class="aestrick">&#42;</span></label> <input
+														class="form-control" required="required" id="instTxnNo"
+														data-ng-model="workAgreementBean.agreementNumber"														
+														name="agreementNumber" type="text" maxlength="10" />
+													<div data-ng-show="onContinue || workAgreementForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="workAgreementForm.agreementNumber.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span
+																th:text="#{agreementNumber}">agreementNumber.</span>
+														</p>
+													</div>
+												</div>
+
+												<div class="form-group col-sm-3">
+													<label><span th:text="#{agreementDate}">Agreement
+															Date </span> <span class="aestrick">&#42;</span></label>
+													<!-- <div class="input-group date" id="datetimepicker1"
+														data-target-input="nearest">
+														<input type="text" class="form-control datetimepicker-input"
+															data-target="#datetimepicker1" name="agreementDate"
+															required="required" placeholder="DD/MM/YYYY"
+															data-ng-model="workAgreementBean.agreementDate"
+															id="agreementDate" autocomplete="off" />																	
+														<div class="input-group-append input-group-addon"
+															data-target="#datetimepicker1" data-toggle="datetimepicker">
+															<div class="input-group-text">
+																<i class="fa fa-calendar"></i>
+															</div>
+														</div>
+													</div> -->														
+													<input class="form-control datepicker" required="required" id="agreementDate"
+														data-ng-model="workAgreementBean.agreementDate"														
+														name="agreementDate" autocomplete="off" type="text"/>												
+													<div data-ng-show="onContinue || workAgreementForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="workAgreementForm.agreementDate.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span
+																th:text="#{agreementDate}">agreementDate</span>
+														</p>
+													</div>
+												</div>
+
+												<div class="form-group col-sm-3">
+													<label><span
+														th:text="#{Date_of_written_Order_to_Commence_Work}">Date
+															of written Order to Commence Work </span> <span class="aestrick">&#42;</span></label>
+													 													
+													<input class="form-control datepicker" required="required" id="writtenOrderDate"
+														data-ng-model="workAgreementBean.writtenOrderDate"														
+														name="writtenOrderDate" autocomplete="off" type="text"/>
+													<div data-ng-show="onContinue || workAgreementForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="workAgreementForm.writtenOrderDate.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span
+																th:text="#{Date_of_written_Order_to_Commence_Work}">Date
+																of written Order to Commence Work </span>
+														</p>
+													</div>
+												</div>
+
+												<div class="form-group col-sm-3">
+													<label><span
+														th:text="#{Stipulated_date_of_work_completion}">Stipulated
+															date of work completion </span> <span class="aestrick">&#42;</span></label>
+													 
+													<input class="form-control datepicker" required="required" id="tentativeCompletionDate"
+														data-ng-model="workAgreementBean.tentativeCompletionDate"														
+														name="tentativeCompletionDate" autocomplete="off" type="text"/>
+													<div data-ng-show="onContinue || workAgreementForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="workAgreementForm.tentativeCompletionDate.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span
+																th:text="#{Stipulated_date_of_work_completion}">Stipulated
+																date of work completion</span>
+														</p>
+													</div>
+												</div>
+											</div>
+											<!-- /row -->
+											<div class="text-right">
+												<a class="btn btn-sm btn-primary" href=""
+													data-ng-click="validateWorkAgreementDetailsTab()"> Continue <i class="icon-arrow-right-circle"></i> 
+												</a>
+											</div>
+										</div>
+										<div class="tab-pane tab2" role="tabpanel">
+											<div class="row">
+												<div class="col-sm-12" style="margin-bottom: 15px">
+													<div class="card-header"> 
+														<span th:text="#{Financial_Milestone}">Financial Milestone</span> 
+													</div>	
+													<table  data-ng-init="loadFinancialMileStone()"
+														class="table table-striped table-bordered table-hover margin0 tbl-vm">
+														<thead class="thead-default">
+															<tr>
+																<th width="10%">Mile Stone</th>
+																<th width="30%">Mile Stone Description</th>
+																<th width="30%">Completion Date</th>
+																<th width="30%">Min. Cummulative Financial Progress</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="financialStageBean in financialStages">
+																<td>{{$index+1}}</td>
+																<td>{{financialStageBean.financialStageNameE}}</td>																
+																<td>
+																	<input type="text" data-ng-model="financialStageBean.completionDate" required="required" 
+																		class="form-control datepicker1" name="fcompletionDate_{{$index}}" id="fcompletionDate_{{$index}}" autocomplete="off"/>
+																	<script type="text/javascript">																	
+																		$(document).ready(function() {
+																			$(".datepicker1" ).datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, yearRange: "-100:+50"});
+																			$(".datepicker1").keypress(function(event) {event.preventDefault();});
+																		});
+																	</script>
+																	<div data-ng-show="onBack || workAgreementForm.$submitted">
+																		<p class="help-block" style="color: red;"
+																			data-ng-show="workAgreementForm.fcompletionDate_{{$index}}.$error.required">
+																			<span th:text="#{pleaseEnter}">Please enter</span> <span
+																				th:text="#{Completion_Date}">Completion Date</span>
+																		</p>
+																	</div>
+																</td>
+																<td>
+																	<input type="text" class="form-control digits-only" data-ng-model="financialStageBean.cumulative" maxlength="10" required="required"
+																		name="cumulative_{{$index}}" id="cumulative_{{$index}}"/>
+																	<div data-ng-show="onBack || workAgreementForm.$submitted">
+																		<p class="help-block" style="color: red;"
+																			data-ng-show="workAgreementForm.cumulative_{{$index}}.$error.required">
+																			<span th:text="#{pleaseEnter}">Please enter</span> <span
+																				th:text="#{Cummulative_Financial_Progress}">Cummulative Financial Progress</span>
+																		</p>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+													
+												<div class="col-sm-12" style="margin-bottom: 15px">
+													<div class="card-header"> 
+														<span th:text="#{Physical_Milestone}">Physical Milestone</span> 
+													</div>
+													
+													<table data-ng-init=""
+														class="table table-striped table-bordered table-hover margin0 tbl-vm">
+														<thead class="thead-default">
+															<tr>
+																<th width="10%">Mile Stone</th>
+																<th width="30%">Mile Stone Description</th>
+																<th width="30%">Completion Date</th>
+																<th width="30%"></th>
+															</tr>		
+														</thead>
+														<tbody>		
+															<tr data-ng-repeat="physicalStageBean in physicalStages">
+																<td>{{$index+1}}</td>
+																<td>{{physicalStageBean.physicalStageNameE}}</td>
+																<td>
+																	<input type="text" data-ng-model="physicalStageBean.completionDate" 
+																		class="form-control datepicker2" name="pcompletionDate_{{$index}}" id="pcompletionDate_{{$index}}" autocomplete="off"/>
+																	<script type="text/javascript">
+																		$(document).ready(function() {
+																			$(".datepicker2" ).datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, yearRange: "-100:+50"});
+																			$(".datepicker2").keypress(function(event) {event.preventDefault();});
+																		});
+																	</script>
+																	<div data-ng-show="onBack || workAgreementForm.$submitted">
+																		<!-- <p class="help-block" style="color: red;"
+																			data-ng-show="workAgreementForm.pcompletionDate_{{$index}}.$error.required">
+																			<span th:text="#{pleaseEnter}">Please enter</span> <span
+																				th:text="#{Completion_Date}">Completion_Date</span>
+																		</p> -->
+																	</div>
+																</td>
+																<td></td>
+															</tr>		
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="text-right">
+												<!-- <a class="btn btn-sm btn-primary" href=""> Finish </a> -->
+												<button type="button" class="btn btn-sm btn-primary" data-ng-click="validateWorkAgreementMileStoneTab()">
+													<span th:text="#{back}">Back</span>
+												</button>
+												<button	type="submit" class="btn btn-sm btn-primary" data-ng-click="saveAsDraft=true">
+													<span th:text="#{saveAsDraft}">Save As Draft</span>
+												</button>
+												<button type="submit" class="btn btn-sm btn-primary" data-ng-click="submit=true">
+													<span th:text="#{saveAndFinish}">Save &amp; Finish</span>
+												</button>												
+											</div>											
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+	</div>
+	<!-- /.container-fluid -->	
+</div>
+</html>

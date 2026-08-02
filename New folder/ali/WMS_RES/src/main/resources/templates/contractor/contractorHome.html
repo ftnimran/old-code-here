@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" data-ng-app="res">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}"
+	type="image/x-icon" />
+<link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+
+<div th:replace="fragments/header :: header-css" />
+</head>
+<!-- data-ng-controller="AdminController" id="Controller" -->
+<!-- data-ng-controller="CommonController" id="CommonController" -->
+<body
+	class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+	<div dw-loading="sample-1" dw-loading-options="{text: 'Loading....'}"
+		
+		class="controller">
+		<!-- <div id="wrapper"> -->
+		<div th:replace="fragments/header :: header_after_login" />
+		<div class="app-body">
+			<div class="sidebar" id="sideNav">
+				<nav class="sidebar-nav">
+					<ul class="nav">
+						 <li class="nav-item"><a class="nav-link" href="#dashboard"><i
+								class="icon-speedometer"></i><span th:text="#{dashboard}">Dashboard</span>
+						</a></li>
+									
+						<!-- <li class="nav-item nav-dropdown"><a
+							class="nav-link nav-dropdown-toggle" href="#"><i
+								class="fa fa-folder-open"></i><span th:text="#{Budget_Management}">Budget Management</span></a>
+							<ul class="nav-dropdown-items">
+								<li class="nav-item"><a class="nav-link" href="#budgetRequestApprovalList">
+								<i class="icon-arrow-right-circle"></i><span th:text="#{Budget_Request_Approval}">Budget Request Approval</span></a></li>
+							</ul>
+							
+							<ul class="nav-dropdown-items">
+								<li class="nav-item"><a class="nav-link" href="#budgetRequestAllotmentList">
+								<i class="icon-arrow-right-circle"></i><span th:text="#{Budget_Allotment}">Budget Allotment</span></a></li>
+							</ul>
+							
+							<ul class="nav-dropdown-items">
+								<li class="nav-item"><a class="nav-link" href="#budgetRequestAllotmentListAccHeadWise">
+								<i class="icon-arrow-right-circle"></i><span th:text="#{Budget_Allotment_accountHeadWise}">Budget Allotment Account Head Wise</span></a></li>
+							</ul>
+							
+							</li> -->
+							
+							<li class="nav-item nav-dropdown"><a
+							class="nav-link nav-dropdown-toggle" href="#"><i
+								class="fa fa-folder-open"></i><span th:text="#{billing}">Billing</span></a>
+							<ul class="nav-dropdown-items">
+								<li class="nav-item"><a class="nav-link" href="#searchWorkForBillContractor"><i
+										class="icon-arrow-right-circle"></i><span th:text="#{addNewBill}">Add New Bill</span></a></li>
+								<!-- <li class="nav-item"><a class="nav-link" href="#viewBills"><i
+										class="icon-arrow-right-circle"></i><span th:text="#{viewBills}">View Bills</span></a></li>
+								
+								<li class="nav-item"><a class="nav-link" href="#viewPayments"><i
+										class="icon-arrow-right-circle"></i><span th:text="#{BillPayments}">Bill Payments</span></a></li> -->
+										
+										<li class="nav-item"><a class="nav-link" href="#viewBillsContractor"><i
+										class="icon-arrow-right-circle"></i><span th:text="#{viewBills}">View Bills</span></a></li>
+										
+							</ul></li>				
+							
+							
+						 
+					</ul>
+				</nav>
+			</div>
+			<!-- Main content -->
+			<main class="main"> <!-- <div class="formstyle1"> -->
+			<div data-ng-view=""></div>
+			
+			<!-- </div> --> </main>
+		
+		
+		</div>
+		<!-- </div> -->
+		
+		<footer class="app-footer">
+			<span>Rural Engineering Service &copy; 2020. All rights
+				reserved.</span> <span class="ml-auto">Designed &amp; Developed by <a
+				target="_blank" href="http://www.mapit.gov.in/coedetails.aspx">Center
+					of Excellence (CoE)</a>, <a target="_blank"
+				href="http://www.mapit.gov.in">MAP_IT</a>.
+			</span>
+		</footer>
+
+		<div th:replace="fragments/footer :: footer" />
+		<!-- <script th:src="@{/angular/enc/ENCRouting.js}"></script>
+		<script th:src="@{/angular/enc/ENCController.js}"></script> -->
+		<script th:src="@{/angular/contractor/ContractorRouting.js}"></script>
+		<script th:src="@{/angular/contractor/ContractorController.js}"></script>
+		<script th:src="@{/angular/common/CommonRouting.js}"></script>
+		<script th:src="@{/angular/common/CommonController.js}"></script>
+	</div>
+</body>
+
+</html>

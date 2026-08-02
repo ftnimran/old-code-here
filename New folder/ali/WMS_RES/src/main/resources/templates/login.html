@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link rel="shortcut icon" th:href="@{img/favicon.ico}" type="image/x-icon" />
+<link rel="icon" th:href="@{img/favicon.ico}" type="image/x-icon" />
+<title>RES - OWMS -
+	Login</title>
+<link th:href="@{css/font-awesome.min.css}" rel="stylesheet" />
+<link th:href="@{css/simple-line-icons.css}" rel="stylesheet" />
+<link th:href="@{css/style.css}" rel="stylesheet" />
+<link th:href="@{css/custom.css}" rel="stylesheet" />
+</head>
+
+<body>
+	<div class="app flex-column align-items-center login-bg">
+		<div class="container flex1">
+			<div class="row justify-content-center align-items-center h100">
+				<div class="login-box">
+					<div class="card-group mb-0">
+						<div class="card p-4">
+							<div class="card-body">
+								<div class="logo">
+									<img th:src="@{/img/logo-symbol.png}" alt="Logo" height="70px" />
+									<h3>
+										Rural Engineering Service<span>Online Works mgmt. system</span>
+									</h3>
+								</div>
+								<h4>Login</h4>
+								<p class="text-muted">Sign In to your account</p>
+								<form th:action="@{/login}" method="post">
+									<div class="text-success" th:if="${message != null}">
+										<strong>Success!</strong>
+										<p th:text="${message}">Success message!</p>
+									</div>
+
+									<div class="text-danger" th:if="${error != null}">
+										<strong>Error!</strong>
+										<p th:text="${error}">Error message!</p>
+									</div>
+									<div class="input-group mb-3">
+										<span class="input-group-addon"><i class="icon-user"></i></span>
+										<input type="text" class="form-control" name="username"
+											id="username" placeholder="Email Id" required="required"
+											autofocus="autofocus" maxlength="30" />
+									</div>
+									<div class="input-group mb-3">
+										<span class="input-group-addon"><i class="icon-lock"></i></span>
+										<input type="password" class="form-control" name="password"
+											id="password" placeholder="Password" required="required"
+											maxlength="20"  AUTOCOMPLETE="off"/>
+									</div>
+									<!-- <img th:src="@{img/captcha.jpg}" class="captcha"/> -->
+									<div class="input-group mb-3">
+										<span class="input-group-addon"><i class="icon-pencil"></i></span>
+										<input name="captchaText" id="captchaText" type="text"
+											maxlength="6" style="text-transform: uppercase;"
+											autocomplete="off" required="required" class="form-control"
+											placeholder="Captcha" />
+									</div>
+									<div class="input-group mb-1">
+										<img id="captcha_id" name="imgCaptcha"
+											th:src="@{/captcha?type=login}" /> <a href="#"><img
+											th:src="@{/img/refresh.ico}"
+											onclick="document.getElementById('captcha_id').src = 'captcha?' + Math.random() + '&amp;type=login';  return false" /></a>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<input id="btn-login" type="submit" class="btn btn-main px-4"
+												value="Login" />
+											<!-- <button type="button" class="btn btn-main px-4">Login</button> -->
+										</div>
+										<div class="col-6 text-right">
+											<!-- <input id="btn-signup" type="button" class="btn btn-main px-4"
+												value="Sign Up" onclick="window.location='/res_owms/signup/signupForm'"/> -->
+											<a th:href="@{/signup}" class="btn btn-main px-4"> <span>Sign Up
+													</span>
+											</a>	
+										</div>
+										<div class="col-12">
+											<a th:href="@{/forgotpassword}" class="btn btn-link px-0" style="float: right;"> <span>Forgot
+													password?</span>
+											</a>
+											<!-- <button type="button" class="btn btn-link px-0">Forgot
+												password?</button> -->
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div th:replace="fragments/loginfooter :: footer" /> -->
+		<div class="home-footer">
+			<div class="container-fluid">
+				<div class="float-right">
+					<a target="_blank" href="https://mp.mygov.in"><img th:src="@{/img/logo2.png}" alt="Image" height="60px" /></a>
+				</div>
+				<div class="float-left mt-2">
+					Rural Engineering Service &copy; 2020. All rights
+					reserved. <br /> Designed &amp; Developed by <a
+						target="_blank" href="http://www.mapit.gov.in/coedetails.aspx" style="color: wheat">Center of Excellence (CoE)</a>, <a
+						target="_blank" href="http://www.mapit.gov.in"
+						style="color: wheat">MAP_IT</a>.
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<!-- Bootstrap and necessary plugins -->
+	<script th:src="@{js/jquery.min.js}"></script>
+	<script th:src="@{js/popper.min.js}"></script>
+	<script th:src="@{js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/sha256.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#btn-login')
+									.click(
+											function() {
+												if ($.trim($('#username').val()) == ''
+														|| $.trim($('#password').val()) == ''
+														|| $.trim($('#captchaText').val()) == '') {
+													//alert("Please enter User Name and Password");
+												} else {
+													var hashObj = new jsSHA("SHA-256", "TEXT","1");
+													hashObj.update($('#password').val());
+													$("#password").val(hashObj.getHash("HEX"));
+												}
+											});
+						});
+	</script>
+	</div>
+</body>
+</html>

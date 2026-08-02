@@ -1,0 +1,941 @@
+/*--------------------------------
+
+nc-demo_outline Web Font - built using nucleoapp.com
+License - nucleoapp.com/license/
+
+-------------------------------- */
+@font-face {
+  font-family: 'nc-demo_outline';
+  src: url('../fonts/nc-demo_outline.eot');
+  src: url('../fonts/nc-demo_outline.eot') format('embedded-opentype'), url('../fonts/nc-demo_outline.woff2') format('woff2'), url('../fonts/nc-demo_outline.woff') format('woff'), url('../fonts/nc-demo_outline.ttf') format('truetype'), url('../fonts/nc-demo_outline.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/*------------------------
+	base class definition
+-------------------------*/
+.nc-icon {
+  display: inline-block;
+  font: normal normal normal 14px/1 'nc-demo_outline';
+  font-size: inherit;
+  speak: none;
+  text-transform: none;
+  /* Better Font Rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/*------------------------
+  change icon size
+-------------------------*/
+.nc-icon.lg {
+  font-size: 1.33333333em;
+  vertical-align: -16%;
+}
+.nc-icon.x2 {
+  font-size: 2em;
+}
+.nc-icon.x3 {
+  font-size: 3em;
+}
+/*----------------------------------
+  add a square/circle background
+-----------------------------------*/
+.nc-icon.square,
+.nc-icon.circle {
+  padding: 0.33333333em;
+  vertical-align: -16%;
+  background-color: #eee;
+}
+.nc-icon.circle {
+  border-radius: 50%;
+}
+/*------------------------
+  list icons
+-------------------------*/
+.nc-icon-ul {
+  padding-left: 0;
+  margin-left: 2.14285714em;
+  list-style-type: none;
+}
+.nc-icon-ul > li {
+  position: relative;
+}
+.nc-icon-ul > li > .nc-icon {
+  position: absolute;
+  left: -1.57142857em;
+  top: 0.14285714em;
+  text-align: center;
+}
+.nc-icon-ul > li > .nc-icon.lg {
+  top: 0;
+  left: -1.35714286em;
+}
+.nc-icon-ul > li > .nc-icon.circle,
+.nc-icon-ul > li > .nc-icon.square {
+  top: -0.19047619em;
+  left: -1.9047619em;
+}
+/*------------------------
+  spinning icons
+-------------------------*/
+.nc-icon.spin {
+  -webkit-animation: nc-icon-spin 2s infinite linear;
+  -moz-animation: nc-icon-spin 2s infinite linear;
+  animation: nc-icon-spin 2s infinite linear;
+}
+@-webkit-keyframes nc-icon-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes nc-icon-spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@keyframes nc-icon-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/*------------------------
+  rotated/flipped icons
+-------------------------*/
+.nc-icon.rotate-90 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.nc-icon.rotate-180 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.nc-icon.rotate-270 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.nc-icon.flip-y {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
+  -webkit-transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.nc-icon.flip-x {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -webkit-transform: scale(1, -1);
+  -moz-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+/*------------------------
+	font icons
+-------------------------*/
+
+.nc-archive-2::before {
+    content: "\ea01";
+}
+
+.nc-archive-paper::before {
+    content: "\ea02";
+}
+
+.nc-award-48::before {
+    content: "\ea03";
+}
+
+.nc-badge-13::before {
+    content: "\ea04";
+}
+
+.nc-bag-09::before {
+    content: "\ea05";
+}
+
+.nc-barcode-qr::before {
+    content: "\ea06";
+}
+
+.nc-bear-2::before {
+    content: "\ea07";
+}
+
+.nc-bell-53::before {
+    content: "\ea08";
+}
+
+.nc-bookmark-2::before {
+    content: "\ea09";
+}
+
+.nc-briefcase-24::before {
+    content: "\ea0a";
+}
+
+.nc-calendar-60::before {
+    content: "\ea0b";
+}
+
+.nc-camera-20::before {
+    content: "\ea0c";
+}
+
+.nc-cart-simple::before {
+    content: "\ea0d";
+}
+
+.nc-chat-46::before {
+    content: "\ea0e";
+}
+
+.nc-check-circle-07::before {
+    content: "\ea0f";
+}
+
+.nc-cloud-26::before {
+    content: "\ea10";
+}
+
+.nc-compass-05::before {
+    content: "\ea11";
+}
+
+.nc-dashboard-level::before {
+    content: "\ea12";
+}
+
+.nc-diamond::before {
+    content: "\ea13";
+}
+
+.nc-edit-78::before {
+    content: "\ea14";
+}
+
+.nc-email-84::before {
+    content: "\ea15";
+}
+
+.nc-eye-19::before {
+    content: "\ea16";
+}
+
+.nc-favourite-31::before {
+    content: "\ea17";
+}
+
+.nc-flag-points-32::before {
+    content: "\ea18";
+}
+
+.nc-flash-21::before {
+    content: "\ea19";
+}
+
+.nc-folder-15::before {
+    content: "\ea1a";
+}
+
+.nc-gift-2::before {
+    content: "\ea1b";
+}
+
+.nc-grid-45::before {
+    content: "\ea1c";
+}
+
+.nc-handout::before {
+    content: "\ea1d";
+}
+
+.nc-heart-2::before {
+    content: "\ea1e";
+}
+
+.nc-home-52::before {
+    content: "\ea1f";
+}
+
+.nc-image::before {
+    content: "\ea20";
+}
+
+.nc-key-25::before {
+    content: "\ea21";
+}
+
+.nc-layers-3::before {
+    content: "\ea22";
+}
+
+.nc-like-2::before {
+    content: "\ea23";
+}
+
+.nc-link-72::before {
+    content: "\ea24";
+}
+
+.nc-lock-open::before {
+    content: "\ea25";
+}
+
+.nc-lock::before {
+    content: "\ea26";
+}
+
+.nc-multiple-11::before {
+    content: "\ea27";
+}
+
+.nc-notes::before {
+    content: "\ea28";
+}
+
+.nc-pencil::before {
+    content: "\ea29";
+}
+
+.nc-phone-2::before {
+    content: "\ea2a";
+}
+
+.nc-preferences::before {
+    content: "\ea2b";
+}
+
+.nc-send-2::before {
+    content: "\ea2c";
+}
+
+.nc-settings-gear-63::before {
+    content: "\ea2d";
+}
+
+.nc-single-01::before {
+    content: "\ea2e";
+}
+
+.nc-single-folded-content::before {
+    content: "\ea2f";
+}
+
+.nc-skull-2::before {
+    content: "\ea30";
+}
+
+.nc-spaceship::before {
+    content: "\ea31";
+}
+
+.nc-square-download::before {
+    content: "\ea32";
+}
+
+.nc-square-upload::before {
+    content: "\ea34";
+}
+
+.nc-support-16::before {
+    content: "\ea33";
+}
+
+.nc-trash-simple::before {
+    content: "\ea35";
+}
+
+.nc-turtle::before {
+    content: "\ea36";
+}
+
+.nc-vector::before {
+    content: "\ea37";
+}
+
+.nc-video-66::before {
+    content: "\ea38";
+}
+
+.nc-wallet-43::before {
+    content: "\ea39";
+}
+
+.nc-widget::before {
+    content: "\ea3a";
+}
+
+.nc-world::before {
+    content: "\ea3b";
+}
+
+.nc-zoom-2::before {
+    content: "\ea3c";
+}
+
+
+/* all icon font classes list here */
+
+/* --------------------------------
+
+Nucleo Outline Web Font - nucleoapp.com/
+License - nucleoapp.com/license/
+Created using IcoMoon - icomoon.io
+
+-------------------------------- */
+
+@font-face {
+    font-family: 'Nucleo Outline';
+    src: url("../fonts/nucleo-outline.eot");
+    src: url("../fonts/nucleo-outline.eot") format("embedded-opentype"), url("../fonts/nucleo-outline.woff2") format("woff2"), url("../fonts/nucleo-outline.woff") format("woff"), url("../fonts/nucleo-outline.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/*------------------------
+  base class definition
+-------------------------*/
+
+.now-ui-icons {
+    display: inline-block;
+    font: normal normal normal 14px/1 'Nucleo Outline';
+    font-size: inherit;
+    speak: none;
+    text-transform: none;
+    /* Better Font Rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/*------------------------
+  change icon size
+-------------------------*/
+
+
+/*----------------------------------
+  add a square/circle background
+-----------------------------------*/
+
+.now-ui-icons.circle {
+    padding: 0.33333333em;
+    vertical-align: -16%;
+    background-color: #eee;
+}
+
+.now-ui-icons.circle {
+    border-radius: 50%;
+}
+
+
+/*------------------------
+  list icons
+-------------------------*/
+
+.nc-icon-ul {
+    padding-left: 0;
+    margin-left: 2.14285714em;
+    list-style-type: none;
+}
+
+.nc-icon-ul>li {
+    position: relative;
+}
+
+.nc-icon-ul>li>.now-ui-icons {
+    position: absolute;
+    left: -1.57142857em;
+    top: 0.14285714em;
+    text-align: center;
+}
+
+.nc-icon-ul>li>.now-ui-icons.circle {
+    top: -0.19047619em;
+    left: -1.9047619em;
+}
+
+
+/*------------------------
+  spinning icons
+-------------------------*/
+
+.now-ui-icons.spin {
+    -webkit-animation: nc-icon-spin 2s infinite linear;
+    -moz-animation: nc-icon-spin 2s infinite linear;
+    animation: nc-icon-spin 2s infinite linear;
+}
+
+@-webkit-keyframes nc-icon-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes nc-icon-spin {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@keyframes nc-icon-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+
+/*------------------------
+  rotated/flipped icons
+-------------------------*/
+
+
+/*------------------------
+  font icons
+-------------------------*/
+
+.now-ui-icons.ui-1_check:before {
+    content: "\ea22";
+}
+
+.now-ui-icons.ui-1_email-85:before {
+    content: "\ea2a";
+}
+
+.now-ui-icons.arrows-1_cloud-download-93:before {
+    content: "\ea21";
+}
+
+.now-ui-icons.arrows-1_cloud-upload-94:before {
+    content: "\ea24";
+}
+
+.now-ui-icons.arrows-1_minimal-down:before {
+    content: "\ea39";
+}
+
+.now-ui-icons.arrows-1_minimal-left:before {
+    content: "\ea3a";
+}
+
+.now-ui-icons.arrows-1_minimal-right:before {
+    content: "\ea3b";
+}
+
+.now-ui-icons.arrows-1_minimal-up:before {
+    content: "\ea3c";
+}
+
+.now-ui-icons.arrows-1_refresh-69:before {
+    content: "\ea44";
+}
+
+.now-ui-icons.arrows-1_share-66:before {
+    content: "\ea4c";
+}
+
+.now-ui-icons.business_badge:before {
+    content: "\ea09";
+}
+
+.now-ui-icons.business_bank:before {
+    content: "\ea0a";
+}
+
+.now-ui-icons.business_briefcase-24:before {
+    content: "\ea13";
+}
+
+.now-ui-icons.business_bulb-63:before {
+    content: "\ea15";
+}
+
+.now-ui-icons.business_chart-bar-32:before {
+    content: "\ea1e";
+}
+
+.now-ui-icons.business_chart-pie-36:before {
+    content: "\ea1f";
+}
+
+.now-ui-icons.business_globe:before {
+    content: "\ea2f";
+}
+
+.now-ui-icons.business_money-coins:before {
+    content: "\ea40";
+}
+
+.now-ui-icons.clothes_tie-bow:before {
+    content: "\ea5b";
+}
+
+.now-ui-icons.design_vector:before {
+    content: "\ea61";
+}
+
+.now-ui-icons.design_app:before {
+    content: "\ea08";
+}
+
+.now-ui-icons.design_bullet-list-67:before {
+    content: "\ea14";
+}
+
+.now-ui-icons.design_image:before {
+    content: "\ea33";
+}
+
+.now-ui-icons.design_palette:before {
+    content: "\ea41";
+}
+
+.now-ui-icons.design_scissors:before {
+    content: "\ea4a";
+}
+
+.now-ui-icons.design-2_html5:before {
+    content: "\ea32";
+}
+
+.now-ui-icons.design-2_ruler-pencil:before {
+    content: "\ea48";
+}
+
+.now-ui-icons.emoticons_satisfied:before {
+    content: "\ea49";
+}
+
+.now-ui-icons.files_box:before {
+    content: "\ea12";
+}
+
+.now-ui-icons.files_paper:before {
+    content: "\ea43";
+}
+
+.now-ui-icons.files_single-copy-04:before {
+    content: "\ea52";
+}
+
+.now-ui-icons.health_ambulance:before {
+    content: "\ea07";
+}
+
+.now-ui-icons.loader_gear:before {
+    content: "\ea4e";
+}
+
+.now-ui-icons.loader_refresh:before {
+    content: "\ea44";
+}
+
+.now-ui-icons.location_bookmark:before {
+    content: "\ea10";
+}
+
+.now-ui-icons.location_compass-05:before {
+    content: "\ea25";
+}
+
+.now-ui-icons.location_map-big:before {
+    content: "\ea3d";
+}
+
+.now-ui-icons.location_pin:before {
+    content: "\ea47";
+}
+
+.now-ui-icons.location_world:before {
+    content: "\ea63";
+}
+
+.now-ui-icons.media-1_album:before {
+    content: "\ea02";
+}
+
+.now-ui-icons.media-1_button-pause:before {
+    content: "\ea16";
+}
+
+.now-ui-icons.media-1_button-play:before {
+    content: "\ea18";
+}
+
+.now-ui-icons.media-1_button-power:before {
+    content: "\ea19";
+}
+
+.now-ui-icons.media-1_camera-compact:before {
+    content: "\ea1c";
+}
+
+.now-ui-icons.media-2_note-03:before {
+    content: "\ea3f";
+}
+
+.now-ui-icons.media-2_sound-wave:before {
+    content: "\ea57";
+}
+
+.now-ui-icons.objects_diamond:before {
+    content: "\ea29";
+}
+
+.now-ui-icons.objects_globe:before {
+    content: "\ea2f";
+}
+
+.now-ui-icons.objects_key-25:before {
+    content: "\ea38";
+}
+
+.now-ui-icons.objects_planet:before {
+    content: "\ea46";
+}
+
+.now-ui-icons.objects_spaceship:before {
+    content: "\ea55";
+}
+
+.now-ui-icons.objects_support-17:before {
+    content: "\ea56";
+}
+
+.now-ui-icons.objects_umbrella-13:before {
+    content: "\ea5f";
+}
+
+.now-ui-icons.education_agenda-bookmark:before {
+    content: "\ea01";
+}
+
+.now-ui-icons.education_atom:before {
+    content: "\ea0c";
+}
+
+.now-ui-icons.education_glasses:before {
+    content: "\ea2d";
+}
+
+.now-ui-icons.education_hat:before {
+    content: "\ea30";
+}
+
+.now-ui-icons.education_paper:before {
+    content: "\ea42";
+}
+
+.now-ui-icons.shopping_bag-16:before {
+    content: "\ea0d";
+}
+
+.now-ui-icons.shopping_basket:before {
+    content: "\ea0b";
+}
+
+.now-ui-icons.shopping_box:before {
+    content: "\ea11";
+}
+
+.now-ui-icons.shopping_cart-simple:before {
+    content: "\ea1d";
+}
+
+.now-ui-icons.shopping_credit-card:before {
+    content: "\ea28";
+}
+
+.now-ui-icons.shopping_delivery-fast:before {
+    content: "\ea27";
+}
+
+.now-ui-icons.shopping_shop:before {
+    content: "\ea50";
+}
+
+.now-ui-icons.shopping_tag-content:before {
+    content: "\ea59";
+}
+
+.now-ui-icons.sport_trophy:before {
+    content: "\ea5d";
+}
+
+.now-ui-icons.sport_user-run:before {
+    content: "\ea60";
+}
+
+.now-ui-icons.tech_controller-modern:before {
+    content: "\ea26";
+}
+
+.now-ui-icons.tech_headphones:before {
+    content: "\ea31";
+}
+
+.now-ui-icons.tech_laptop:before {
+    content: "\ea36";
+}
+
+.now-ui-icons.tech_mobile:before {
+    content: "\ea3e";
+}
+
+.now-ui-icons.tech_tablet:before {
+    content: "\ea58";
+}
+
+.now-ui-icons.tech_tv:before {
+    content: "\ea5e";
+}
+
+.now-ui-icons.tech_watch-time:before {
+    content: "\ea62";
+}
+
+.now-ui-icons.text_align-center:before {
+    content: "\ea05";
+}
+
+.now-ui-icons.text_align-left:before {
+    content: "\ea06";
+}
+
+.now-ui-icons.text_bold:before {
+    content: "\ea0e";
+}
+
+.now-ui-icons.text_caps-small:before {
+    content: "\ea1b";
+}
+
+.now-ui-icons.gestures_tap-01:before {
+    content: "\ea5a";
+}
+
+.now-ui-icons.transportation_air-baloon:before {
+    content: "\ea03";
+}
+
+.now-ui-icons.transportation_bus-front-12:before {
+    content: "\ea17";
+}
+
+.now-ui-icons.travel_info:before {
+    content: "\ea04";
+}
+
+.now-ui-icons.travel_istanbul:before {
+    content: "\ea34";
+}
+
+.now-ui-icons.ui-1_bell-53:before {
+    content: "\ea0f";
+}
+
+.now-ui-icons.ui-1_calendar-60:before {
+    content: "\ea1a";
+}
+
+.now-ui-icons.ui-1_lock-circle-open:before {
+    content: "\ea35";
+}
+
+.now-ui-icons.ui-1_send:before {
+    content: "\ea4d";
+}
+
+.now-ui-icons.ui-1_settings-gear-63:before {
+    content: "\ea4e";
+}
+
+.now-ui-icons.ui-1_simple-add:before {
+    content: "\ea4f";
+}
+
+.now-ui-icons.ui-1_simple-delete:before {
+    content: "\ea54";
+}
+
+.now-ui-icons.ui-1_simple-remove:before {
+    content: "\ea53";
+}
+
+.now-ui-icons.ui-1_zoom-bold:before {
+    content: "\ea64";
+}
+
+.now-ui-icons.ui-2_chat-round:before {
+    content: "\ea20";
+}
+
+.now-ui-icons.ui-2_favourite-28:before {
+    content: "\ea2b";
+}
+
+.now-ui-icons.ui-2_like:before {
+    content: "\ea37";
+}
+
+.now-ui-icons.ui-2_settings-90:before {
+    content: "\ea4b";
+}
+
+.now-ui-icons.ui-2_time-alarm:before {
+    content: "\ea5c";
+}
+
+.now-ui-icons.users_circle-08:before {
+    content: "\ea23";
+}
+
+.now-ui-icons.users_single-02:before {
+    content: "\ea51";
+}

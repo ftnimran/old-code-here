@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+</head>
+<script type="text/javascript">
+	$(function() {
+
+		$('#datetimepicker1').datetimepicker({
+			//viewMode : 'days',
+			//maxDate : moment(),
+			//useCurrent: false,
+			format : 'DD/MM/YYYY'
+		//useCurrent : false
+		});
+		/* $("#dateOfRegistration").keypress(function(event) {
+			event.preventDefault();
+		}); */
+		
+
+		$('#datetimepicker2').datetimepicker({
+			//viewMode : 'days',
+			maxDate : moment(),
+			//useCurrent: false,
+			format : 'DD/MM/YYYY',
+			useCurrent : false
+		});
+
+		$('#datetimepicker3').datetimepicker({
+			//viewMode : 'days',
+			//maxDate : moment(),
+			//useCurrent: false,
+			format : 'DD/MM/YYYY'
+			//useCurrent : false
+		});
+
+		$('#datetimepicker4').datetimepicker({
+			//viewMode : 'days',
+			maxDate : moment(),
+			//useCurrent: false,
+			format : 'DD/MM/YYYY',
+			useCurrent : false
+		});
+
+	});
+</script>
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item"><a
+			href="#manageTechnicalSanctionDataRoute"><span
+				th:text="#{viewTechnicalSanction}">view Technical sanction</span></a></li>
+
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" href="#" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header top-header">
+							<i class="fa fa-wpforms"></i> <span
+								th:text="#{viewTechnicalSanction}">View Technical Section</span>
+						</div>
+						
+						
+						
+						<div class="col-md-12">
+							<div data-ng-if="responseObject.errorMessage != null"
+								class="text-danger">
+								<strong>Error!</strong>
+								<p>{{responseObject.errorMessage}}</p>
+							</div>
+						</div>
+						
+						<div class="col-md-12">
+							<div data-ng-if="errorMessage1 != null"	class="text-danger">
+								<strong>Error!</strong>
+								<p>{{errorMessage1}}</p>
+							</div>
+						</div>
+						
+
+						<form
+							data-ng-submit="addTechnicalSanction(workFormName,workFormName.$valid, ldPdfFile)"
+							name="workFormName" id="workForkName" novalidate="novalidate"
+							data-ng-init="loadWorkDetailThree();">
+
+							<div class="card-header">
+								<span th:text="#{workDetails}">Work Details</span>
+							</div>
+							<div class="card-body">
+								<table style="width: 100%;">
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Work
+												Name: </span>{{workData.workName}}</td>
+										<td width="50%"><span style="font-weight: 700;">Work
+												Type: </span>{{workData.workTypeBean.workTypeNameE}}</td>
+									</tr>
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Line
+												Department: </span>{{workData.lineDepartmentBean.lineDepartmentNameE}}</td>
+										<td width="50%"><span style="font-weight: 700;">Work
+												Sub Type: </span>{{workData.workSubTypeBean.workSubTypeNameE ?
+											workData.workSubTypeBean.workSubTypeNameE : '-'}}</td>
+									</tr>
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Executed
+												By: </span>{{workData.agencyTypeBean.agencyTypeNameE ?
+											workData.agencyTypeBean.agencyTypeNameE : '-'}}</td>
+										<td width="50%"><span style="font-weight: 700;">District
+												Name: </span>{{workData.districtName ? workData.districtName :
+											'-'}}</td>
+									</tr>
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Gram
+												Panchayat Name By: </span>{{workData.gramPanchayatName ?
+											workData.gramPanchayatName : '-'}}</td>
+										<td width="50%"><span style="font-weight: 700;">Village
+												Name: </span>{{workData.villageBean.villageName ?
+											workData.villageBean.villageName : '-'}}</td>
+									</tr>
+
+								</table>
+
+							</div>
+
+							<div class="card-header">
+								<span>Technical Sanction Details</span>
+							</div>
+							<div class="card-body">
+								<table style="width: 100%;">
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Technical Sanction Type: </span>{{workData.workEstimationBean.estimationType}}</td>
+										<td width="50%"><span style="font-weight: 700;">Technical Sanction Amount: </span> {{workData.workEstimationBean.grandTotal}}</td>
+									</tr>
+									
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Status:	</span>{{tsStatus}}</td>
+										<td width="50%"><span style="font-weight: 700;">Estimation Date: </span> {{workData.workEstimationBean.estimationSubmissionDate}} </td>
+									</tr>
+										
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Issuing	Authority: </span> {{workData.workEstimationBean.approvedByUser.designationBean.designation}}</td>
+										<td width="50%"><span style="font-weight: 700;">Issued By: </span>{{workData.workEstimationBean.approvedByUser.name}}</td>
+									</tr>
+									
+								</table>
+
+							</div>
+							
+							<div class="card-header" data-ng-show="workData.workEstimationBean.estimationType=='REVISED'">
+								<span >Competent Authority Details for Revision</span>
+							</div>
+							<div class="card-body" data-ng-show="workData.workEstimationBean.estimationType=='REVISED'">
+							<div class="row">
+							<div class="form-group col-sm-6">
+										<label><span>Name of Competent Authority</span><span
+											class="aestrick">&#42;</span></label> <input type="text" disabled="disabled"
+											class="form-control" id="competentAuthName" data-ng-required="workData.workEstimationBean.estimationType=='REVISED'"
+											data-ng-model="workData.competentAuthName" name="competentAuthName"
+											maxlength="20" />
+										<div data-ng-show="workFormName.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="workFormName.competentAuthName.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													>Name of Competent Authority</span>
+											</p>
+										</div>
+									</div>
+									<div class="form-group col-sm-6">
+										<label><span>Designation of Competent Authority</span><span
+											class="aestrick">&#42;</span></label> <input type="text" disabled="disabled"
+											class="form-control" id="competentAuthDesig" data-ng-required="workData.workEstimationBean.estimationType=='REVISED'"
+											data-ng-model="workData.competentAuthDesig" name="competentAuthDesig"
+											maxlength="20" />
+										<div data-ng-show="workFormName.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="workFormName.competentAuthDesig.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													>Designation of Competent Authority</span>
+											</p>
+										</div>
+									</div>
+									</div>
+									</div>
+							
+							<div class="card-header">
+								<span th:text="#{dispatchDetails}">Dispatch Details</span>
+							</div>
+
+
+
+							<!-- administrative section details -->
+
+
+							<div class="card-body">
+								<div class="row">
+
+
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{technicalSanction}">Technical
+												Sanction </span><span th:text="#{dispatchNo}">Dispatch No.</span><span
+											class="aestrick">&#42;</span></label> <input type="text"
+											class="form-control" id="workTsNoId"  required="required"
+											data-ng-model="workData.tsDispatchNumber"
+											name="tsDispatchNumber" 
+											disabled="disabled"/> 
+											
+											
+											<input type="hidden"
+											data-ng-model="editAs" data-ng-init="editAs='yes'"  disabled="disabled"/>
+
+
+										<div data-ng-show="workFormName.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="workFormName.tsDispatchNumber.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{technicalSanctionNo}">technical Sanction
+													No</span>
+											</p>
+										</div>
+									</div>
+									
+									
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{oldtechnicalSanctionNo}">Old Technical Sanction No. </span>
+										</label> 
+										 <input type="text"
+											class="form-control" id="nworkTsNoId" 
+											data-ng-model="workData.technicalSanctionNoOld"
+											name="technicalSanctionNoOld" disabled="disabled" />
+											
+
+										<div data-ng-show="workFormName.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="workFormName.technicalSanctionNoOld.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{olddispatchNo}">new technical Sanction
+													No</span>
+											</p>
+										</div>
+									</div>
+
+									<!-- data-ng-change="compareDates(workData.administrationSanctionBean.administrationSanctionDate,workData.technicalSanctionBean.technicalSanctionDate);" -->
+
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{technicalSanction}">Technical
+												Sanction </span><span th:text="#{dispatchDate}">Dispatch
+												Date</span><span class="aestrick">&#42;</span></label>
+										<div class="input-group date" id="datetimepicker3"
+											data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input"
+												data-target="#datetimepicker3" name="tsDispatchDate"
+												required="required" placeholder="DD/MM/YYYY"
+												data-ng-model="workData.tsDispatchDate"
+												id="startingDate" autocomplete="off" disabled="disabled" />
+											<!--  data-ng-change="validateStartingDate();validateSubAcctStartingDate();" 
+													ye wali line upar autocomplete ke baad aayegi
+													-->
+
+											<div class="input-group-append input-group-addon"
+												data-target="#datetimepicker3" data-toggle="datetimepicker">
+												<div class="input-group-text">
+													<i class="fa fa-calendar"></i>
+												</div>
+											</div>
+										</div>
+
+										<div data-ng-show="workFormName.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="workFormName.tsDispatchDate.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span><span>Technical Sanction Dispatch Date</span>
+											</p>
+										</div>
+
+									</div>
+
+									
+									<div class="form-group col-sm-4">
+                   							<div class="form-group">
+                       						<label> <span
+												th:text="#{uploadTechnicalSanctionFile}">Upload
+													Technical Sanction File</span> <span class="aestrick">&#42;</span>
+											</label>
+                                              <input required="required" type='file' accept=".pdf" class="form-control" file-model="ldPdfFile" name="ldPdfFile" id="ldPdfFile"  disabled="disabled"/>
+                                              (<span th:text="#{allowedPdfFormatOnly}"></span>)
+                                               <p class="help-block" data-ng-show="workData.technicalSanctionFileId!=0 &amp;&amp; workData.technicalSanctionFileId!=null">
+                                              <span th:text="#{downloadCurrentFile}"></span>
+                                              <a style="cursor: pointer;" data-ng-click="downloadDocument(workData.technicalSanctionFileId)">
+                                              <img th:src="@{/img/download.ico}" style="width: 7%;" alt="" />
+                                              </a>
+                                              </p>	
+                                               <input type="hidden" data-ng-model="workData.technicalSanctionFileId" />
+                                               <p class="help-block" data-ng-show="workData.technicalSanctionFileId==null || workData.technicalSanctionFileId==0">
+                                              <span th:text="#{noFileAvailable}"></span></p>
+                                              											  
+                                           	  <p class="help-block" style="color: red;" data-ng-show="fileExtentionErrorLd &amp;&amp; !workFormName.$submitted">
+                                                   <span th:text="#{uploadedFileFormatDoesNotSupported}">Uploaded File Format does not supported</span>
+                                              </p>
+                                              <p class="help-block" style="color: red;" data-ng-show="fileSizeErrorLd &amp;&amp; !workFormName.$submitted">
+                                                   <span th:text="#{fileSizeGreaterThan5Mb}">File Size is Greater Than 5mb.</span>
+                                              </p>
+                                              
+                                              
+                                               <div data-ng-show="workFormName.$submitted"> 
+                                               <div data-ng-show="workData.technicalSanctionFileId==0">                                                                        
+                                              <p class="help-block" style="color: red;" data-ng-show="noFileError">
+                                                  <span th:text="#{pleaseUploadTheFile}">Please upload the file</span>
+                                              </p>
+                                              </div><!-- 
+                                            <p class="help-block" style="color: red;" data-ng-show="maxSizeError">
+                                               <span th:text="#{application.page.maxSizeError}">Uploaded file exceeding allowed file size</span>
+                                             </p> -->
+                                            <p class="help-block" style="color: red;" data-ng-show="fileExtentionErrorLd">
+                                                   <span th:text="#{uploadedFileFormatDoesNotSupported}">Uploaded file format does not supported</span>
+                                            </p>
+                                            
+                                             <p class="help-block" style="color: red;" data-ng-show="fileSizeErrorLd">
+                                                    <span th:text="#{fileSizeGreaterThan5Mb}">File Size is Greater Than 5mb.</span>
+                                            </p> 
+                                            
+                                               </div>
+                                              
+                                              
+                                             </div>
+                                          </div>
+
+
+									<div>
+										<div class="form-group col-sm-12">
+											<h4>प्रतिलिपि:-</h4>
+											<ol data-ng-if="workData.technicalSanctionStatusId!=3">
+												<li><label for="p1">&nbsp;&nbsp;प्रमुख अभियंता, ग्रामीण यांत्रिकी सेवा, भोपाल</label></li>
+												<li><label for="p2">&nbsp;<input disabled="disabled"  type="checkbox" id="p2" data-ng-model="workData.isCeOfficeName"/>&nbsp;मुख्य अभियंता, ग्रामीण यांत्रिकी सेवा, परिक्षेत्र </label></li>
+												<li><label for="p3">&nbsp;<input disabled="disabled"  type="checkbox" id="p3" data-ng-model="workData.isSeOfficeName"/>&nbsp;अधीक्षण यंत्री, ग्रामीण यांत्रिकी सेवा, मण्डल </label></li>
+												<li><label for="p4">&nbsp;<input disabled="disabled"  type="checkbox" id="p4" data-ng-model="workData.isDistrictName"/>&nbsp;कलेक्टर, जिला </label></li>
+												<li><label for="p5">&nbsp;<input disabled="disabled"  type="checkbox" id="p5" data-ng-model="workData.isGrampanchayatName"/>&nbsp;मुख्य कार्यपालन अधिकारी, जिला पंचायत </label></li>
+												<li><label for="p6">&nbsp;<input disabled="disabled"  type="checkbox" id="p6" data-ng-model="workData.isLinedepartmentName"/>&nbsp;संबंधित विभाग </label></li>
+												<li><label for="p7">&nbsp;<input disabled="disabled"  type="checkbox" id="p7" data-ng-model="workData.isEeOfficeName"/>&nbsp;कार्यपालन यंत्री, ग्रामीण यांत्रिकी सेवा, संभाग </label></li>
+											</ol>
+											
+											<ol data-ng-if="workData.technicalSanctionStatusId==3">
+												<li><label for="p1">&nbsp;&nbsp;प्रमुख अभियंता, ग्रामीण यांत्रिकी सेवा, भोपाल</label></li>
+												<li><label for="p2">&nbsp;<input disabled="disabled"  type="checkbox" id="p2" data-ng-model="workData.isCeOfficeName" data-ng-disabled="workData.isCeOfficeName == null" />&nbsp;मुख्य अभियंता, ग्रामीण यांत्रिकी सेवा, परिक्षेत्र </label></li>
+												<li><label for="p3">&nbsp;<input disabled="disabled"  type="checkbox" id="p3" data-ng-model="workData.isSeOfficeName" data-ng-disabled="workData.isSeOfficeName == null" />&nbsp;अधीक्षण यंत्री, ग्रामीण यांत्रिकी सेवा, मण्डल </label></li>
+												<li><label for="p4">&nbsp;<input disabled="disabled"  type="checkbox" id="p4" data-ng-model="workData.isDistrictName" data-ng-disabled="workData.isDistrictName == null" />&nbsp;कलेक्टर, जिला </label></li>
+												<li><label for="p5">&nbsp;<input disabled="disabled"  type="checkbox" id="p5" data-ng-model="workData.isGrampanchayatName" data-ng-disabled="workData.isGrampanchayatName == null" />&nbsp;मुख्य कार्यपालन अधिकारी, जिला पंचायत </label></li>
+												<li><label for="p6">&nbsp;<input disabled="disabled"  type="checkbox" id="p6" data-ng-model="workData.isLinedepartmentName" data-ng-disabled="workData.isLinedepartmentName == null" />&nbsp;संबंधित विभाग </label></li>
+												<li><label for="p7">&nbsp;<input disabled="disabled"  type="checkbox" id="p7" data-ng-model="workData.isEeOfficeName" data-ng-disabled="workData.isEeOfficeName == null" />&nbsp;कार्यपालन यंत्री, ग्रामीण यांत्रिकी सेवा, संभाग </label></li>
+											</ol>
+											
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+
+
+							<!-- <div class="card-footer text-right" data-ng-hide="workData.technicalSanctionStatusId==3">
+								<button	
+									type="submit" class="btn btn-sm btn-primary" data-ng-click="saveAsDraft=true;submit=false">
+									<span th:text="#{saveAsDraft}">Save As Draft</span>
+								</button>
+								
+								<button type="submit" class="btn btn-sm btn-primary" data-ng-click="submit=true;saveAsDraft=false">
+									<span>Submit</span>
+								</button>
+								
+								</div> -->
+								</form>
+								<div class="card-footer text-right">
+								<button  class="btn btn-sm btn-primary"
+									data-ng-click="doTheBack()">
+									<span>Cancel</span>
+								</button>
+								</div>
+						
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+	</div>d
+	<!-- /.container-fluid -->
+</div>
+</html>

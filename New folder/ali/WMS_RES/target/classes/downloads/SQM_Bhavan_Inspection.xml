@@ -1,0 +1,1095 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+  <h:head>
+    <h:title>Bhavan</h:title>
+    <model>
+      <instance>
+        <data id="build_Bhavan_1542969303">
+          <meta>
+            <instanceID/>
+          </meta>
+          <group1>
+            <jila/>
+            <vikaskhand/>
+            <gramPanchayat/>
+            <gram/>
+            <inspectionDate/>
+            <adhikariNameNPost/>
+          </group1>
+          <group2>
+            <karyaName/>
+            <yojnaName/>
+            <prashaskiyaSwikratRashi/>
+            <swikratVarsh/>
+            <vartmanstithi/>
+          </group2>
+          <group3>
+            <neevDesign/>
+            <samgriQuality/>
+            <workmanship/>
+            <remark1/>
+          </group3>
+          <group4>
+            <samgriQuality1/>
+            <workmanship1/>
+            <design/>
+          </group4>
+          <group5>
+            <samgriQuality2/>
+            <workmanship2/>
+            <lintel/>
+            <door/>
+          </group5>
+          <group6>
+            <samgriQuality3/>
+            <workmanship3/>
+            <lintel1/>
+            <roofwork/>
+            <roofSlope/>
+            <roofWorkDesign/>
+          </group6>
+          <group7>
+            <plaster/>
+            <floor/>
+            <painting/>
+            <sanitary/>
+          </group7>
+          <group8>
+            <conduitPipe/>
+            <fan/>
+          </group8>
+          <group9>
+            <suggestion/>
+            <error/>
+            <lastGrading/>
+            <officerName/>
+            <officerMobileNo/>
+            <physicalStage/>
+          </group9>
+          <overallObservation>
+            <overallObservationGrading/>
+            <overallObservationGradingRemarks/>
+          </overallObservation>
+          <group10>
+            <imageStr1/>
+            <imageStr2/>
+            <imageStr3/>
+            <imageStr4/>
+            <imageStr5/>
+            <fileStr/>
+          </group10>
+        </data>
+      </instance>
+      <itext>
+        <translation lang="English">
+          <text id="/data/group1:label">
+            <value>निरीक्षण</value>
+          </text>
+          <text id="/data/group1/jila:label">
+            <value>जिला</value>
+          </text>
+          <text id="/data/group1/vikaskhand:label">
+            <value>विकास खंड</value>
+          </text>
+          <text id="/data/group1/gramPanchayat:label">
+            <value>ग्राम पंचायत</value>
+          </text>
+          <text id="/data/group1/gram:label">
+            <value>ग्राम</value>
+          </text>
+          <text id="/data/group1/inspectionDate:label">
+            <value>निरिक्षण की दिनांक</value>
+          </text>
+          <text id="/data/group1/adhikariNameNPost:label">
+            <value>उपस्थित अधिकारी का नाम एवं पद</value>
+          </text>
+          <text id="/data/group2:label">
+            <value>भवन कार्य</value>
+          </text>
+          <text id="/data/group2/karyaName:label">
+            <value>कार्य का नाम</value>
+          </text>
+          <text id="/data/group2/yojnaName:label">
+            <value>योजना का नाम</value>
+          </text>
+          <text id="/data/group2/prashaskiyaSwikratRashi:label">
+            <value>प्रशासकीय स्वीकृत राशि (Rs लाख में)</value>
+          </text>
+          <text id="/data/group2/swikratVarsh:label">
+            <value>स्वीकृत वर्ष</value>
+          </text>
+          <text id="/data/group2/vartmanstithi:label">
+            <value>वर्तमान स्थिति</value>
+          </text>
+          <text id="/data/group2/vartmanstithi:option0">
+            <value>पूर्ण</value>
+          </text>
+          <text id="/data/group2/vartmanstithi:option1">
+            <value>अपूर्ण</value>
+          </text>
+          <text id="/data/group2/vartmanstithi:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3:label">
+            <value>कार्य का स्तर</value>
+          </text>
+          <text id="/data/group3/neevDesign:label">
+            <value>नींव की डिजाइन ठीक है </value>
+          </text>
+          <text id="/data/group3/neevDesign:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group3/neevDesign:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group3/neevDesign:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/samgriQuality:label">
+            <value>सामग्री की गुणवत्ता</value>
+          </text>
+          <text id="/data/group3/samgriQuality:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group3/samgriQuality:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group3/samgriQuality:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group3/samgriQuality:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/workmanship:label">
+            <value>कार्य की वर्कमेनशिप</value>
+          </text>
+          <text id="/data/group3/workmanship:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group3/workmanship:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group3/workmanship:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group3/workmanship:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/remark1:label">
+            <value>Remark</value>
+          </text>
+          <text id="/data/group4:label">
+            <value>नींव एवं कुर्सी स्तर</value>
+          </text>
+          <text id="/data/group4/samgriQuality1:label">
+            <value>सामग्री की गुणवत्ता</value>
+          </text>
+          <text id="/data/group4/samgriQuality1:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group4/samgriQuality1:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group4/samgriQuality1:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group4/samgriQuality1:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group4/workmanship1:label">
+            <value>कार्य की वर्कमेनशिप </value>
+          </text>
+          <text id="/data/group4/workmanship1:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group4/workmanship1:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group4/workmanship1:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group4/workmanship1:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group4/design:label">
+            <value>फाउन्डेषन  डिजाईन ठीक है एवं मानक अनुसार है</value>
+          </text>
+          <text id="/data/group4/design:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group4/design:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group4/design:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group5:label">
+            <value>छत स्तर/लिंटल स्तर</value>
+          </text>
+          <text id="/data/group5/samgriQuality2:label">
+            <value>सामग्री की गुणवत्ता</value>
+          </text>
+          <text id="/data/group5/samgriQuality2:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group5/samgriQuality2:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group5/samgriQuality2:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group5/samgriQuality2:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group5/workmanship2:label">
+            <value>कार्य की वर्कमेनशिप </value>
+          </text>
+          <text id="/data/group5/workmanship2:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group5/workmanship2:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group5/workmanship2:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group5/workmanship2:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group5/lintel:label">
+            <value>लिंटल, छज्जे/बीम मानक अनुसार है</value>
+          </text>
+          <text id="/data/group5/lintel:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group5/lintel:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group5/lintel:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group5/door:label">
+            <value>दरवाजा, खिड़की, वेन्टीलेटर की गुणवत्ता</value>
+          </text>
+          <text id="/data/group5/door:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group5/door:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group5/door:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group5/door:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group6:label">
+            <value>छत कार्य</value>
+          </text>
+          <text id="/data/group6/samgriQuality3:label">
+            <value>सामग्री की गुणवत्ता</value>
+          </text>
+          <text id="/data/group6/samgriQuality3:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group6/samgriQuality3:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group6/samgriQuality3:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group6/samgriQuality3:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group6/workmanship3:label">
+            <value>कार्य की वर्कमेनशिप </value>
+          </text>
+          <text id="/data/group6/workmanship3:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group6/workmanship3:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group6/workmanship3:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group6/workmanship3:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group6/lintel1:label">
+            <value>लिंटल, छज्जे/बीम मानक अनुसार है</value>
+          </text>
+          <text id="/data/group6/lintel1:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group6/lintel1:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group6/lintel1:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group6/roofwork:label">
+            <value>छत का कार्य मानकों अनुसार कराया गया है</value>
+          </text>
+          <text id="/data/group6/roofwork:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group6/roofwork:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group6/roofwork:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group6/roofSlope:label">
+            <value>छत का स्लोप पर्याप्त है</value>
+          </text>
+          <text id="/data/group6/roofSlope:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group6/roofSlope:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group6/roofSlope:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group6/roofWorkDesign:label">
+            <value>छत कार्य का डिजाईन मानकों अनुसार है</value>
+          </text>
+          <text id="/data/group6/roofWorkDesign:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group6/roofWorkDesign:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group6/roofWorkDesign:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group7:label">
+            <value>फिनिशिग कार्य</value>
+          </text>
+          <text id="/data/group7/plaster:label">
+            <value>प्लास्टर कार्य की गुणवत्ता ठीक है</value>
+          </text>
+          <text id="/data/group7/plaster:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group7/plaster:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group7/plaster:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group7/floor:label">
+            <value>फर्श  कार्य की गुणवत्ता ठीक है</value>
+          </text>
+          <text id="/data/group7/floor:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group7/floor:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group7/floor:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group7/painting:label">
+            <value>पुताई पेंट कार्य</value>
+          </text>
+          <text id="/data/group7/painting:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group7/painting:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group7/painting:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group7/sanitary:label">
+            <value>सेनेटरी/वाटर सप्लाई फिटिंग का कार्य ठीक है</value>
+          </text>
+          <text id="/data/group7/sanitary:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group7/sanitary:option1">
+            <value>नहीं </value>
+          </text>
+          <text id="/data/group7/sanitary:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group8:label">
+            <value>विद्युतीकरण (यदि कार्य स्वीकृति में शामिल है ) </value>
+          </text>
+          <text id="/data/group8/conduitPipe:label">
+            <value>कन्ड्यूट पाईप, वायर, स्विच, बोर्ड मानक अनुसार है </value>
+          </text>
+          <text id="/data/group8/conduitPipe:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group8/conduitPipe:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group8/conduitPipe:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group8/fan:label">
+            <value>पंखे, ट्यूबलाईट लगाए हैं</value>
+          </text>
+          <text id="/data/group8/fan:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group8/fan:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group8/fan:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group9:label">
+            <value></value>
+          </text>
+          <text id="/data/group9/suggestion:label">
+            <value>सुधार संबंधी सुझाव</value>
+          </text>
+          <text id="/data/group9/error:label">
+            <value>यदि कार्य में गंभीर त्रुटि हो तो विवरण</value>
+          </text>
+          <text id="/data/group9/lastGrading:label">
+            <value>अंतिम ग्रेडिंग</value>
+          </text>
+          <text id="/data/group9/officerName:label">
+            <value>निरीक्षण करने वाले अधिकारी का नाम</value>
+          </text>
+          <text id="/data/group9/officerMobileNo:label">
+            <value>निरीक्षण करने वाले अधिकारी का मोबाईल नंबर </value>
+          </text>
+          <text id="/data/group9/physicalStage:label">
+            <value>Physical Stage</value>
+          </text>
+          <text id="/data/group9/physicalStage:option0">
+            <value>प्रथम स्टेज : कुर्सी स्तर</value>
+          </text>
+          <text id="/data/group9/physicalStage:option1">
+            <value>तृतीय स्टेज : छत पूर्ण</value>
+          </text>
+          <text id="/data/group9/physicalStage:option2">
+            <value>अंतिम स्टेज :  कार्य पूर्णता पर</value>
+          </text>
+          <text id="/data/group9/physicalStage:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/overallObservation:label">
+            <value>Overall Observation of Inspection</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:label">
+            <value>Overall Observation - Grading</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:requiredMsg">
+            <value>Please select Overall Observation Grading</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGradingRemarks:label">
+            <value>If this item is graded U, write clear reasons and suggestions for improvement:</value>
+          </text>
+          <text id="/data/group10:label">
+            <value></value>
+          </text>
+          <text id="/data/group10/imageStr1:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group10/imageStr2:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group10/imageStr3:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group10/imageStr4:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group10/imageStr5:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group10/fileStr:label">
+            <value>Please upload report in image format</value>
+          </text>
+          <text id="/data/group10/fileStr:hint">
+            <value></value>
+          </text>
+        </translation>
+      </itext>
+      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" calculate="concat('uuid:', uuid())"/>
+      <bind nodeset="/data/group1/jila" type="string"/>
+      <bind nodeset="/data/group1/vikaskhand" type="string"/>
+      <bind nodeset="/data/group1/gramPanchayat" type="string"/>
+      <bind nodeset="/data/group1/gram" type="string"/>
+      <bind nodeset="/data/group1/inspectionDate" type="date"/>
+      <bind nodeset="/data/group1/adhikariNameNPost" type="string"/>
+      <bind nodeset="/data/group2/karyaName" type="string"/>
+      <bind nodeset="/data/group2/yojnaName" type="string"/>
+      <bind nodeset="/data/group2/prashaskiyaSwikratRashi" type="string"/>
+      <bind nodeset="/data/group2/swikratVarsh" type="string"/>
+      <bind nodeset="/data/group2/vartmanstithi" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/neevDesign" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/samgriQuality" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/workmanship" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/remark1" type="string" required="true()" relevant="(selected(/data/group3/workmanship, '3'))" constraint="(regex(., &quot;^.{1,2000}$&quot;))" jr:constraintMsg="Response length must be between 1 and 2000"/>
+      <bind nodeset="/data/group4/samgriQuality1" type="select1" required="true()"/>
+      <bind nodeset="/data/group4/workmanship1" type="select1" required="true()"/>
+      <bind nodeset="/data/group4/design" type="select1" required="true()"/>
+      <bind nodeset="/data/group5/samgriQuality2" type="select1" required="true()"/>
+      <bind nodeset="/data/group5/workmanship2" type="select1" required="true()"/>
+      <bind nodeset="/data/group5/lintel" type="select1" required="true()"/>
+      <bind nodeset="/data/group5/door" type="select1" required="true()"/>
+      <bind nodeset="/data/group6/samgriQuality3" type="select1" required="true()"/>
+      <bind nodeset="/data/group6/workmanship3" type="select1" required="true()"/>
+      <bind nodeset="/data/group6/lintel1" type="select1" required="true()"/>
+      <bind nodeset="/data/group6/roofwork" type="select1" required="true()"/>
+      <bind nodeset="/data/group6/roofSlope" type="select1" required="true()"/>
+      <bind nodeset="/data/group6/roofWorkDesign" type="select1" required="true()"/>
+      <bind nodeset="/data/group7/plaster" type="select1" required="true()"/>
+      <bind nodeset="/data/group7/floor" type="select1" required="true()"/>
+      <bind nodeset="/data/group7/painting" type="select1" required="true()"/>
+      <bind nodeset="/data/group7/sanitary" type="select1" required="true()"/>
+      <bind nodeset="/data/group8/conduitPipe" type="select1" required="true()"/>
+      <bind nodeset="/data/group8/fan" type="select1" required="true()"/>
+      <bind nodeset="/data/group9/suggestion" type="string"/>
+      <bind nodeset="/data/group9/error" type="string"/>
+      <bind nodeset="/data/group9/lastGrading" type="string"/>
+      <bind nodeset="/data/group9/officerName" type="string" required="true()"/>
+      <bind nodeset="/data/group9/officerMobileNo" type="string" required="true()"/>
+      <bind nodeset="/data/group9/physicalStage" type="select1" required="true()"/>
+      <bind nodeset="/data/overallObservation/overallObservationGrading" type="select1" required="true()" jr:requiredMsg="jr:itext('/data/overallObservation/overallObservationGrading:requiredMsg')"/>
+      <bind nodeset="/data/overallObservation/overallObservationGradingRemarks" type="string"/>
+      <bind nodeset="/data/group10/imageStr1" type="binary" required="true()"/>
+      <bind nodeset="/data/group10/imageStr2" type="binary"/>
+      <bind nodeset="/data/group10/imageStr3" type="binary"/>
+      <bind nodeset="/data/group10/imageStr4" type="binary"/>
+      <bind nodeset="/data/group10/imageStr5" type="binary"/>
+      <bind nodeset="/data/group10/fileStr" type="binary"/>
+    </model>
+  </h:head>
+  <h:body>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group1:label')"/>
+      <input ref="/data/group1/jila">
+        <label ref="jr:itext('/data/group1/jila:label')"/>
+      </input>
+      <input ref="/data/group1/vikaskhand">
+        <label ref="jr:itext('/data/group1/vikaskhand:label')"/>
+      </input>
+      <input ref="/data/group1/gramPanchayat">
+        <label ref="jr:itext('/data/group1/gramPanchayat:label')"/>
+      </input>
+      <input ref="/data/group1/gram">
+        <label ref="jr:itext('/data/group1/gram:label')"/>
+      </input>
+      <input ref="/data/group1/inspectionDate">
+        <label ref="jr:itext('/data/group1/inspectionDate:label')"/>
+      </input>
+      <input ref="/data/group1/adhikariNameNPost">
+        <label ref="jr:itext('/data/group1/adhikariNameNPost:label')"/>
+      </input>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group2:label')"/>
+      <input ref="/data/group2/karyaName">
+        <label ref="jr:itext('/data/group2/karyaName:label')"/>
+      </input>
+      <input ref="/data/group2/yojnaName">
+        <label ref="jr:itext('/data/group2/yojnaName:label')"/>
+      </input>
+      <input ref="/data/group2/prashaskiyaSwikratRashi">
+        <label ref="jr:itext('/data/group2/prashaskiyaSwikratRashi:label')"/>
+      </input>
+      <input ref="/data/group2/swikratVarsh">
+        <label ref="jr:itext('/data/group2/swikratVarsh:label')"/>
+      </input>
+      <select1 ref="/data/group2/vartmanstithi">
+        <label ref="jr:itext('/data/group2/vartmanstithi:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group2/vartmanstithi:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/vartmanstithi:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/vartmanstithi:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group3:label')"/>
+      <select1 ref="/data/group3/neevDesign">
+        <label ref="jr:itext('/data/group3/neevDesign:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/neevDesign:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/neevDesign:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/neevDesign:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/samgriQuality">
+        <label ref="jr:itext('/data/group3/samgriQuality:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriQuality:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriQuality:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriQuality:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriQuality:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/workmanship">
+        <label ref="jr:itext('/data/group3/workmanship:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/workmanship:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/workmanship:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/workmanship:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/workmanship:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <input ref="/data/group3/remark1">
+        <label ref="jr:itext('/data/group3/remark1:label')"/>
+      </input>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group4:label')"/>
+      <select1 ref="/data/group4/samgriQuality1">
+        <label ref="jr:itext('/data/group4/samgriQuality1:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group4/samgriQuality1:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/samgriQuality1:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/samgriQuality1:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/samgriQuality1:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group4/workmanship1">
+        <label ref="jr:itext('/data/group4/workmanship1:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group4/workmanship1:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/workmanship1:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/workmanship1:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/workmanship1:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group4/design">
+        <label ref="jr:itext('/data/group4/design:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group4/design:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/design:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/design:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group5:label')"/>
+      <select1 ref="/data/group5/samgriQuality2">
+        <label ref="jr:itext('/data/group5/samgriQuality2:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group5/samgriQuality2:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/samgriQuality2:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/samgriQuality2:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/samgriQuality2:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group5/workmanship2">
+        <label ref="jr:itext('/data/group5/workmanship2:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group5/workmanship2:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/workmanship2:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/workmanship2:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/workmanship2:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group5/lintel">
+        <label ref="jr:itext('/data/group5/lintel:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group5/lintel:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/lintel:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/lintel:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group5/door">
+        <label ref="jr:itext('/data/group5/door:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group5/door:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/door:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/door:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/door:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group6:label')"/>
+      <select1 ref="/data/group6/samgriQuality3">
+        <label ref="jr:itext('/data/group6/samgriQuality3:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group6/samgriQuality3:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/samgriQuality3:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/samgriQuality3:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/samgriQuality3:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group6/workmanship3">
+        <label ref="jr:itext('/data/group6/workmanship3:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group6/workmanship3:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/workmanship3:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/workmanship3:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/workmanship3:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group6/lintel1">
+        <label ref="jr:itext('/data/group6/lintel1:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group6/lintel1:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/lintel1:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/lintel1:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group6/roofwork">
+        <label ref="jr:itext('/data/group6/roofwork:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group6/roofwork:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/roofwork:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/roofwork:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group6/roofSlope">
+        <label ref="jr:itext('/data/group6/roofSlope:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group6/roofSlope:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/roofSlope:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/roofSlope:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group6/roofWorkDesign">
+        <label ref="jr:itext('/data/group6/roofWorkDesign:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group6/roofWorkDesign:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/roofWorkDesign:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group6/roofWorkDesign:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group7:label')"/>
+      <select1 ref="/data/group7/plaster">
+        <label ref="jr:itext('/data/group7/plaster:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group7/plaster:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group7/plaster:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group7/plaster:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group7/floor">
+        <label ref="jr:itext('/data/group7/floor:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group7/floor:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group7/floor:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group7/floor:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group7/painting">
+        <label ref="jr:itext('/data/group7/painting:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group7/painting:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group7/painting:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group7/painting:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group7/sanitary">
+        <label ref="jr:itext('/data/group7/sanitary:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group7/sanitary:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group7/sanitary:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group7/sanitary:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group8:label')"/>
+      <select1 ref="/data/group8/conduitPipe">
+        <label ref="jr:itext('/data/group8/conduitPipe:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group8/conduitPipe:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group8/conduitPipe:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group8/conduitPipe:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group8/fan">
+        <label ref="jr:itext('/data/group8/fan:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group8/fan:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group8/fan:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group8/fan:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group9:label')"/>
+      <input ref="/data/group9/suggestion">
+        <label ref="jr:itext('/data/group9/suggestion:label')"/>
+      </input>
+      <input ref="/data/group9/error">
+        <label ref="jr:itext('/data/group9/error:label')"/>
+      </input>
+      <input ref="/data/group9/lastGrading">
+        <label ref="jr:itext('/data/group9/lastGrading:label')"/>
+      </input>
+      <input ref="/data/group9/officerName">
+        <label ref="jr:itext('/data/group9/officerName:label')"/>
+      </input>
+      <input ref="/data/group9/officerMobileNo">
+        <label ref="jr:itext('/data/group9/officerMobileNo:label')"/>
+      </input>
+      <select1 ref="/data/group9/physicalStage">
+        <label ref="jr:itext('/data/group9/physicalStage:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group9/physicalStage:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group9/physicalStage:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group9/physicalStage:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group9/physicalStage:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+    </group>
+    <group ref="/data/overallObservation" appearance="field-list">
+      <label ref="jr:itext('/data/overallObservation:label')"/>
+      <select1 ref="/data/overallObservation/overallObservationGrading">
+        <label ref="jr:itext('/data/overallObservation/overallObservationGrading:label')"/>
+        <item>
+          <label ref="jr:itext('/data/overallObservation/overallObservationGrading:option0')"/>
+          <value>s</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/overallObservation/overallObservationGrading:option1')"/>
+          <value>sri</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/overallObservation/overallObservationGrading:option2')"/>
+          <value>u</value>
+        </item>
+      </select1>
+      <input ref="/data/overallObservation/overallObservationGradingRemarks">
+        <label ref="jr:itext('/data/overallObservation/overallObservationGradingRemarks:label')"/>
+      </input>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group10:label')"/>
+      <upload ref="/data/group10/imageStr1" mediatype="image/*">
+        <label ref="jr:itext('/data/group10/imageStr1:label')"/>
+      </upload>
+      <upload ref="/data/group10/imageStr2" mediatype="image/*">
+        <label ref="jr:itext('/data/group10/imageStr2:label')"/>
+      </upload>
+      <upload ref="/data/group10/imageStr3" mediatype="image/*">
+        <label ref="jr:itext('/data/group10/imageStr3:label')"/>
+      </upload>
+      <upload ref="/data/group10/imageStr4" mediatype="image/*">
+        <label ref="jr:itext('/data/group10/imageStr4:label')"/>
+      </upload>
+      <upload ref="/data/group10/imageStr5" mediatype="image/*">
+        <label ref="jr:itext('/data/group10/imageStr5:label')"/>
+      </upload>
+      <upload ref="/data/group10/fileStr" mediatype="image/*">
+        <label ref="jr:itext('/data/group10/fileStr:label')"/>
+        <hint ref="jr:itext('/data/group10/fileStr:hint')"/>
+      </upload>
+    </group>
+  </h:body>
+</h:html>

@@ -1,0 +1,289 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap");
+
+:root {
+  --primary: #6c63ff;
+  --primary-light: #8f88ff;
+  --secondary: #00bfa6;
+  --accent: #ffc107;
+  --danger: #ff5252;
+  --success: #2ecc71;
+  --warning: #f1c40f;
+
+  --bg-light: #f5f7fb;
+  --bg-white: #ffffff;
+  --text-dark: #2c3e50;
+  --text-muted: #7f8c8d;
+  --border-color: #e2e8f0;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.1);
+
+  --font-main: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --sidebar-width: 260px;
+  --header-height: 70px;
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  --transition: all 0.3s ease;
+}
+
+[data-theme="dark"] {
+  --bg-light: #121212;
+  --bg-white: #1e1e2e;
+  --text-dark: #f1f1f1;
+  --text-muted: #a0a0b0;
+  --border-color: #2d2d3f;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+
+body {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  transition: var(--transition);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-main);
+  font-weight: 600;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .glass {
+  background: rgba(30, 30, 46, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: 2rem;
+  padding-top: calc(var(--header-height) + 2rem);
+  transition: var(--transition);
+}
+
+/* Common UI Layout Items */
+.card {
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+}
+
+.top-navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: var(--sidebar-width);
+  height: var(--header-height);
+  background: var(--bg-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  border-bottom: 1px solid var(--border-color);
+  z-index: 100;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-light);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  width: 300px;
+}
+
+.search-bar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  margin-left: 0.5rem;
+  color: var(--text-dark);
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-dark);
+}
+
+.profile-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Forms styling */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-light);
+  color: var(--text-dark);
+  font-size: 1rem;
+}
+.form-control:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+/* Grid systems */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+.book-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+.book-cover {
+  height: 200px;
+  background: #eee;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.book-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.badge-success {
+  background: rgba(46, 204, 113, 0.15);
+  color: var(--success);
+}
+.badge-danger {
+  background: rgba(255, 82, 82, 0.15);
+  color: var(--danger);
+}
+
+/* Members Layout */
+.member-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  background: var(--bg-white);
+}
+.member-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.member-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Simple React Modal overlay system */
+.react-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.react-modal-content {
+  background: var(--bg-white);
+  width: 100%;
+  max-width: 500px;
+  border-radius: var(--radius-md);
+  padding: 2rem;
+}

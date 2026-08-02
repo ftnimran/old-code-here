@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+</head>
+<script type="text/javascript">
+	$(function() {
+
+		$('#sorEstimation').css("display", 'none');
+		$('#SORDiv').css("display", 'none');
+
+		$('#datetimepicker1').datetimepicker({
+			//viewMode : 'days',
+			//maxDate : moment(),
+			//useCurrent: false,
+			format : 'DD/MM/YYYY'
+		//useCurrent : false
+		});
+		/* $("#dateOfRegistration").keypress(function(event) {
+			event.preventDefault();
+		}); */
+
+		$('#datetimepicker2').datetimepicker({
+			//viewMode : 'days',
+			maxDate : moment(),
+			//useCurrent: false,
+			format : 'DD/MM/YYYY',
+			useCurrent : false
+		});
+
+		$('#datetimepicker3').datetimepicker({
+			//viewMode : 'days',
+			maxDate : moment(),
+			//useCurrent: false,
+			format : 'DD/MM/YYYY',
+			useCurrent : false
+		});
+
+		$('#datetimepicker4').datetimepicker({
+			//viewMode : 'days',
+			maxDate : moment(),
+			//useCurrent: false,
+			format : 'DD/MM/YYYY',
+			useCurrent : false
+		});
+		$('#datetimepicker5').datetimepicker({
+			//viewMode : 'days',
+			maxDate : moment(),
+			//useCurrent: false,
+			format : 'DD/MM/YYYY',
+			useCurrent : false
+		});
+
+		/* $("#startingDate").keypress(function(event) {
+			event.preventDefault();
+		}); */
+
+		/*	$("#datetimepicker1").on("change.datetimepicker", function(e) {
+				$('#datetimepicker2').datetimepicker('minDate', e.date);
+			});
+			$("#datetimepicker2").on("change.datetimepicker", function(e) {
+				$('#datetimepicker1').datetimepicker('maxDate', e.date);
+			}); */
+
+		$('#add-new-item-popup').on("shown.bs.modal", function() {
+			var index = $('#id').val();
+			var type = $('#type').val();
+			$('#id').scope().addWorkEstimationItemEntryChild(index, type);
+
+		});
+
+		$(document).on("click", ".test", function() {
+			var id_value = $(this).data('id');
+			var type_value = $(this).data('type');
+			$("#id").val(id_value);
+			$("#type").val(type_value);
+		});
+
+	});
+</script>
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item"><a href="#viewPendingWorkEstimations"><span
+				th:text="#{workEstimation}">Work Estimation</span></a></li>
+		<li class="breadcrumb-item active"><span
+			th:text="#{addWorkEstimation}">Add Work Estimation</span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" href="#" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header top-header">
+							<i class="fa fa-wpforms"></i> <span>Revise Work Estimation</span>
+						</div>
+						<div class="col-md-12">
+							<div data-ng-if="responseObject.errorMessage != null"
+								class="text-danger">
+								<strong>Error!</strong>
+								<p>{{responseObject.errorMessage}}</p>
+							</div>
+						</div>
+						<form
+							data-ng-submit="saveRevisedWorkEstimationData(billForm.$valid)"
+							name="billForm" data-ng-init="loadAddNewWorkEstimationForm()"
+							novalidate="novalidate">
+							<div class="card-header">
+								<span>Estimation Details</span>
+							</div>
+							<div class="card-body">
+								<table style="width: 100%;">
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Work
+												Requisition Id: </span>{{workData.workRequisitionNo}}</td>
+										<td width="50%"><span style="font-weight: 700;">Previous
+												Estimation Type: </span>{{workData.estimationType}}</td>
+									</tr>
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Estimation
+												Status: </span>{{workData.status}}</td>
+										<td width="50%"><span style="font-weight: 700;">Estimation
+												Date: </span>{{workData.estimationSubmissionDate}}</td>
+									</tr>
+
+								</table>
+
+							</div>
+							<div class="card-header">
+								<span th:text="#{workDetails}">Work Details</span>
+							</div>
+							<div class="card-body">
+								<table style="width: 100%;">
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Work
+												Name: </span>{{workData.workName}}</td>
+										<td width="50%"><span style="font-weight: 700;">Work
+												Type: </span>{{workData.workTypeBean.workTypeNameE}}</td>
+									</tr>
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Line
+												Department: </span>{{workData.lineDepartmentBean.lineDepartmentNameE}}</td>
+										<td width="50%"><span style="font-weight: 700;">Work
+												Sub Type: </span>{{workData.workSubTypeBean.workSubTypeNameE ?
+											workData.workSubTypeBean.workSubTypeNameE : '-'}}</td>
+									</tr>
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Executed
+												By: </span>{{workData.agencyTypeBean.agencyTypeNameE ?
+											workData.agencyTypeBean.agencyTypeNameE : '-'}}</td>
+										<td width="50%"><span style="font-weight: 700;">District
+												Name: </span>{{workData.districtName ? workData.districtName :
+											'-'}}</td>
+									</tr>
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Gram
+												Panchayat Name By: </span>{{workData.gramPanchayatName ?
+											workData.gramPanchayatName : '-'}}</td>
+										<td width="50%"><span style="font-weight: 700;">Village
+												Name: </span>{{workData.villageBean.villageName ?
+											workData.villageBean.villageName : '-'}}</td>
+									</tr>
+
+								</table>
+
+							</div>
+							<div class="card-header">
+								<span>Competent Authority Details for Revision</span>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label><span>Name of Competent Authority</span><span
+											class="aestrick">&#42;</span></label> <input type="text"
+											class="form-control" id="competentAuthName"
+											required="required"
+											onkeypress="return !(/[0-9]/.test(event.key))"
+											data-ng-model="workData.competentAuthName"
+											name="competentAuthName" maxlength="20" />
+										<div data-ng-show="billForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="billForm.competentAuthName.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span>Name
+													of Competent Authority</span>
+											</p>
+										</div>
+									</div>
+									<div class="form-group col-sm-6">
+										<label><span>Designation of Competent Authority</span><span
+											class="aestrick">&#42;</span></label> <input type="text"
+											class="form-control" id="competentAuthDesig"
+											required="required"
+											onkeypress="return !(/[0-9]/.test(event.key))"
+											data-ng-model="workData.competentAuthDesig"
+											name="competentAuthDesig" maxlength="20" />
+										<div data-ng-show="billForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="billForm.competentAuthDesig.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span>Designation
+													of Competent Authority</span>
+											</p>
+										</div>
+									</div>
+									<div class="form-group col-sm-4">
+										<label><span>Revised Letter No</span></label><span
+											class="aestrick">&#42;</span> <input type="text"
+											class="form-control" id="revisedletterNo" maxlength="15"
+											data-ng-model="workData.revisedLetterNo" required="required"
+											name="revisedletterNo" />
+										<div data-ng-show="billForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="billForm.revisedletterNo.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span>Revised
+													Letter No</span>
+											</p>
+										</div>
+									</div>
+									<div class="form-group col-sm-4">
+										<label><span>Letter No. Date</span><span
+											class="aestrick">&#42;</span></label>
+										<div class="input-group date" id="datetimepicker5"
+											data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input"
+												data-target="#datetimepicker5" name="letterNoDate"
+												required="required" placeholder="DD/MM/YYYY"
+												data-ng-model="workData.letterNoDate" id="letterNoDate"
+												autocomplete="off" />
+
+											<div class="input-group-append input-group-addon"
+												data-target="#datetimepicker5" data-toggle="datetimepicker">
+												<div class="input-group-text">
+													<i class="fa fa-calendar"></i>
+												</div>
+											</div>
+										</div>
+
+										<div data-ng-show="billForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="billForm.letterNoDate.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span>Letter
+													No. Date</span>
+											</p>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<input type="hidden" name="id" id="id" value="" /> <input
+								type="hidden" name="type" id="type" value="" />
+							<div class="card-header">
+								<span th:text="#{itemDetails}">Item Details</span>
+							</div>
+							<table style="width: 100%;">
+								<tr>
+									<td width="15%" style="padding-left: 20px; padding-top: 10px;"><span
+										style="font-weight: 700;">Template Type: </span></td>
+									<td width="20%" style="padding-top: 20px;"><input
+										type="radio" data-ng-change="changeTemplateType()"
+										data-ng-model="templateType" value="1" name="templateType">Regular
+										Template</input>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+										data-ng-change="changeTemplateType()"
+										data-ng-model="templateType" name="templateType" type="radio"
+										value="2">Standard Template</input>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+										data-ng-change="changeTemplateType()"
+										data-ng-model="templateType" name="templateType" type="radio"
+										value="3">Add SOR</input></td>
+									<td width="25%"
+										style="padding-top: 20px; padding-right: 20px; display: none;"
+										id="standardTemplateTypeTd"><select class="form-control"
+										id="standardTemplateTypeId"
+										data-ng-model="standardTemplateTypeId"
+										data-ng-change="changeStandardTemplateType()"
+										name="standardTemplateTypeId">
+											<option value="" disabled="disabled">--Please Select
+												Standard Template Type--</option>
+											<option
+												data-ng-repeat="standardTemplateType in standardTemplateTypes"
+												value="{{standardTemplateType.id}}">{{standardTemplateType.typeDesc}}</option>
+									</select></td>
+								</tr>
+
+							</table>
+							<div class="card-body">
+
+								<div id="sorEstimation">
+									<table style="width: 100%;">
+										<tr style="background-color: lavender;">
+											<td width="88%" style=""><span style="font-weight: 700;">Work
+													Category</span></td>
+											<td align="right" style="">
+												<!-- <button style="" class="btn btn-secondary" type="button" data-toggle="modal" data-target="#add-new-group-popup1">Add Group</button> -->
+											</td>
+											<td align="right">
+												<button style="" class="btn btn-success" type="button"
+													data-toggle="modal" data-target="#add-sor-popup">Add
+													SOR</button>
+											</td>
+										</tr>
+									</table>
+									<!-- <table	class="table table-striped table-bordered table-hover" data-ng-init="workTemplateGroupItems=[]">
+										<thead>
+											<tr>
+												<th rowspan="2" width="2%">#</th>
+												<th rowspan="2" width="40%">Group Name</th>
+												<th rowspan="2" width="10%">Estimated Amount</th>
+												<th rowspan="2" width="10%">Total Items</th>
+												<th rowspan="2" width="15%">Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="groupItem in workTemplateGroupItems">
+												<td>{{$index+1}}</td>
+												<td>{{groupItem.groupName}}<input type="hidden" data-ng-model="groupItem.groupName"/></td>
+												<td>{{groupItem.remarks}}</td>
+												<td></td>
+												<td>
+												<a class="btn btn-xs btn-primary" data-toggle="modal" data-placement="top" title="View/Edit" href="JavaScript:Void(0);" data-target="#add-new-group-popup1" data-ng-click="editGroupEntry($index)"><i class="fa fa-pencil"></i></a> 
+												<input type="button" class="remove"	data-ng-click="removeGroupEntry($index)" title="Remove" value="-"/>
+												<input type="button" value="Add SOR" title="Add SOR" data-toggle="modal" data-target="#add-sor-popup" data-placement="top" data-type="child" data-ng-click="addSorItems($index)"/>
+												</td>
+											</tr>
+										</tbody>
+								</table> -->
+								</div>
+
+								<div id="nonSORDiv" class="table-responsive" data-ng-init="">
+									<!-- table -->
+									<table
+										class="table table-striped table-bordered table-hover margin0 tbl-vm">
+										<thead class="thead-default">
+											<tr>
+												<th rowspan="2">#</th>
+												<th rowspan="2" width="10%">SOR Item No.</th>
+												<th rowspan="2" width="30%">Description</th>
+												<th rowspan="2" width="5%">No.</th>
+												<th rowspan="2" width="7%">Length</th>
+												<th rowspan="2" width="7%">Width</th>
+												<th rowspan="2" width="7%">Thick</th>
+												<th rowspan="2" width="7%">Quantity</th>
+												<th rowspan="2" width="7%">Unit</th>
+												<th rowspan="2" width="7%">Rate</th>
+												<th rowspan="2" width="7%">Amount</th>
+												<!--  <th rowspan="2"  width="7%">Labour Component</th>-->
+												<th rowspan="2">Action</th>
+											</tr>
+
+										</thead>
+										<tbody>
+
+											<tr data-ng-repeat="billItem in workTemplateItems">
+												<td>{{billItem.serialNo}}</td>
+
+												<td data-ng-if="billItem.sorItemNoReadOnly">{{billItem.sorItemNo}}</td>
+												<td
+													data-ng-if="!billItem.sorItemNoReadOnly &amp;&amp; !billItem.new &amp;&amp; (billItem.group || billItem.parentItem!=null)"></td>
+												<td
+													data-ng-if="billItem.new || (!billItem.sorItemNoReadOnly &amp;&amp; (!billItem.group &amp;&amp; billItem.parentItem==null))"><input
+													type="text" data-ng-model="billItem.sorItemNo" /></td>
+
+												<td
+													data-ng-if="billItem.hasChild &amp;&amp; billItem.descReadOnly"><label
+													style="font-weight: bold">{{billItem.itemDesc}}</label></td>
+												<td
+													data-ng-if="!billItem.hasChild &amp;&amp; billItem.descReadOnly"><label>{{billItem.itemDesc}}</label></td>
+
+												<td
+													data-ng-if="billItem.hasChild &amp;&amp; !billItem.descReadOnly"><textarea
+														style="font-weight: bold"
+														data-ng-model="billItem.itemDesc" rows="4" cols="38"></textarea></td>
+												<td
+													data-ng-if="!billItem.hasChild &amp;&amp; !billItem.descReadOnly"><textarea
+														data-ng-model="billItem.itemDesc" rows="4" cols="38"></textarea></td>
+
+												<td data-ng-if="billItem.hasChild || billItem.group"></td>
+												<td
+													data-ng-if="!billItem.hasChild &amp;&amp; !billItem.group"><input
+													type="text" class="number-OnlyTwoDecimalWithMinus"
+													data-ng-model="billItem.no" name="abc" maxlength="6"
+													data-ng-change="calculateQuantity(billItem)" /></td>
+
+												<td data-ng-if="billItem.measureLength"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.length" maxlength="13"
+													data-ng-change="calculateQuantity(billItem)" /></td>
+												<td data-ng-if="!billItem.measureLength"></td>
+
+												<td data-ng-if="billItem.measureWidth"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.width" maxlength="13"
+													data-ng-change="calculateQuantity(billItem)" /></td>
+												<td data-ng-if="!billItem.measureWidth"></td>
+
+												<td data-ng-if="billItem.measureHeightDepth"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.heightDepth" maxlength="13"
+													data-ng-change="calculateQuantity(billItem)" /></td>
+												<td data-ng-if="!billItem.measureHeightDepth"></td>
+
+												<td data-ng-if="billItem.hasChild || billItem.group"></td>
+												<td
+													data-ng-if="!billItem.hasChild &amp;&amp; !billItem.group"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.quantity" maxlength="13"
+													disabled="disabled" /></td>
+
+												<td data-ng-if="billItem.hasChild || billItem.group"></td>
+												<td
+													data-ng-if="!billItem.hasChild &amp;&amp; !billItem.group"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.unit" maxlength="40"
+													data-ng-disabled="billItem.unitReadOnly" /></td>
+
+												<td data-ng-if="billItem.hasChild || billItem.group"></td>
+												<td
+													data-ng-if="!billItem.hasChild &amp;&amp; !billItem.group"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.rate" maxlength="13"
+													data-ng-change="calculateAmount(billItem);"
+													data-ng-disabled="billItem.rateReadOnly" /></td>
+
+												<td data-ng-if="billItem.hasChild || billItem.group"></td>
+												<td
+													data-ng-if="!billItem.hasChild &amp;&amp; !billItem.group"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.amount" maxlength="13"
+													disabled="disabled" /></td>
+
+												<!--  <td data-ng-if="billItem.labourComponent"><input type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.labourComponentValue" maxlength="13" data-ng-change="calculateTotalLabourComponent()"/></td>
+												<td data-ng-if="!billItem.labourComponent"></td>-->
+
+												<td align="center"><input type="button"
+													class="add test"
+													data-ng-if="!billItem.hasChild &amp;&amp; billItem.lastElement &amp;&amp; !billItem.group"
+													title="Add" value="+" data-toggle="modal"
+													data-target="#add-new-item-popup" data-placement="top"
+													style="color: #fff; cursor: pointer;" data-id="{{$index}}"
+													data-type="normal" /> <input type="button" class="remove"
+													data-ng-click="removeWorkEstimationItemEntry($index)"
+													title="Remove" value="-" /> <input type="button"
+													class="test sitemap"
+													data-ng-if="!billItem.hasChild &amp;&amp; !billItem.leafNode"
+													title="Add Child" value="+" data-toggle="modal"
+													data-target="#add-new-item-popup" data-placement="top"
+													style="color: #fff; cursor: pointer;" data-id="{{$index}}"
+													data-type="child" /></td>
+
+											</tr>
+										<tfoot>
+											<tr>
+												<td colspan="10" align="right" style="font-weight: bold">Total
+													<span th:text="#{rs}">(Rs.)</span>:
+												</td>
+												<td>{{workData.estimatedAmount}}</td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+											</tr>
+											<!-- <tr>
+													<td colspan="10" align="right">In Lakh: <span th:text="#{rs}">(Rs.)</span>:</td>
+													<td>{{estimatedAmountInLakh}}</td>
+													<td colspan="2"></td>
+												</tr>-->
+											<tr>
+												<td colspan="9" align="right">Expected Tendered Rate <span>(%)</span><span
+													class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text"
+													class="number-OnlyTwoDecimalWithMinus" required="required"
+													data-ng-model="workData.expectedTenderedRatePer"
+													name="expectedTenderedRatePer" maxlength="5"
+													data-ng-change="calculateExpectedTenderedAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.expectedTenderedRatePer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Expected
+																Tendered Rate</span>
+														</p>
+													</div>
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="tenderRateGreaterThan10">
+															<span>Expected Tendered Rate can not be greater
+																than 10%</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.expectedTenderedAmt}}</td>
+											</tr>
+											<tr>
+												<td colspan="9" align="right">Applicable GST <span>(%)
+														(On Total plus Expected Tender Amount)</span><span
+													class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text"
+													class="number-OnlyTwoDecimalWithMinus" required="required"
+													name="applicableGstPer"
+													data-ng-model="workData.applicableGstPer" maxlength="5"
+													data-ng-change="calculateApplicableGstAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.applicableGstPer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Applicable
+																GST</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.applicableGstAmt}}</td>
+											</tr>
+											<tr>
+												<td colspan="9" align="right">Overhead Charges <span>(%)</span><span
+													class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text"
+													class="number-OnlyTwoDecimalWithMinus" required="required"
+													name="overheadChargesPer"
+													data-ng-model="workData.overheadChargesPer" maxlength="5"
+													data-ng-change="calculateOverheadChargesAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.overheadChargesPer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Overhead
+																Charges</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.overheadChargesAmt}}</td>
+											</tr>
+											<tr>
+												<td colspan="9" align="right">Labour Welfare Component
+													<span>(%)</span><span class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text"
+													class="number-OnlyTwoDecimalWithMinus" required="required"
+													name="labourWelfareComponentPer"
+													data-ng-model="workData.labourWelfareComponentPer"
+													maxlength="5"
+													data-ng-change="calculateLabourWelfareComponentAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.labourWelfareComponentPer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Labour
+																Welfare Component</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.labourWelfareComponentAmt}}</td>
+											</tr>
+
+
+											<tr>
+												<td colspan="9" align="right">Work Charge &amp;
+													Contingency <span>(%)</span><span class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text"
+													class="number-OnlyTwoDecimalWithMinus" required="required"
+													name="workChargeContingencyPer"
+													data-ng-model="workData.workChargeContingencyPer"
+													maxlength="5"
+													data-ng-change="calculateWorkChargeContingencyAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.workChargeContingencyPer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Work
+																Charge &amp; Contingency</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.workChargeContingencyAmt}}</td>
+											</tr>
+
+
+											<tr>
+												<td colspan="9" align="right">Administrative
+													expenditure <span>(%)</span><span class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text"
+													class="number-OnlyTwoDecimalWithMinus" required="required"
+													name="administrativeExpenditurePer"
+													data-ng-model="workData.administrativeExpenditurePer"
+													maxlength="5"
+													data-ng-change="calculateAdministrativeExpenditureAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.administrativeExpenditurePer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Administrative
+																expenditure</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.administrativeExpenditureAmt}}</td>
+											</tr>
+
+											<tr>
+												<td colspan="10" align="right">Others Charges <span>(Rs.)</span><span
+													class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text"
+													class="number-OnlyTwoDecimalWithMinus" required="required"
+													name="othersCharges" data-ng-model="workData.othersCharges"
+													maxlength="5" data-ng-change="calculateGrandTotal();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.othersCharges.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Others
+																Charges</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+											</tr>
+
+											<tr>
+												<td colspan="10" align="right" style="font-weight: bold">Grand
+													Total <span th:text="#{rs}">(Rs.)</span>:
+												</td>
+												<td>{{workData.grandTotal}}</td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+											</tr>
+
+										</tfoot>
+
+										<tr data-ng-show="billData.billItems.length==0">
+											<td colspan="9"><span>No data available</span></td>
+										</tr>
+										</tbody>
+									</table>
+
+									<table class="table table-striped table-bordered"
+										style="width: 100%;">
+
+										<tr data-ng-show="workData.subEngFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">Sub
+												Engineer Remarks:</td>
+											<td style="padding-top: 15px;">
+												{{workData.subEngComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">Sub
+												Engineer Forward Date:</td>
+											<td style="padding-top: 15px;">
+												{{workData.subEngFwdDate}}</td>
+										</tr>
+										<tr data-ng-show="workData.sdoFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">Sub
+												Divisional Officer Remarks:</td>
+											<td style="padding-top: 15px;">{{workData.sdoComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">Sub
+												Divisional Forward Date:</td>
+											<td style="padding-top: 15px;">{{workData.sdoFwdDate}}</td>
+										</tr>
+
+										<tr data-ng-show="workData.aeFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">AE
+												Remarks:</td>
+											<td style="padding-top: 15px;">{{workData.aeComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">AE
+												Forward Date:</td>
+											<td style="padding-top: 15px;">{{workData.aeFwdDate}}</td>
+										</tr>
+
+										<tr data-ng-show="workData.eeFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">EE
+												Remarks:</td>
+											<td style="padding-top: 15px;">{{workData.eeComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">EE
+												Forward Date:</td>
+											<td style="padding-top: 15px;">{{workData.eeFwdDate}}</td>
+										</tr>
+
+										<tr data-ng-show="workData.seFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">SE
+												Remarks:</td>
+											<td style="padding-top: 15px;">{{workData.seComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">SE
+												Forward Date:</td>
+											<td style="padding-top: 15px;">{{workData.seFwdDate}}</td>
+										</tr>
+
+										<tr data-ng-show="workData.ceFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">CE
+												Remarks:</td>
+											<td style="padding-top: 15px;">{{workData.ceComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">CE
+												Forward Date:</td>
+											<td style="padding-top: 15px;">{{workData.ceFwdDate}}</td>
+										</tr>
+
+										<tr>
+											<td style="font-weight: bold; padding-top: 15px;">Remarks<span
+												class="aestrick">&#42;</span>:
+											</td>
+											<td style="padding-top: 15px;"><textarea rows="5"
+													cols="90" name="comments" data-ng-model="workData.comments"
+													maxlength="800" required="required"></textarea>
+												<div data-ng-show="billForm.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="billForm.comments.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Remarks</span>
+													</p>
+												</div></td>
+										</tr>
+									</table>
+									<!-- <button style="margin-left: 450px; margin-top: 10px;"
+										class="btn btn-secondary" type="button" data-toggle="modal"
+										data-target="#add-new-item-popup">Add New Item</button> -->
+										
+										<button style="margin-left: 450px; margin-top: 10px;"
+										class="btn btn-secondary" type="button" data-toggle="modal"
+										data-target="#add-new-item-popup1">Add Non SOR Item</button>
+									<!--  <a href="" class="float-right"
+										data-ng-click="addWorkEstimationItemEntry();">Add
+										More</a>-->
+								</div>
+
+								<!-- ####SORITEMS DISPLAY LOGIC -->
+
+								<div id="SORDiv" class="table-responsive">
+									<!-- table -->
+
+									<table
+										class="table table-striped table-bordered table-hover margin0 tbl-vm">
+										<thead class="thead-default">
+											<tr>
+												<th rowspan="2">#</th>
+												<th rowspan="2" width="6%">SOR Item No.</th>
+												<th rowspan="2" width="28%">Description</th>
+												<th rowspan="2" width="5%">No.</th>
+												<th rowspan="2" width="6%">Length</th>
+												<th rowspan="2" width="6%">Width</th>
+												<th rowspan="2" width="6%">Thick</th>
+												<th rowspan="2" width="7%">Quantity</th>
+												<th rowspan="2" width="7%">Unit</th>
+												<th rowspan="2" width="7%">Rate</th>
+												<th rowspan="2" width="8%">Amount</th>
+												<!--  <th rowspan="2"  width="7%">Labour Component</th>-->
+												<th rowspan="2">Action</th>
+											</tr>
+
+										</thead>
+										<tbody>
+											<!--<tr data-ng-repeat="group in workTemplateGroupItems">
+										<td colspan="1">{{$index+1}}</td>
+												<td >{{group.groupName}}</td>
+										
+										
+										<td>
+										<table> -->
+
+											<tr data-ng-repeat="billItem in itemGroupData">
+												<td
+													data-ng-if="billItem.serialNo==''|| billItem.serialNo==null">{{$index+1}}</td>
+												<td data-ng-if="!billItem.serialNo==''">{{billItem.serialNo}}</td>
+
+												<td data-ng-if="billItem.sorItemNoReadOnly">{{billItem.sorItemNo}}</td>
+												<td
+													data-ng-if="!billItem.sorItemNoReadOnly &amp;&amp; !billItem.new &amp;&amp; (billItem.group || billItem.parentItem!=null)"></td>
+												<td
+													data-ng-if="billItem.new || (!billItem.sorItemNoReadOnly &amp;&amp; (!billItem.group &amp;&amp; billItem.parentItem==null))">
+													<input type="text" data-ng-model="billItem.sorItemNo" />
+												</td>
+
+												<td
+													data-ng-if="billItem.hasChild &amp;&amp; billItem.descReadOnly"><label
+													style="font-weight: bold">{{billItem.itemDesc}}</label></td>
+												<td
+													data-ng-if="!billItem.hasChild &amp;&amp; billItem.descReadOnly"><label>{{billItem.itemDesc}}</label></td>
+												<td
+													data-ng-if="billItem.hasChild &amp;&amp; !billItem.descReadOnly">
+													<textarea style="font-weight: bold"
+														data-ng-model="billItem.itemDesc" rows="4" cols="38"></textarea>
+												</td>
+												<td
+													data-ng-if="!billItem.hasChild &amp;&amp; !billItem.descReadOnly">
+													<textarea data-ng-model="billItem.itemDesc" rows="4"
+														cols="38"></textarea>
+												</td>
+
+												<td data-ng-if="billItem.noReadOnly">{{billItem.no}} <input
+													type="hidden" class="number-OnlyTwoDecimalWithMinus"
+													data-ng-model="billItem.no" name="abc" maxlength="6"
+													data-ng-change="calculateSORQuantity(billItem)" /></td>
+												<!-- <td data-ng-if="billItem.hasChild || billItem.group">
+													<input type="text" class="number-OnlyTwoDecimalWithMinus" data-ng-model="billItem.no" name="abc" maxlength="6" data-ng-change="calculateQuantity(billItem)"/>
+												</td> -->
+												<td data-ng-if="!billItem.noReadOnly"><input
+													type="text" class="number-OnlyTwoDecimalWithMinus"
+													data-ng-model="billItem.no" name="abc" maxlength="6"
+													data-ng-change="calculateSORQuantity(billItem)" /></td>
+
+												<td data-ng-if="billItem.measureLength">
+													{{billItem.length}} <input type="hidden"
+													class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.length" maxlength="13"
+													data-ng-change="calculateSORQuantity(billItem)" />
+												</td>
+												<td data-ng-if="!billItem.measureLength"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.length" maxlength="13"
+													data-ng-change="calculateSORQuantity(billItem)" /></td>
+												<!-- <td data-ng-if="!billItem.measureLength"></td> -->
+
+												<td data-ng-if="billItem.measureWidth">{{billItem.width}}
+													<input type="hidden" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.width" maxlength="13"
+													data-ng-change="calculateSORQuantity(billItem)" />
+												</td>
+												<td data-ng-if="!billItem.measureWidth"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.width" maxlength="13"
+													data-ng-change="calculateSORQuantity(billItem)" /></td>
+												<!-- <td data-ng-if="!billItem.measureWidth" ></td> -->
+
+												<td data-ng-if="billItem.measureHeightDepth">{{billItem.heightDepth}}
+													<input type="hidden" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.heightDepth" maxlength="13"
+													data-ng-change="calculateSORQuantity(billItem)" />
+												</td>
+												<td data-ng-if="!billItem.measureHeightDepth"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.heightDepth" maxlength="13"
+													data-ng-change="calculateSORQuantity(billItem)" /></td>
+												<!-- <td data-ng-if="!billItem.measureHeightDepth"></td> -->
+
+												<td data-ng-if="billItem.sorItemNoReadOnly">{{billItem.quantity}}
+													<input type="hidden" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.quantity" maxlength="13"
+													disabled="disabled" />
+												</td>
+												<!-- <td data-ng-if="billItem.hasChild || billItem.group"></td> -->
+												<td data-ng-if="!billItem.sorItemNoReadOnly"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.quantity" maxlength="13"
+													disabled="disabled" /></td>
+
+												<td data-ng-if="billItem.sorItemNoReadOnly">{{billItem.unit}}
+													<input type="hidden" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.unit" maxlength="40"
+													data-ng-disabled="billItem.unitReadOnly" />
+												</td>
+												<!-- <td data-ng-if="billItem.hasChild || billItem.group"></td> -->
+												<td data-ng-if="!billItem.sorItemNoReadOnly"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.unit" maxlength="40"
+													data-ng-disabled="billItem.unitReadOnly" /></td>
+
+												<td data-ng-if="billItem.rateReadOnly">{{billItem.rate}}
+													<input type="hidden" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.rate"
+													data-ng-change="calculateSORAmount(billItem);"
+													data-ng-disabled="billItem.rateReadOnly" />
+												</td>
+												<!-- <td data-ng-if="billItem.hasChild || billItem.group"></td> -->
+												<td data-ng-if="!billItem.rateReadOnly"><input
+													type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.rate" maxlength="13"
+													data-ng-change="calculateSORAmount(billItem);" /></td>
+
+												<td data-ng-if="billItem.sorItemNoReadOnly">{{billItem.amount}}
+													<input type="hidden" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.amount" maxlength="13" />
+												</td>
+												<!-- <td data-ng-if="billItem.hasChild || billItem.group"></td> -->
+												<td
+													data-ng-if="!billItem.sorItemNoReadOnly &amp;&amp; !billItem.hasChild &amp;&amp; !billItem.group">
+													<input type="text" class="number-OnlyTwoDecimal"
+													data-ng-model="billItem.amount" maxlength="13" />
+												</td>
+
+												<td align="center"><input type="button"
+													class="add test"
+													data-ng-if="!billItem.hasChild &amp;&amp; billItem.lastElement &amp;&amp; !billItem.group"
+													title="Add" value="+" data-toggle="modal"
+													data-target="#add-new-item-popup" data-placement="top"
+													style="color: #fff; cursor: pointer;" data-id="{{$index}}"
+													data-type="normal" /> <input type="button" class="remove"
+													data-ng-click="removeSubItemEntry($index)" title="Remove"
+													value="-" /> <input type="button"
+													class="add test ng-scope" data-ng-if="billItem.isParent"
+													title="Add" value="+"
+													data-ng-click="addNewEmptySubItemEntry($index)"
+													data-placement="top" style="color: #fff; cursor: pointer;"
+													data-id="{{$index}}" data-type="normal" /></td>
+											</tr>
+
+											<!-- </table>
+											</td>
+											</tr> -->
+										<tfoot>
+											<tr>
+												<td colspan="10" align="right" style="font-weight: bold">Total
+													<span th:text="#{rs}">(Rs.)</span>:
+												</td>
+												<td>{{workData.estimatedAmount}}</td>
+
+											</tr>
+											<!-- <tr>
+													<td colspan="10" align="right">In Lakh: <span th:text="#{rs}">(Rs.)</span>:</td>
+													<td>{{estimatedAmountInLakh}}</td>
+													<td colspan="2"></td>
+												</tr>-->
+											<tr>
+												<td colspan="9" align="right">Expected Tendered Rate <span>(%)</span><span
+													class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text" class="number-OnlyTwoDecimal"
+													required="required"
+													data-ng-model="workData.expectedTenderedRatePer"
+													name="expectedTenderedRatePer" maxlength="5"
+													data-ng-change="calculateExpectedTenderedAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.expectedTenderedRatePer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Expected
+																Tendered Rate</span>
+														</p>
+													</div>
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="tenderRateGreaterThan10">
+															<span>Expected Tendered Rate can not be greater
+																than 10%</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.expectedTenderedAmt}}</td>
+											</tr>
+											<tr>
+												<td colspan="9" align="right">Applicable GST <span>(%)
+														(On Total plus Expected Tender Amount)</span><span
+													class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text" class="number-OnlyTwoDecimal"
+													required="required" name="applicableGstPer"
+													data-ng-model="workData.applicableGstPer" maxlength="5"
+													data-ng-change="calculateApplicableGstAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.applicableGstPer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Applicable
+																GST</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.applicableGstAmt}}</td>
+											</tr>
+											<tr>
+												<td colspan="9" align="right">Overhead Charges <span>(%)</span><span
+													class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text" class="number-OnlyTwoDecimal"
+													required="required" name="overheadChargesPer"
+													data-ng-model="workData.overheadChargesPer" maxlength="5"
+													data-ng-change="calculateOverheadChargesAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.overheadChargesPer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Overhead
+																Charges</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.overheadChargesAmt}}</td>
+											</tr>
+											<tr>
+												<td colspan="9" align="right">Labour Welfare Component
+													<span>(%)</span><span class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text" class="number-OnlyTwoDecimal"
+													required="required" name="labourWelfareComponentPer"
+													data-ng-model="workData.labourWelfareComponentPer"
+													maxlength="5"
+													data-ng-change="calculateLabourWelfareComponentAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.labourWelfareComponentPer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Labour
+																Welfare Component</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.labourWelfareComponentAmt}}</td>
+											</tr>
+
+
+											<tr>
+												<td colspan="9" align="right">Work Charge &amp;
+													Contingency <span>(%)<span class="aestrick">&#42;</span></span>:
+												</td>
+												<td><input type="text" class="number-OnlyTwoDecimal"
+													required="required" name="workChargeContingencyPer"
+													data-ng-model="workData.workChargeContingencyPer"
+													maxlength="5"
+													data-ng-change="calculateWorkChargeContingencyAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.workChargeContingencyPer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Work
+																Charge &amp; Contingency</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.workChargeContingencyAmt}}</td>
+											</tr>
+
+
+											<tr>
+												<td colspan="9" align="right">Administrative
+													expenditure <span>(%)<span class="aestrick">&#42;</span></span>:
+												</td>
+												<td><input type="text" class="number-OnlyTwoDecimal"
+													required="required" name="administrativeExpenditurePer"
+													data-ng-model="workData.administrativeExpenditurePer"
+													maxlength="5"
+													data-ng-change="calculateAdministrativeExpenditureAmt();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.administrativeExpenditurePer.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Administrative
+																expenditure</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+												<td colspan="1">{{workData.administrativeExpenditureAmt}}</td>
+											</tr>
+
+											<tr>
+												<td colspan="10" align="right">Others Charges <span>(Rs.)</span><span
+													class="aestrick">&#42;</span>:
+												</td>
+												<td><input type="text" class="number-OnlyTwoDecimal"
+													required="required" name="othersCharges"
+													data-ng-model="workData.othersCharges" maxlength="5"
+													data-ng-change="calculateGrandTotal();" />
+													<div data-ng-show="billForm.$submitted">
+														<p class="help-block" style="color: red;"
+															data-ng-show="billForm.othersCharges.$error.required">
+															<span th:text="#{pleaseEnter}">Please enter</span> <span>Others
+																Charges</span>
+														</p>
+													</div></td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+											</tr>
+
+											<tr>
+												<td colspan="10" align="right" style="font-weight: bold">Grand
+													Total <span th:text="#{rs}">(Rs.)</span>:
+												</td>
+												<td>{{workData.grandTotal}}</td>
+												<!-- <td>{{workData.totalLabourComponent}}</td> -->
+											</tr>
+
+										</tfoot>
+
+										<tr data-ng-show="billData.billItems.length==0">
+											<td colspan="9"><span>No data available</span></td>
+										</tr>
+
+										</tbody>
+
+									</table>
+									<table class="table table-striped table-bordered"
+										style="width: 100%;">
+
+										<tr data-ng-show="workData.subEngFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">Sub
+												Engineer Remarks:</td>
+											<td style="padding-top: 15px;">
+												{{workData.subEngComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">Sub
+												Engineer Forward Date:</td>
+											<td style="padding-top: 15px;">
+												{{workData.subEngFwdDate}}</td>
+										</tr>
+
+										<tr data-ng-show="workData.aeFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">AE
+												Remarks:</td>
+											<td style="padding-top: 15px;">{{workData.aeComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">AE
+												Forward Date:</td>
+											<td style="padding-top: 15px;">{{workData.aeFwdDate}}</td>
+										</tr>
+
+										<tr data-ng-show="workData.eeFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">EE
+												Remarks:</td>
+											<td style="padding-top: 15px;">{{workData.eeComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">EE
+												Forward Date:</td>
+											<td style="padding-top: 15px;">{{workData.eeFwdDate}}</td>
+										</tr>
+
+										<tr data-ng-show="workData.seFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">SE
+												Remarks:</td>
+											<td style="padding-top: 15px;">{{workData.seComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">SE
+												Forward Date:</td>
+											<td style="padding-top: 15px;">{{workData.seFwdDate}}</td>
+										</tr>
+
+										<tr data-ng-show="workData.ceFwdDate!=null">
+											<td style="font-weight: bold; padding-top: 15px;">CE
+												Remarks:</td>
+											<td style="padding-top: 15px;">{{workData.ceComments}}</td>
+											<td style="font-weight: bold; padding-top: 15px;">CE
+												Forward Date:</td>
+											<td style="padding-top: 15px;">{{workData.ceFwdDate}}</td>
+										</tr>
+
+										<tr>
+											<td style="font-weight: bold; padding-top: 15px;">Remarks<span
+												class="aestrick">&#42;</span>:
+											</td>
+											<td style="padding-top: 15px;"><textarea rows="5"
+													cols="90" name="comments" data-ng-model="workData.comments"
+													maxlength="800" required="required"></textarea>
+												<div data-ng-show="billForm.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="billForm.comments.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Remarks</span>
+													</p>
+												</div></td>
+										</tr>
+									</table>
+
+									<button style="margin-left: 450px; margin-top: 10px;"
+										class="btn btn-secondary" type="button" data-toggle="modal"
+										data-target="#add-new-item-popup1">Add New Item</button>
+
+									<!--  <a href="" class="float-right"
+										data-ng-click="addWorkEstimationItemEntry();">Add
+										More</a>-->
+								</div>
+								<!-- ##EOF-SOR ITEM DISPLAY LOGIC -->
+
+							</div>
+
+							<!-- <div class="card-body">
+								<table style="width: 100%;">
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Labour Component for Road Work Only in percentage: </span>{{labourInPctg}}</td>
+									</tr>
+									<tr>
+										<td width="50%"><span style="font-weight: 700;">Components of diferents Heads : </span></td>
+									</tr>
+									<tr >
+										<td width="50%" style="padding-left: 250px"><span style="font-weight: 700;">MNREGS =</span>{{mnregs}}</td>
+									</tr>
+									<tr>
+										<td width="50%" style="padding-left: 270px"><span style="font-weight: 500;">* Labour =</span>{{workData.totalLabourComponent}}</td>
+									</tr>
+									<tr>
+										<td width="50%" style="padding-left: 270px"><span style="font-weight: 500;">* Material =</span>{{material}}</td>
+									</tr>
+									<tr>
+										<td width="50%" style="padding-left: 250px"><span style="font-weight: 700;">Other Head =</span>{{otherHead}}</td>
+									</tr>
+									<tr>
+										<td width="50%" style="padding-left: 250px"><span style="font-weight: 700;">Total =</span>{{workData.estimatedAmount}}</td>
+									</tr>
+									
+									
+								</table>
+
+							</div> -->
+
+							<div class="card-footer text-right">
+								<button
+									data-ng-show="workData.estimationStatusId==null || workData.estimationStatusId==1"
+									th:if="${loggedInUserRole=='ROLE_SUB_ENGG' || loggedInUserRole=='ROLE_AE' || loggedInUserRole=='ROLE_EE'}"
+									type="submit" class="btn btn-sm btn-primary"
+									data-ng-click="saveAsDraft=true">
+									<span th:text="#{saveAsDraft}">Save As Draft</span>
+								</button>
+
+								<button
+									data-ng-show="(workData.estimationStatusId==null || workData.estimationStatusId==1) &amp;&amp; workData.grandTotal &gt; 0"
+									th:if="${loggedInUserRole=='ROLE_SUB_ENGG'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Forward to SDO</span>
+								</button>
+								<button
+									data-ng-show="(workData.estimationStatusId==null || workData.estimationStatusId==1) &amp;&amp; workData.grandTotal &gt; 1500000"
+									th:if="${loggedInUserRole=='ROLE_AE'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Forward to EE</span>
+								</button>
+
+								<button
+									data-ng-show="(workData.estimationStatusId==null || workData.estimationStatusId==1) &amp;&amp; workData.grandTotal &gt; 0 &amp;&amp; workData.grandTotal &lt;= 1500000"
+									th:if="${loggedInUserRole=='ROLE_AE'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Approve</span>
+								</button>
+
+								<button
+									data-ng-show="workData.estimationStatusId==6 &amp;&amp; workData.grandTotal &gt; 0 &amp;&amp; workData.grandTotal &lt;= 1500000"
+									th:if="${loggedInUserRole=='ROLE_AE'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Approve</span>
+								</button>
+								<button
+									data-ng-show="workData.estimationStatusId==6 &amp;&amp; workData.grandTotal &gt; 1500000"
+									th:if="${loggedInUserRole=='ROLE_AE'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Forward to EE</span>
+								</button>
+								<!-- EE Role - Approve (Agency Type = 2, any amount) -->
+								<button
+									data-ng-show="(workData.estimationStatusId==null || workData.estimationStatusId==1 || workData.estimationStatusId==2) &amp;&amp; workData.agencyTypeBean.agencyTypeId==2 &amp;&amp; workData.grandTotal &gt; 0"
+									th:if="${loggedInUserRole=='ROLE_EE'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Approve <i class="fa fa-tick"></i></span>
+								</button>
+
+								<!-- EE Role - Approve (0-200 lakh) - Only if revision <= 10% -->
+								<button
+									data-ng-show="(workData.estimationStatusId==null || workData.estimationStatusId==1 || workData.estimationStatusId==2) &amp;&amp; workData.agencyTypeBean.agencyTypeId!=2 &amp;&amp; workData.grandTotal &gt; 0 &amp;&amp; workData.grandTotal &lt;= 20000000 &amp;&amp; ((workData.workNatureId==1) || (workData.workNatureId==2 &amp;&amp; workData.grandTotal &lt;= 1000000)) &amp;&amp; (!workData.grandTotalOriginalAmoumnt || (workData.grandTotal &lt;= (workData.grandTotalOriginalAmoumnt + (workData.grandTotalOriginalAmoumnt * 0.10))))"
+									th:if="${loggedInUserRole=='ROLE_EE'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Approve <i class="fa fa-tick"></i></span>
+								</button>
+
+								<!-- EE Role - Forward to SE (200+ lakh OR revision > 10%) -->
+								<button
+									data-ng-show="(workData.estimationStatusId==null || workData.estimationStatusId==1 || workData.estimationStatusId==9 || workData.estimationStatusId==2) &amp;&amp; workData.agencyTypeBean.agencyTypeId!=2 &amp;&amp; (((workData.workNatureId==1 &amp;&amp; workData.grandTotal &gt; 20000000) || (workData.workNatureId==2 &amp;&amp; workData.grandTotal > 1000000)) || (workData.grandTotalOriginalAmoumnt &amp;&amp; (workData.grandTotal > (workData.grandTotalOriginalAmoumnt + (workData.grandTotalOriginalAmoumnt * 0.10)))))"
+									th:if="${loggedInUserRole=='ROLE_EE'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Forward to SE <i class="fa fa-arrow-right"></i></span>
+								</button>
+
+								<!-- SE Role - Approve (0-500 lakh) -->
+								<button
+									data-ng-show="workData.estimationStatusId==3 &amp;&amp; workData.agencyTypeBean.agencyTypeId!=2 &amp;&amp; workData.grandTotal > 20000000 &amp;&amp; workData.grandTotal &lt;= 50000000 &amp;&amp; ((workData.workNatureId==1) || (workData.workNatureId==2 &amp;&amp; workData.grandTotal &gt; 1000000))"
+									th:if="${loggedInUserRole=='ROLE_SUPDT_ENGG'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Approve</span>
+								</button>
+
+								<!-- SE Role - Forward to CE (500+ lakh) -->
+								<button
+									data-ng-show="workData.estimationStatusId==3 &amp;&amp; workData.agencyTypeBean.agencyTypeId!=2 &amp;&amp; workData.grandTotal > 50000000 &amp;&amp; ((workData.workNatureId==1) || (workData.workNatureId==2))"
+									th:if="${loggedInUserRole=='ROLE_SUPDT_ENGG'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Forward to CE <i class="fa fa-arrow-right"></i></span>
+								</button>
+
+								<!-- CE Role - Approve (any amount) -->
+								<button
+									data-ng-show="workData.estimationStatusId==4 &amp;&amp; workData.agencyTypeBean.agencyTypeId!=2 &amp;&amp; workData.grandTotal > 0 &amp;&amp; ((workData.workNatureId==1 &amp;&amp; workData.grandTotal &gt; 50000000) || (workData.workNatureId==2 &amp;&amp; workData.grandTotal > 1000000))"
+									th:if="${loggedInUserRole=='ROLE_CE'}" type="submit"
+									class="btn btn-sm btn-primary" data-ng-click="submit=true">
+									<span>Approve <i class="fa fa-stamp"></i></span>
+								</button>
+
+
+
+							</div>
+						</form>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</div>
+<div class="modal fade popup-lg" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel" aria-hidden="true"
+	id="add-new-item-popup1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">
+					<span>Add Non SOR Item</span>
+				</h6>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form data-ng-submit="addNewChildItem(addNewItemForm1.$valid)"
+				name="addNewItemForm1" id="addNewItemForm1" novalidate="novalidate">
+				<div class="modal-body table-responsive">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card margin0">
+									<div class="row">
+										<div class="col-md-12">
+											<div data-ng-if="responseObject.errorMessage != null"
+												class="text-danger">
+												<strong>Error!</strong>
+												<p>{{responseObject.errorMessage}}</p>
+											</div>
+										</div>
+									</div>
+
+
+									<!-- added by MS -->
+									<div class="card-body">
+
+										<div class="row">
+
+											<div class="form-group col-sm-12" style="padding-right: 0">
+												<label><span>Is Group ?</span><span class="aestrick">&#42;</span></label>
+												<select class="form-control"
+													data-ng-change="resetItemDataValues()" id="group"
+													required="required" data-ng-model="itemData.group"
+													name="group">
+													<option value="" disabled="disabled">Select</option>
+													<option value="Yes">Yes</option>
+													<option value="No">No</option>
+												</select>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.group.$error.required">
+														<span th:text="#{pleaseSelect}">Please select</span><span>
+															Is Group ?</span>
+													</p>
+												</div>
+											</div>
+										</div>
+
+										<div class="row"
+											data-ng-show="null!=itemData.group &amp;&amp; itemData.group=='No'">
+											<div class="form-group col-sm-4">
+												<label><span>Non SOR Item No.</span><span
+													class="aestrick">&#42;</span></label> <input type="text"
+													class="form-control" id="itemSorNo"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.itemSorNo" name="itemSorNo"
+													maxlength="30" />
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.itemSorNo.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Item
+															SOR No.</span>
+													</p>
+												</div>
+											</div>
+
+											<div class="form-group col-sm-8">
+												<label><span>Item Description</span><span
+													class="aestrick">&#42;</span></label>
+												<textarea class="form-control" id="itemDesc"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													rows="3" cols="36" data-ng-model="itemData.itemDesc"
+													name="itemDesc" maxlength="1500"></textarea>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.itemDesc.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Item
+															Description</span>
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-4">
+												<label><span>Item Unit</span><span class="aestrick">&#42;</span></label>
+												<input type="text" class="form-control" id="itemUnit"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.itemUnit" name="itemUnit"
+													maxlength="30" />
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.itemUnit.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Item
+															Unit</span>
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-8">
+												<label><span>Item Rate</span><span class="aestrick">&#42;</span></label>
+												<input type="text"
+													class="form-control number-OnlyTwoDecimal" id="rate"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.rate" name="rate" maxlength="8" />
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.rate.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Item
+															Rate</span>
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-4" style="padding-right: 0">
+												<label><span>Is length Applicable</span><span
+													class="aestrick">&#42;</span></label> <select class="form-control"
+													id="isLengthApplicable"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.isLengthApplicable"
+													name="isLengthApplicable">
+													<option value="" disabled="disabled">Select</option>
+													<option value="Yes">Yes</option>
+													<option value="No">No</option>
+												</select>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.isLengthApplicable.$error.required">
+														<span th:text="#{pleaseSelect}">Please select</span> Is
+														Length Applicable
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-4" style="padding-right: 0">
+												<label><span>Is Width Applicable</span><span
+													class="aestrick">&#42;</span></label> <select class="form-control"
+													id="isWidthApplicable"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.isWidthApplicable"
+													name="isWidthApplicable">
+													<option value="" disabled="disabled">Select</option>
+													<option value="Yes">Yes</option>
+													<option value="No">No</option>
+												</select>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.isWidthApplicable.$error.required">
+														<span th:text="#{pleaseSelect}">Please select</span> Is
+														Width Applicable
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-4" style="padding-right: 0">
+												<label><span>Is Height/Depth Applicable</span><span
+													class="aestrick">&#42;</span></label> <select class="form-control"
+													id="isHeightDepthApplicable"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.isHeightDepthApplicable"
+													name="isHeightDepthApplicable">
+													<option value="" disabled="disabled">Select</option>
+													<option value="Yes">Yes</option>
+													<option value="No">No</option>
+												</select>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.isHeightDepthApplicable.$error.required">
+														<span th:text="#{pleaseSelect}">Please select</span> Is
+														Height/Depth Applicable
+													</p>
+												</div>
+											</div>
+										</div>
+
+
+
+									</div>
+									<!-- closed by MS -->
+
+
+								</div>
+								<!--/.col-->
+							</div>
+							<!--/.row-->
+						</div>
+						<!-- /.container-fluid -->
+					</div>
+				</div>
+				<div class="modal-footer text-right">
+					<button type="submit" class="btn btn-sm btn-primary">
+						<span th:text="#{submit}">Submit</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal fade popup-lg" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel" aria-hidden="true"
+	id="add-new-item-popup1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">
+					<span>Add New Item</span>
+				</h6>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form data-ng-submit="addNewChildItem(addNewItemForm1.$valid)"
+				name="addNewItemForm1" id="addNewItemForm1" novalidate="novalidate">
+				<div class="modal-body table-responsive">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card margin0">
+									<div class="row">
+										<div class="col-md-12">
+											<div data-ng-if="responseObject.errorMessage != null"
+												class="text-danger">
+												<strong>Error!</strong>
+												<p>{{responseObject.errorMessage}}</p>
+											</div>
+										</div>
+									</div>
+
+
+									<!-- added by MS -->
+									<div class="card-body">
+
+										<div class="row">
+
+											<div class="form-group col-sm-12" style="padding-right: 0">
+												<label><span>Is Group ?</span><span class="aestrick">&#42;</span></label>
+												<select class="form-control"
+													data-ng-change="resetItemDataValues()" id="group"
+													required="required" data-ng-model="itemData.group"
+													name="group">
+													<option value="" disabled="disabled">Select</option>
+													<option value="Yes">Yes</option>
+													<option value="No">No</option>
+												</select>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.group.$error.required">
+														<span th:text="#{pleaseSelect}">Please select</span><span>
+															Is Group ?</span>
+													</p>
+												</div>
+											</div>
+										</div>
+
+										<div class="row"
+											data-ng-show="null!=itemData.group &amp;&amp; itemData.group=='No'">
+											<div class="form-group col-sm-4">
+												<label><span>Item SOR No.</span><span
+													class="aestrick">&#42;</span></label> <input type="text"
+													class="form-control" id="itemSorNo"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.itemSorNo" name="itemSorNo"
+													maxlength="30" />
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.itemSorNo.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Item
+															SOR No.</span>
+													</p>
+												</div>
+											</div>
+
+											<div class="form-group col-sm-8">
+												<label><span>Item Description</span><span
+													class="aestrick">&#42;</span></label>
+												<textarea class="form-control" id="itemDesc"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													rows="3" cols="36" data-ng-model="itemData.itemDesc"
+													name="itemDesc" maxlength="1500"></textarea>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.itemDesc.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Item
+															Description</span>
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-4">
+												<label><span>Item Unit</span><span class="aestrick">&#42;</span></label>
+												<input type="text" class="form-control" id="itemUnit"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.itemUnit" name="itemUnit"
+													maxlength="30" />
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.itemUnit.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Item
+															Unit</span>
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-8">
+												<label><span>Item Rate</span><span class="aestrick">&#42;</span></label>
+												<input type="text"
+													class="form-control number-OnlyTwoDecimal" id="rate"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.rate" name="rate" maxlength="8" />
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.rate.$error.required">
+														<span th:text="#{pleaseEnter}">Please enter</span> <span>Item
+															Rate</span>
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-4" style="padding-right: 0">
+												<label><span>Is length Applicable</span><span
+													class="aestrick">&#42;</span></label> <select class="form-control"
+													id="isLengthApplicable"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.isLengthApplicable"
+													name="isLengthApplicable">
+													<option value="" disabled="disabled">Select</option>
+													<option value="Yes">Yes</option>
+													<option value="No">No</option>
+												</select>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.isLengthApplicable.$error.required">
+														<span th:text="#{pleaseSelect}">Please select</span> Is
+														Length Applicable
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-4" style="padding-right: 0">
+												<label><span>Is Width Applicable</span><span
+													class="aestrick">&#42;</span></label> <select class="form-control"
+													id="isWidthApplicable"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.isWidthApplicable"
+													name="isWidthApplicable">
+													<option value="" disabled="disabled">Select</option>
+													<option value="Yes">Yes</option>
+													<option value="No">No</option>
+												</select>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.isWidthApplicable.$error.required">
+														<span th:text="#{pleaseSelect}">Please select</span> Is
+														Width Applicable
+													</p>
+												</div>
+											</div>
+											<div class="form-group col-sm-4" style="padding-right: 0">
+												<label><span>Is Height/Depth Applicable</span><span
+													class="aestrick">&#42;</span></label> <select class="form-control"
+													id="isHeightDepthApplicable"
+													data-ng-required="null!=itemData.group &amp;&amp; itemData.group=='No'"
+													data-ng-model="itemData.isHeightDepthApplicable"
+													name="isHeightDepthApplicable">
+													<option value="" disabled="disabled">Select</option>
+													<option value="Yes">Yes</option>
+													<option value="No">No</option>
+												</select>
+												<div data-ng-show="addNewItemForm1.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addNewItemForm1.isHeightDepthApplicable.$error.required">
+														<span th:text="#{pleaseSelect}">Please select</span> Is
+														Height/Depth Applicable
+													</p>
+												</div>
+											</div>
+										</div>
+
+
+
+									</div>
+									<!-- closed by MS -->
+
+
+								</div>
+								<!--/.col-->
+							</div>
+							<!--/.row-->
+						</div>
+						<!-- /.container-fluid -->
+					</div>
+				</div>
+				<div class="modal-footer text-right">
+					<button type="submit" class="btn btn-sm btn-primary">
+						<span th:text="#{submit}">Submit</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade popup-lg" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel" aria-hidden="true"
+	id="add-sor-popup">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">
+					<span>Select Item</span>
+					<!-- <br/>Group Name : {{currentGroup.groupName}} Group Index : {{currentGroup.index}} //for group disable comment-->
+				</h6>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<!-- 	<form data-ng-submit="addSORItem(addSORForm.$valid)" name="addSORForm" id="addSORForm" novalidate="novalidate"> -->
+
+			<div class="modal-body table-responsive">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card margin0">
+								<div class="row">
+									<div class="col-md-12">
+										<div data-ng-if="responseObject.errorMessage != null"
+											class="text-danger">
+											<strong>Error!</strong>
+											<p>{{responseObject.errorMessage}}</p>
+										</div>
+									</div>
+								</div>
+
+
+								<!-- added by MS -->
+								<form data-ng-submit="addTheseRowItems(1)" name="itemForm"
+									data-ng-init="">
+									<div class="card-body">
+										<!-- <input type="text" data-ng-model="currentGroup.index"/> //for group disable comment-->
+										<div class="row">
+
+											<div class="form-group col-sm-4" style="padding-right: 0">
+												<label><span>SoR Reference Name</span><span
+													class="aestrick">&#42;</span></label> <select
+													data-ng-init="loadSOR()" class="form-control" id="sorId"
+													data-ng-model="sorData.sorName" name="sorName"
+													data-ng-change="callChapterListBySORId()">
+													<option value="">Select</option>
+													<option data-ng-repeat="sor in sors" value="{{sor.id}}">{{sor.referenceName}}</option>
+												</select>
+											</div>
+
+
+											<div class="form-group col-sm-4" style="padding-right: 0">
+												<label> <span>Chapter Number</span> <span
+													class="aestrick">&#42;</span></label> <select class="form-control"
+													id="chapterId" required="required"
+													data-ng-model="sorData.chapterName" name="chapterName"
+													data-ng-change="callItemsByChapterId()">
+													<option value="">Select</option>
+													<option data-ng-repeat="chapter in chapterData"
+														value="{{chapter.id}}">{{chapter.chapterName}}</option>
+												</select>
+												<div data-ng-show="addSORForm.$submitted">
+													<p class="help-block" style="color: red;"
+														data-ng-show="addSORForm.chapterName.$error.required">
+														<span th:text="#{pleaseSelect}">Please select</span> one
+														chapter
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="card">
+													<div class="card-header">
+														<i class="fa fa-folder-open-o"></i> <span>Search by
+															SOR Item No or Item Name...</span>
+													</div>
+													<div class="card-body">
+														<div class="col-md-12">
+															<div class="row ng-pristine ng-valid ng-valid-maxlength">
+																<div class="input-group col-md-8">
+																	<input type="text"
+																		class="form-control ng-pristine ng-untouched ng-valid ng-valid-maxlength"
+																		id="searchBox"
+																		data-ng-change="callItemsByYearChapterIdItemNoOrName(sorData.chapterName, searchBox )"
+																		placeholder="Search by SOR Item No, Item Name [Please enter atleast four characters]"
+																		data-ng-model="searchBox" maxlength="100" />
+																	<div class="btn-group pr">
+																		<button class="btn btn-secondary" type="submit"
+																			title="Search">
+																			<i class="fa fa-search"></i>
+																		</button>
+																		<!-- <button class="btn btn-secondary" type="reset"
+																				data-ng-click="resetFunction()" title="Reset">
+																				<i class="fa fa-refresh"></i>
+																			</button> -->
+
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="table-responsive">
+										<!-- table -->
+
+										<table
+											class="table table-striped table-bordered table-hover margin0 tbl-vm">
+											<thead class="thead-default">
+												<tr>
+													<th rowspan="2">#</th>
+													<th rowspan="2" width="6%">SOR Item No.</th>
+													<th rowspan="2" width="28%">Description</th>
+													<th rowspan="2" width="5%">No.</th>
+													<th rowspan="2" width="6%">Length</th>
+													<th rowspan="2" width="6%">Width</th>
+													<th rowspan="2" width="6%">Thick</th>
+													<th rowspan="2" width="7%">Quantity</th>
+													<th rowspan="2" width="7%">Unit</th>
+													<th rowspan="2" width="7%">Rate</th>
+													<th rowspan="2" width="8%">Amount</th>
+													<th rowspan="2">Action</th>
+												</tr>
+
+											</thead>
+											<tbody>
+
+												<tr data-ng-repeat="sorChapterItemData in myData">
+													<td>{{$index+1}}</td>
+													<td>{{sorChapterItemData.itemNumber}}</td>
+
+													<td><label style="font-weight: bold">{{sorChapterItemData.description}}</label></td>
+
+													<td>{{sorChapterItemData.no}} <!-- <input type="text" class="number-OnlyTwoDecimalWithMinus" data-ng-model="sorChapterItemData.no" name="abc" maxlength="6" data-ng-change="calculateQuantity(sorChapterItemData)"/> -->
+													</td>
+
+													<td>{{sorChapterItemData.length}} <!-- <input type="text" class="number-OnlyTwoDecimal" data-ng-model="sorChapterItemData.length" maxlength="13" data-ng-change="calculateQuantity(sorChapterItemData)"/> -->
+													</td>
+
+													<td>{{sorChapterItemData.width}} <!-- <input type="text" class="number-OnlyTwoDecimal" data-ng-model="sorChapterItemData.width" maxlength="13" data-ng-change="calculateQuantity(sorChapterItemData)"/> -->
+													</td>
+
+
+													<td>{{sorChapterItemData.heightDepth}} <!-- <input type="text" class="number-OnlyTwoDecimal" data-ng-model="sorChapterItemData.heightDepth" maxlength="13" data-ng-change="calculateQuantity(sorChapterItemData)"/> -->
+													</td>
+													<td>{{sorChapterItemData.quantity}} <!-- <input type="text" class="number-OnlyTwoDecimal" data-ng-model="sorChapterItemData.quantity" maxlength="13"/> -->
+													</td>
+													<td>{{sorChapterItemData.unit.unit}} <!-- <input type="text" class="number-OnlyTwoDecimal" data-ng-model="sorChapterItemData.unit.unit" maxlength="40" /> -->
+													</td>
+													<td>{{sorChapterItemData.rate}} <!-- <input type="text" class="number-OnlyTwoDecimal" data-ng-model="sorChapterItemData.rate" maxlength="13" data-ng-change="calculateAmount(sorChapterItemData);"/> -->
+													</td>
+													<td>{{sorChapterItemData.amount}} <!-- <input type="text" class="number-OnlyTwoDecimal" data-ng-model="sorChapterItemData.amount" maxlength="13" disabled="disabled" /> -->
+													</td>
+													<td align="center"><input type="checkbox"
+														class="add test"
+														data-ng-model="sorChapterItemData.confirmed" title="add"
+														data-ng-click="selectSORItems($index)" /></td>
+												</tr>
+											<tfoot>
+												<tr>
+													<td colspan="10" align="right" style="font-weight: bold">Total
+														<span th:text="#{rs}">(Rs.)</span>:
+													</td>
+													<td>{{ getTotal() }} <input type="hidden"
+														id="totalAmount" value="{{ getTotal() }}" />
+													</td>
+												</tr>
+											</tfoot>
+
+											<tr data-ng-show="billData.sorChapterItemDatas.length==0">
+												<td colspan="9"><span>No data available</span></td>
+											</tr>
+
+											</tbody>
+
+										</table>
+
+									</div>
+									<div class="modal-footer text-right">
+										<button type="submit"
+											data-ng-click="addWorkEstimationItemsEntrySORFlow($index)"
+											class="btn btn-sm btn-primary">
+											<span th:text="#{submit}">Submit</span>
+										</button>
+									</div>
+
+								</form>
+							</div>
+							<!-- closed by MS -->
+
+						</div>
+						<!--/.col-->
+					</div>
+					<!--/.row-->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+		</div>
+
+	</div>
+</div>
+</html>

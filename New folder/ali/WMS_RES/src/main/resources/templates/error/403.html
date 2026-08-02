@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+    
+</head>
+<body>
+
+
+<div class="container">
+
+    <div class="starter-template">
+        <h2 style="color: red;">403 - Access is denied</h2>
+        <div th:inline="text">Hello <b>'[[${#httpServletRequest.remoteUser}]]'</b>,
+                you do not have permission to access this page.</div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+
+</body>
+</html>

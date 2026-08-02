@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+
+<script th:src="@{/js/datepicker/jquery.ui.datepicker.js}"></script>
+<script th:src="@{/js/datepicker/jquery-ui.min.js}"></script>
+
+<link th:href="@{/css/datepicker/jquery.ui.datepicker.css}" rel="stylesheet" />
+<link th:href="@{/css/datepicker/jquery-ui.min.css}" rel="stylesheet" />
+	
+</head>
+
+<script type="text/javascript">
+	
+
+$(function() {
+	$(".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, yearRange: "-100:+50"});
+	$('.datepicker').keypress(function() {  
+	    return false;	    
+	});
+});
+</script>
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		
+		
+		<li class="breadcrumb-item active"><span th:text="#{contractor}">  contractor </span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" href="#" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header top-header">
+							<i class="fa fa-wpforms"></i> <span th:text="#{contractor}">Contractor</span>
+						</div>
+						<div class="col-md-12">
+							<div data-ng-if="responseObject.errorMessage != null"
+								class="text-danger">
+								<strong>Error!</strong>
+								<p>{{responseObject.errorMessage}}</p>
+							</div>
+						</div>
+						
+						<div class="col-md-12">
+							<div data-ng-if="errorMessage1 != null"	class="text-danger">
+								<strong>Error!</strong>
+								<p>{{errorMessage1}}</p>
+							</div>
+						</div>
+						<form data-ng-submit="addContractor(contractorForm, contractorForm.$valid)"
+							name="contractorForm" data-ng-init=""
+							novalidate="novalidate">
+							<div class="card-header">
+								<span th:text="#{contractor}">Contractor</span>
+							</div>
+							 
+							 
+							<div class="card-body">
+								<div class="row">
+									<div class="form-group col-sm-4">
+									
+										<label><span th:text="#{registrationNumber}">registrationNumber</span>
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+											<input type="text" class="form-control" 
+													id="amount"   
+													data-ng-model="contractorBean.registrationNumber" name="registrationNumber"
+													maxlength="90" />				
+										
+										<!-- <div data-ng-show="contractorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="contractorForm.registrationNumber.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{amount}">amount</span>
+											</p>
+										</div> -->
+										
+									</div>
+									
+									
+									 <div class="form-group col-sm-4">
+									
+										<label><span th:text="#{Name_of_Contractor}">name</span><span
+											class="aestrick">&#42;</span></label> 
+											
+											<input type="text" class="form-control" 
+													id="amount" required="required"  
+													data-ng-model="contractorBean.name" name="name"
+													maxlength="90" />				
+										
+										<div data-ng-show="contractorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="contractorForm.name.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{Name_of_Contractor}">name</span>
+											</p>
+										</div>
+									</div>
+									 
+									  <div class="form-group col-sm-4">
+									
+										<label><span th:text="#{fatherName}">fatherName</span>
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+											<input type="text" class="form-control" 
+													id="amount"  
+													data-ng-model="contractorBean.fatherName" name="fatherName"
+													maxlength="90" />				
+										
+										<!-- <div data-ng-show="contractorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="contractorForm.fatherName.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{fatherName}">fatherName</span>
+											</p>
+										</div> -->
+									</div>
+									 
+								</div>
+					
+					
+						<div class="row">
+									<div class="form-group col-sm-4">
+									
+										<label><span th:text="#{Address}">address</span>
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+											<input type="text" class="form-control" 
+													id="amount"  
+													data-ng-model="contractorBean.address" name="address"
+													maxlength="400" />				
+										
+										<!-- <div data-ng-show="contractorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="contractorForm.address.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{Address}">Address</span>
+											</p>
+										</div> -->
+									</div>
+									
+									
+									<div class="form-group col-sm-4">
+									
+										<label><span th:text="#{PAN}">PAN</span>
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+									 <input type="text" class="form-control" 
+													id="amount" 
+													data-ng-model="contractorBean.pan" name="pan"
+													maxlength="10" />				
+										
+										<!-- <div data-ng-show="contractorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="contractorForm.pan.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{PAN}">PAN</span>
+											</p>
+										</div> -->
+									</div>
+									
+									 <div class="form-group col-sm-4">
+									
+										<label><span th:text="#{gstin}">gstin</span>
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+											<input type="text" class="form-control" 
+													id="amount" 
+													data-ng-model="contractorBean.gstin" name="gstin"
+													maxlength="40" />				
+										
+										<!-- <div data-ng-show="contractorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="contractorForm.gstin.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{gstin}">gstin</span>
+											</p>
+										</div> -->
+									</div>
+									 
+								</div>
+					
+					<div class="row">
+									<div class="form-group col-sm-4">
+									
+										<label><span th:text="#{contactNo}">contactNo</span> 
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+											<input type="text" class="form-control" 
+													id="amount"  
+													data-ng-model="contractorBean.contactNo" name="contactNo"
+													maxlength="10" />				
+										
+										<!-- <div data-ng-show="contractorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="contractorForm.contactNo.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{contactNo}">contactNo</span>
+											</p>
+										</div> -->
+									</div>
+									
+									
+									<div class="form-group col-sm-4">
+									
+										<label><span th:text="#{emailId}">emailId</span>
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+											<input type="text" class="form-control" 
+													id="amount"   
+													data-ng-model="contractorBean.emailId" name="emailId"
+													maxlength="40" />				
+										
+										<!-- <div data-ng-show="contractorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="contractorForm.emailId.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{emailId}">emailId</span>
+											</p>
+										</div> -->
+									</div>
+									
+									 <div class="form-group col-sm-4">
+										<label><span th:text="#{contractorId}">contractorId</span>
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+											<input type="text" class="form-control" 
+													id="amount"  
+													data-ng-model="contractorBean.contractorId" name="contractorId"
+													maxlength="50" />				
+										
+										<!-- <div data-ng-show="contractorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="contractorForm.contractorId.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{contractorId}">contractorId</span>
+											</p>
+										</div> -->
+									</div>
+									 
+								</div>
+						 
+							</div>
+							
+						<div class="card-footer text-right">
+								
+								<button type="submit" class="btn btn-sm btn-primary" data-ng-click="submit=true" > 
+									<span th:text="#{submit}">Submit</span>
+								</button>
+					</div>
+							
+						
+						</form>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</div>
+</html>

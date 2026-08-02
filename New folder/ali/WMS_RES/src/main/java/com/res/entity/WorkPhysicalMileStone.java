@@ -1,0 +1,87 @@
+package com.res.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name = "work_physical_mile_stone")
+public class WorkPhysicalMileStone implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+
+	@ManyToOne
+    @JoinColumn(name="physical_stage",referencedColumnName="PHYSICAL_STAGE_ID")
+	private PhysicalStageType physicalStage;	
+	
+	@Column(name = "completion_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date completionDate;
+	
+	@JoinColumn(name = "work_agreement_Id", referencedColumnName = "id") 
+	@ManyToOne(fetch = FetchType.LAZY)
+	private WorkAgreement workAgreement;
+
+	@JoinColumn(name = "`revision_Id`", referencedColumnName = "id") 
+	@ManyToOne(fetch = FetchType.LAZY)
+	private WorkAgreementRevision workAgreementRevision;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public PhysicalStageType getPhysicalStage() {
+		return physicalStage;
+	}
+
+	public void setPhysicalStage(PhysicalStageType physicalStage) {
+		this.physicalStage = physicalStage;
+	}
+
+	public Date getCompletionDate() {
+		return completionDate;
+	}
+
+	public void setCompletionDate(Date completionDate) {
+		this.completionDate = completionDate;
+	}
+
+	public WorkAgreement getWorkAgreement() {
+		return workAgreement;
+	}
+
+	public void setWorkAgreement(WorkAgreement workAgreement) {
+		this.workAgreement = workAgreement;
+	}
+
+	public WorkAgreementRevision getWorkAgreementRevision() {
+		return workAgreementRevision;
+	}
+
+	public void setWorkAgreementRevision(WorkAgreementRevision workAgreementRevision) {
+		this.workAgreementRevision = workAgreementRevision;
+	}
+
+	
+
+}

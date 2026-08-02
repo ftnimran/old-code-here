@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+<script th:src="@{/js/highcharts.v5.0.14.min.js}"></script>
+<script th:src="@{/js/drilldown.js}"></script>
+<script th:src="@{/js/exporting.js}"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+function DrawColumnChart(notStartedData, inProgressData, onHoldData, completedData, workTypeNamesData) {
+	
+	 $('#container').highcharts({
+		 
+		 chart: {
+		        type: 'column',
+		        
+		        events: {
+		        	 drilldown: function (e) { 
+
+				          	  if (!e.seriesOptions) {  
+				                    var chart = this;  
+				                  //  chart.showLoading('Loading Drill down ...');
+				                   
+				                    chart.setTitle({  
+				                        text: 'Status - Work Type: ' +e.point.name +'- Sub Type wise'  
+				                    });
+				                    chart.setSubtitle({  
+				                        text: ''  
+				                    }); 
+				                  
+				                    var drilldowns=callChildAgain(e.point.id);
+				                    var series = [drilldowns['workTypeName'], drilldowns['workTypeName' + '_1'], drilldowns['workTypeName' + '_2'], drilldowns['workTypeName' + '_3']];
+				                    chart.addSingleSeriesAsDrilldown(e.point, series[3]);
+			                        chart.addSingleSeriesAsDrilldown(e.point, series[1]);
+			                        chart.addSingleSeriesAsDrilldown(e.point, series[2]);
+			                        chart.addSingleSeriesAsDrilldown(e.point, series[0]);
+			                        chart.applyDrilldown();
+				                 
+				                }  
+				            } ,
+				            drillup: function(e){
+				            	var chart = this; 
+				                    chart.setTitle({text: 'Status - Work Type Wise'}, {text: ''});
+				            }
+				   }
+		    },
+		    title: {
+		        text: 'Status - Work Type Wise'
+		    },
+		    subtitle: {
+		        //text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
+		    },
+		    xAxis: {
+		        //categories: workTypeNamesData
+		        type: 'category'
+		    },
+		    yAxis: {
+		        min: 0,
+		        title: {
+		            text: 'Works Count',
+		            align: 'high'
+		        },
+		        stackLabels: {
+		            enabled: true,
+		            style: {
+		                fontWeight: 'bold',
+		                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+		            }
+		        }
+		    },
+		    tooltip: {
+		        //headerFormat: '<b>{point.x}</b><br/>',
+		        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+		    },
+		    plotOptions: {
+		    	 column: {
+		             stacking: 'normal',
+		             dataLabels: {
+		                 enabled: true,
+		                 color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+		             }
+		         },
+		       
+		        series: {
+	                stacking: 'normal',
+	                borderWidth: 0,
+	                dataLabels: {
+	                    enabled: true
+	                }
+	            }
+		    },
+		    legend: {
+		    	 align: 'right',
+		         x: -30,
+		         verticalAlign: 'top',
+		         y: 25,
+		         floating: true,
+		         backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+		         borderColor: '#CCC',
+		         borderWidth: 1,
+		         shadow: false
+		    },
+		    credits: {
+		        enabled: false
+		    },
+		    series: obj,
+		    drilldown: {
+		    	series: []
+		    }
+		 
+  });
+}
+function DrawColumnChart1(notStartedData, inProgressData, onHoldData, completedData, workTypeNamesData) {
+	
+	 $('#container1').highcharts({
+		 
+		 
+		 chart: {
+		        type: 'column'
+		    },
+		    title: {
+		        text: 'District Wise Work Status'
+		    },
+		    subtitle: {
+		        //text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
+		    },
+		    xAxis: {
+		        categories: workTypeNamesData
+		    },
+		    yAxis: {
+		        min: 0,
+		        title: {
+		            text: 'Works Count',
+		            align: 'high'
+		        },
+		        labels: {
+		            overflow: 'justify'
+		        }
+		    },
+		    tooltip: {
+		        //valueSuffix: ' millions'
+		    },
+		    plotOptions: {
+		    	 column: {
+		             stacking: 'normal',
+		             dataLabels: {
+		                 enabled: true,
+		                 color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+		             }
+		         },
+		        bar: {
+		            dataLabels: {
+		                enabled: true
+		            }
+		        }
+		    },
+		    legend: {
+		    	 align: 'right',
+		         x: -30,
+		         verticalAlign: 'top',
+		         y: 25,
+		         floating: true,
+		         backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+		         borderColor: '#CCC',
+		         borderWidth: 1,
+		         shadow: false
+		    },
+		    credits: {
+		        enabled: false
+		    },
+		    series: [
+		             {
+		        name: 'Completed',
+		        data: completedData,
+		       // color: '#85e085'
+		    },
+		    {
+		        name: 'In Progress',
+		        data: inProgressData,
+		        //color: '#ffff66'
+		    },
+		    {
+		        name: 'On Hold',
+		        data: onHoldData,
+		        //color: '#ff794d'
+		    },
+		    {
+		        name: 'Not Started',
+		        data: notStartedData,
+		        //color: '#66c2ff'
+		    }]
+		 
+ });
+}
+function callChildAgain(id){
+
+	 var drilldowns={};
+	$.ajax({
+       type: "GET",
+       contentType: "application/json; charset=utf-8",
+       url: "../workSubTypeWiseStatus?workTypeId="+id,
+       dataType: "json",
+       async: false,
+       success: function (Result) {
+       	
+           var notStartedData = [];
+           var inProgressData = [];
+           var onHoldData = [];
+           var completedData = [];
+           var workTypeNamesData = [];
+           for (var i in Result) {
+           	 
+               //var notStarted = { name: Result[i].name, y: Result[i].count1, drilldown:true, id: Result[i].id };
+               var notStarted = new Array(Result[i].name, Result[i].count1);
+               notStartedData.push(notStarted);
+               
+               //var inProgress = { name: Result[i].name, y: Result[i].count2, drilldown:true, id: Result[i].id };
+               var inProgress = new Array(Result[i].name, Result[i].count2);
+               inProgressData.push(inProgress);
+               
+               //var onHold = { name: Result[i].name, y: Result[i].count3, drilldown:true, id: Result[i].id };
+               var onHold = new Array(Result[i].name, Result[i].count3);
+               onHoldData.push(onHold);
+               
+               //var completed = { name: Result[i].name, y: Result[i].count4, drilldown:true, id: Result[i].id };
+               var completed = new Array(Result[i].name, Result[i].count4);
+               completedData.push(completed);
+               
+               var workTypeNames = new Array(Result[i].name);
+               workTypeNamesData.push(workTypeNames);
+           }
+           
+           drilldowns = {
+        		   workTypeName:{
+           			name: 'Not Started',
+           			data: notStartedData,
+           			color: '#66c2ff'
+           		},
+           		workTypeName_1: {
+           			name: 'In Progress',
+           			data: inProgressData,
+           			color: '#ffb3ff'
+           		},
+           		workTypeName_2:{
+           			name: 'On Hold',
+           			data: onHoldData,
+           			 color: '#ff794d'
+           		},
+           	workTypeName_3:{
+   			name: 'Completed',
+   			data: completedData,
+   			color: '#85e085'
+   		}
+           
+         }
+       },
+       error: function (Result) {
+           alert("Error" + Result);
+       }
+   });
+	return drilldowns;
+}
+function DrawStatusWisePieChart(chartData) {
+	
+	 $('#statusWisePieContainer').highcharts({
+		 
+		 
+		 chart: {
+		        type: 'pie'
+		    },
+		    title: {
+		        text: 'Status Wise'
+		    },
+		    subtitle: {
+		        //text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
+		    },
+		    tooltip: {
+		        //valueSuffix: ' millions'
+		    },
+		    plotOptions: {
+		    	 series: {
+		             dataLabels: {
+		                 enabled: true,
+		                 format: '{point.name}: {point.y}'
+		             }
+		         }
+		    },
+		    tooltip: {
+		        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+		        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+		    },
+		    legend: {
+		    	 align: 'right',
+		         x: -30,
+		         verticalAlign: 'top',
+		         y: 25,
+		         floating: true,
+		         backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+		         borderColor: '#CCC',
+		         borderWidth: 1,
+		         shadow: false
+		    },
+		    credits: {
+		        enabled: false
+		    },
+		    series: [{
+		    	name: "Work Status",
+		    	//colorByPoint: true,
+		        data: chartData,
+		        dataLabels: {
+		            enabled: true,
+		            padding: 0
+		        }
+		    }]
+		 
+});
+}
+
+function DrawDistrictWisePieChart(chartData) {
+	
+$('#districtWisePieContainer').highcharts({
+	 chart: {
+	        type: 'pie'
+	    },
+	    title: {
+	        text: 'District Wise'
+	    },
+	    subtitle: {
+	        //text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
+	    },
+	    tooltip: {
+	        //valueSuffix: ' millions'
+	    },
+	    plotOptions: {
+	    	 series: {
+	             dataLabels: {
+	                 enabled: true,
+	                 format: '{point.name}: {point.y}'
+	             }
+	         }
+	    },
+	    tooltip: {
+	        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+	        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+	    },
+	    legend: {
+	    	 align: 'right',
+	         x: -30,
+	         verticalAlign: 'top',
+	         y: 25,
+	         floating: true,
+	         backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+	         borderColor: '#CCC',
+	         borderWidth: 1,
+	         shadow: false
+	    },
+	    credits: {
+	        enabled: false
+	    },
+	    series: [{
+	    	name: "District Name",
+	    	colorByPoint: true,
+	        data: chartData,          
+           //showInLegend:true,
+	        dataLabels: {
+	            enabled: true,
+	            padding: 0
+	        }
+	    }]
+	 
+});
+}
+function DrawOfficeWisePieChart(chartData) {
+	
+	$('#officeWisePieContainer').highcharts({
+		 chart: {
+		        type: 'pie',
+		        events: {
+		        	 drilldown: function (e) { 
+
+				          	  if (!e.seriesOptions) {  
+				                    var chart = this;  
+				                  //  chart.showLoading('Loading Drill down ...');
+				                   
+				                    chart.setTitle({  
+				                        text: 'CE Office: ' +e.point.name +'<br/>SE Office Wise Works Count'  
+				                    });
+				                    chart.setSubtitle({  
+				                        text: ''  
+				                    }); 
+				                  
+				                    var drilldowns=getSEOfficeWiseDataByCEOfficeId(e.point.id, e.point.name);
+				                    chart.addSingleSeriesAsDrilldown(e.point, drilldowns);
+			                        chart.applyDrilldown();
+				                 
+				                }  
+				            } ,
+				            drillup: function(e){
+				            	var chart = this; 
+				                    chart.setTitle({text: 'CE Office Wise Works Count'}, {text: ''});
+				            }
+				   }
+		    },
+		    title: {
+		        text: 'CE Office Wise Works Count'
+		    },
+		    subtitle: {
+		        //text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
+		    },
+		    tooltip: {
+		        //valueSuffix: ' millions'
+		    },
+		    plotOptions: {
+		    	 series: {
+		             dataLabels: {
+		                 enabled: true,
+		                 format: '{point.name}: {point.y}',
+		                 style: {
+		                        width: '150px'
+		                    }
+		             }
+		         }
+		    },
+		    tooltip: {
+		        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+		        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+		    },
+		    legend: {
+		    	 align: 'right',
+		         x: -30,
+		         verticalAlign: 'top',
+		         y: 25,
+		         floating: true,
+		         backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+		         borderColor: '#CCC',
+		         borderWidth: 1,
+		         shadow: false
+		    },
+		    credits: {
+		        enabled: false
+		    },
+		    series: [{
+		    	name: "CE Office",
+		    	colorByPoint: true,
+		        data: chartData,          
+	            //showInLegend:true,
+		        dataLabels: {
+		            enabled: true,
+		            padding: 0
+		        }
+		    }]
+		 
+	});
+}
+function getSEOfficeWiseDataByCEOfficeId(id, name){
+	 var finalData = {};
+	$.ajax({
+       type: "GET",
+       contentType: "application/json; charset=utf-8",
+       url: "../seOfficeWiseWorksCount?ceOfficeId="+id,
+       dataType: "json",
+       async: false,
+       success: function (Result) {
+       	 var chartData = [];
+       	for (var i in Result) {
+       		 var data = new Array(Result[i].name, Result[i].count1);
+               chartData.push(data);
+           }
+       	 finalData = { name: name, id: id, data: chartData, drilldown:true };
+       },
+       error: function (Result) {
+           alert("Error" + Result);
+       }
+   });
+	return finalData;
+}
+$(document).ready(function() {
+	
+	
+	$.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        url: "../workTypeWiseStatus",
+        dataType: "json",
+        success: function (Result) {
+        	
+            var notStartedData = [];
+            var inProgressData = [];
+            var onHoldData = [];
+            var completedData = [];
+            var workTypeNamesData = [];
+            for (var i in Result) {
+            	 
+                var notStarted = { name: Result[i].name, y: Result[i].count1, drilldown:true, id: Result[i].id };
+                //var notStarted = new Array(Result[i].name, Result[i].count1);
+                notStartedData.push(notStarted);
+                
+                var inProgress = { name: Result[i].name, y: Result[i].count2, drilldown:true, id: Result[i].id };
+                //var inProgress = new Array(Result[i].name, Result[i].count2);
+                inProgressData.push(inProgress);
+                
+                var onHold = { name: Result[i].name, y: Result[i].count3, drilldown:true, id: Result[i].id };
+                //var onHold = new Array(Result[i].name, Result[i].count3);
+                onHoldData.push(onHold);
+                
+                var completed = { name: Result[i].name, y: Result[i].count4, drilldown:true, id: Result[i].id };
+                //var completed = new Array(Result[i].name, Result[i].count4);
+                completedData.push(completed);
+                
+                var workTypeNames = new Array(Result[i].name);
+                workTypeNamesData.push(workTypeNames);
+            }
+            obj = [
+                   {
+               	    	name: 'Completed',
+  		               data: completedData,
+  		             color: '#85e085'
+               	     },
+               	  {
+                	    	name: 'In Progress',
+     		               data: inProgressData,
+     		               color: '#ffb3ff'
+                  	     },
+                  	   {
+                  	    	name: 'On Hold',
+       		               data: onHoldData,
+       		             color: '#ff794d'
+                    	     },
+               	     {
+            	       name: 'Not Started',
+ 		               data: notStartedData,
+ 		              color: '#66c2ff'
+           	     }
+           	];
+            
+            DrawColumnChart(obj, workTypeNamesData);
+        },
+        error: function (Result) {
+            alert("Error" + Result);
+        }
+    });
+	
+	/*$.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        url: "../districtWiseWorkStatus",
+        dataType: "json",
+        success: function (Result) {
+            var notStartedData = [];
+            var inProgressData = [];
+            var onHoldData = [];
+            var completedData = [];
+            var workTypeNamesData = [];
+            for (var i in Result) {
+                var notStarted = new Array(Result[i].name, Result[i].count1);
+                notStartedData.push(notStarted);
+                
+                var inProgress = new Array(Result[i].name, Result[i].count2);
+                inProgressData.push(inProgress);
+                
+                var onHold = new Array(Result[i].name, Result[i].count3);
+                onHoldData.push(onHold);
+                
+                var completed = new Array(Result[i].name, Result[i].count4);
+                completedData.push(completed);
+                
+                var workTypeNames = new Array(Result[i].name);
+                workTypeNamesData.push(workTypeNames);
+            }
+            
+            DrawColumnChart1(notStartedData, inProgressData, onHoldData, completedData, workTypeNamesData);
+        },
+        error: function (Result) {
+            alert("Error" + Result);
+        }
+    });*/
+	
+	$.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        url: "../statusWiseWorkStatus",
+        dataType: "json",
+        success: function (Result) {
+        	 var chartData = [];
+        	for (var i in Result) {
+        		var color='';
+        		if(Result[i].id==1){
+        			color='#66c2ff';
+        		}
+        		else if(Result[i].id==2){
+        			color='#ffb3ff';
+        		}
+        		else if(Result[i].id==3){
+        			color='#ff794d';
+        		}
+        		else if(Result[i].id==4){
+        			color='#85e085';
+        		}
+        		 var chart = { name: Result[i].name, y: Result[i].count1, color: color };
+                //var chart = new Array(Result[i].name, Result[i].count1, color);
+                chartData.push(chart);
+            }
+            DrawStatusWisePieChart(chartData);
+        },
+        error: function (Result) {
+            alert("Error" + Result);
+        }
+    });
+	
+	$.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        url: "../ceOfficeWiseWorksCount",
+        dataType: "json",
+        success: function (Result) {
+        	 var chartData = [];
+        	for (var i in Result) {
+        		var color='';
+        		if(Result[i].id==1){
+        			color='#66c2ff';
+        		}
+        		else if(Result[i].id==2){
+        			color='#ffb3ff';
+        		}
+        		else if(Result[i].id==3){
+        			color='#ff794d';
+        		}
+        		else if(Result[i].id==4){
+        			color='#85e085';
+        		}else if(Result[i].id==4){
+        			color='#85e085';
+        		}
+                //var chart = new Array(Result[i].name, Result[i].count1);
+                var chart = { name: Result[i].name, y: Result[i].count1, drilldown:true, id: Result[i].id };
+                chartData.push(chart);
+            }
+            DrawOfficeWisePieChart(chartData);
+        },
+        error: function (Result) {
+            alert("Error" + Result);
+        }
+    });
+						
+});
+/*]]>*/
+</script>
+</head>
+
+<div>
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <!-- <li class="breadcrumb-item active">Dashboard</li> -->
+
+        <!-- Breadcrumb Menu-->
+        <!-- <li class="breadcrumb-menu d-md-down-none">
+          <div class="btn-group" role="group" aria-label="Button group">
+            <a class="btn" data-ng-click="doTheBack()"><i class="icon-arrow-left-circle"></i> &nbsp;Back</a>
+          </div>
+        </li> -->
+      </ol>
+
+      <div class="container-fluid">
+
+        <div class="animated fadeIn">
+        	<!-- <div class="row">
+            <div class="col-sm-6 col-lg-3">
+              <div class="card">
+                <div class="count-box">
+                  <div class="icon bg-primary">
+                    <i class="fa fa-folder-open"></i>
+                  </div>
+                  <div>
+                    <h4>29</h4>
+                    <p class="mb-0">Total Projects</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+
+            <div class="col-sm-6 col-lg-3">
+              <div class="card">
+                <div class="count-box">
+                  <div class="icon bg-warning">
+                    <i class="fa fa-files-o"></i>
+                  </div>
+                  <div>
+                    <h4>11</h4>
+                    <p class="mb-0">Completed Work</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+
+            <div class="col-sm-6 col-lg-3">
+               <div class="card">
+                <div class="count-box">
+                  <div class="icon bg-info">
+                    <i class="fa fa-inr"></i>
+                  </div>
+                  <div>
+                    <h4>9</h4>
+                    <p class="mb-0">In Progress</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+            <div class="col-sm-6 col-lg-3">
+               <div class="card">
+                <div class="count-box">
+                  <div class="icon bg-danger">
+                    <i class="fa fa-list-ul"></i>
+                  </div>
+                  <div>
+                    <h4>9</h4>
+                    <p class="mb-0">On Hold &amp; Not Started</p>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          
+          </div>-->
+          
+          <div id="container" style="max-width: 100%; min-height: 400px; margin: 0 auto"></div>
+         
+           <div id="statusWisePieContainer" style="padding-top: 20px;"></div>
+          <div id="officeWisePieContainer" style="padding-top: 20px;"></div>
+          <!--  <div id="container1" style="max-width: 100%; min-height: 400px; margin: 0 auto;padding-top: 20px;"></div>-->
+
+          <!-- <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                 <i class="fa fa-folder-open-o"></i> Reports
+                </div>
+                <div class="card-body">
+                  form
+                  <div class="row">
+                    <div class="form-group col-sm-4">
+                      <label for="company">Company</label>
+                      <input type="text" class="form-control" id="company" placeholder="Enter your company name"/>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                      <label for="vat">Place</label>
+                      <input type="text" class="form-control" id="Place" placeholder="Enter Place"/>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                      <label for="street">Street</label>
+                      <input type="text" class="form-control" id="street" placeholder="Enter street name"/>
+                    </div>
+
+                    <div class="col-md-12 text-right mb-3">
+                      <a href="" class="btn btn-success">Submit</a>
+                    </div>
+
+                  </div>
+                  table
+                  <div class="table-responsive">
+                  <table class="table table-hover table-outline">
+                    <thead class="thead-default">
+                      <tr>
+                        <th>#</th>
+                        <th>Header</th>
+                        <th>Header</th>
+                        <th>Header</th>
+                        <th>Header</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1,002</td>
+                        <td>amet</td>
+                        <td>consectetur</td>
+                        <td>adipiscing</td>
+                        <td>
+                          <a href="" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </a>
+                          <a href="" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>1,003</td>
+                        <td>Integer</td>
+                        <td>nec</td>
+                        <td>odio</td>
+                        <td>
+                          <a href="" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </a>
+                          <a href="" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>1,003</td>
+                        <td>libero</td>
+                        <td>Sed</td>
+                        <td>cursus</td>
+                        <td>
+                          <a href="" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </a>
+                          <a href="" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>1,004</td>
+                        <td>dapibus</td>
+                        <td>diam</td>
+                        <td>Sed</td>
+                        <td>
+                          <a href="" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </a>
+                          <a href="" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>1,005</td>
+                        <td>Nulla</td>
+                        <td>quis</td>
+                        <td>sem</td>
+                        <td>
+                          <a href="" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </a>
+                          <a href="" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>1,006</td>
+                        <td>nibh</td>
+                        <td>elementum</td>
+                        <td>imperdiet</td>
+                        <td>
+                          <a href="" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </a>
+                          <a href="" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                  <ul class="pagination float-right">
+                    <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                    <li class="page-item active">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            /.col
+          </div> -->
+          <!--/.row-->
+          <!-- <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-files-o"></i> Form
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-sm-4">
+                      <label for="company">Company</label>
+                      <input type="text" class="form-control" id="company" placeholder="Enter your company name"/>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                      <label for="Place">Place</label>
+                      <input type="text" class="form-control" id="Place" placeholder="Place"/>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                      <label for="street">Street</label>
+                      <input type="text" class="form-control" id="street" placeholder="Enter street name"/>
+                    </div>
+                  </div>
+                  <div class="row">
+
+                    <div class="form-group col-sm-8">
+                      <label for="city">City</label>
+                      <input type="text" class="form-control" id="city" placeholder="Enter your city"/>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                      <label for="postal-code">Postal Code</label>
+                      <input type="text" class="form-control" id="postal-code" placeholder="Postal Code"/>
+                    </div>
+
+                  </div>
+                  /.row
+
+                  <div class="form-group">
+                    <label for="country">Country</label>
+                    <input type="text" class="form-control" id="country" placeholder="Country name"/>
+                  </div>
+                  <div class="form-group">
+                      <label for="">State</label>
+                      <select class="form-control">
+                        <option>Madhya Pradesh</option>
+                        <option>Gujarat</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Select District</label>
+                    <div>
+                      <div class="form-check form-check-inline">
+                        <input id="inlineCheckbox1" value="option1" type="checkbox"/>
+                        <label for="inlineCheckbox1">Betul</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input id="inlineCheckbox2" value="option2" type="checkbox"/>
+                        <label for="inlineCheckbox2">Bhopal</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input id="inlineCheckbox3" value="option3" type="checkbox"/>
+                        <label for="inlineCheckbox3">Rewa</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-sm btn-danger">Reset</button>
+                </div>
+              </div>
+            </div>
+            /.col
+          </div> -->
+          <!--/.row-->
+          <!-- tabs -->
+          <!-- <div class="mb-4">
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#home3" role="tab" aria-controls="home"><i class="icon-calculator"></i> Tab1</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile"><i class="icon-list"></i> Tab2</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#messages3" role="tab" aria-controls="messages"><i class="icon-pie-chart"></i> Tab3</a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="home3" role="tabpanel">
+                  1. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                </div>
+                <div class="tab-pane" id="profile3" role="tabpanel">
+                  2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                  dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+                <div class="tab-pane" id="messages3" role="tabpanel">
+                  3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                  dolor in reprehenderit in voluptate velit esse cillum...
+                </div>
+              </div>
+            </div> -->
+        </div>
+
+      </div>
+      <!-- /.container-fluid -->
+    
+    </div>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+
+<script th:src="@{/js/datepicker/jquery.ui.datepicker.js}"></script>
+<script th:src="@{/js/datepicker/jquery-ui.min.js}"></script>
+
+<link th:href="@{/css/datepicker/jquery.ui.datepicker.css}"
+	rel="stylesheet" />
+<link th:href="@{/css/datepicker/jquery-ui.min.css}" rel="stylesheet" />
+
+</head>
+
+<div id="StartOrFinishSpinnerId"></div>
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+
+		<li class="breadcrumb-item active"><span
+			th:text="#{edit_sor_definition}">Edit SoR Definition </span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" href="#" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header top-header">
+							<i class="fa fa-wpforms"></i> <span th:text="#{sor_definition}">SoR
+								Definition</span>
+						</div>
+						<div class="col-md-12">
+							<div data-ng-if="responseObject.errorMessage != null"
+								class="text-danger">
+								<strong>Error!</strong>
+								<p>{{responseObject.errorMessage}}</p>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div data-ng-if="errorMessage1 != null" class="text-danger">
+								<strong>Error!</strong>
+								<p>{{errorMessage1}}</p>
+							</div>
+						</div>
+						<form data-ng-submit="editSOR(sorForm, sorForm.$valid)"
+							name="sorForm" data-ng-init="fetchSOR()" novalidate="novalidate">
+							<!-- <div class="card-header">
+								<span th:text="#{contractor}">Contractor</span>
+							</div>
+							  -->
+							<div class="card-body">
+								<div class="row">
+									<div class="form-group col-sm-4">
+
+										<label><span th:text="#{sor_reference_name}">SoR
+												Reference Name</span> <!-- <span class="aestrick">&#42;</span> -->
+										</label> <input required="required" type="text" class="form-control"
+											id="amount" data-ng-model="sorBean.referenceName"
+											name="referenceName" maxlength="90" />
+
+										<div data-ng-show="sorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="sorForm.referenceName.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{reference_name}">referenceName</span>
+											</p>
+										</div>
+
+									</div>
+
+									<div class="form-group col-sm-4">
+
+										<label><span th:text="#{year}">Year</span>
+										<!-- <span
+											class="aestrick">&#42;</span> --></label> <select
+											class="form-control" required="required"
+											data-ng-init="loadYears()" data-ng-model="sorBean.year.id"
+											name="year" id="year">
+											<option value="" disabled="disabled">--Select--</option>
+											<option data-ng-repeat="year in years" value="{{year.id}}">{{year.year}}</option>
+										</select>
+
+										<div data-ng-show="sorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="sorForm.year.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{year}">year</span>
+											</p>
+										</div>
+									</div>
+
+									<div class="form-group col-sm-4">
+
+										<label><span th:text="#{date_of_adoption}">Date
+												of Adoption</span> <!-- <span class="aestrick">&#42;</span> --> </label> <input
+											type="text" class="form-control" data-target="#datepicker"
+											id="datepicker" data-ng-model="sorBean.dateOfAdoption"
+											name="dateOfAdoption" maxlength="90" />
+
+										<div data-ng-show="sorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="sorForm.dateOfAdoption.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{date_of_adoption}">date_of_adoption</span>
+											</p>
+										</div>
+									</div>
+
+								</div>
+
+
+								<div class="row">
+									<div class="form-group col-sm-4">
+
+										<label><span th:text="#{status}">Status</span> <!-- <span class="aestrick">&#42;</span> -->
+										</label> <select class="form-control" required="required"
+											data-ng-init="loadStatus()" data-ng-model="sorBean.status.id"
+											name="status" id="status">
+											<option value="" disabled="disabled">--Select--</option>
+											<option data-ng-repeat="status in statuses"
+												value="{{status.id}}">{{status.statusName}}</option>
+										</select>
+
+										<div data-ng-show="sorForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="sorForm.status.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{status}">status</span>
+											</p>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="row">
+									<div class="form-group col-sm-4">
+
+										<label><span th:text="#{remarks}">Remarks</span> <!-- <span class="aestrick">&#42;</span> -->
+										</label>
+										<textarea rows="2" cols="100" class="form-control-textarea"
+											data-ng-model="sorBean.remarks" name="remarks"></textarea>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+							<div class="card-footer text-right">
+
+								<button type="submit" class="btn btn-sm btn-primary"
+									data-ng-click="submit=true">
+									<span th:text="#{update}">update</span>
+								</button>
+
+								<button type="button" class="btn btn-sm btn-primary"
+									data-ng-click="doTheBack()">
+									<span th:text="#{Cancel}">Cancel</span>
+								</button>
+
+							</div>
+
+
+						</form>
+					</div>
+				<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<i class="fa fa-wpforms"></i> <span th:text="#{chapter_definition}">Chapter Definition</span>
+						</div>
+						<div class="col-md-12">
+							<div data-ng-if="responseObject.errorMessage != null"
+								class="text-danger">
+								<strong>Error!</strong>
+								<p>{{responseObject.errorMessage}}</p>
+							</div>
+						</div>
+						
+						<div class="col-md-12">
+							<div data-ng-if="errorMessage1 != null"	class="text-danger">
+								<strong>Error!</strong>
+								<p>{{errorMessage1}}</p>
+							</div>
+						</div>
+						<form data-ng-submit="addChapter(chapterForm, chapterForm.$valid)"	name="chapterForm" data-ng-init="" novalidate="novalidate">
+							<!-- <div class="card-header">
+								<span th:text="#{contractor}">Contractor</span>
+							</div> -->
+							 
+							 
+							<div class="card-body">
+								<div class="row">
+									<div class="form-group col-sm-4">
+									
+										<label><span th:text="#{chapter_number}">Chapter Number</span>
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+											<input required="required" type="text" class="form-control" 
+													id="amount"   
+													data-ng-model="chapterBean.chapterNumber" name="chapterNumber"
+													maxlength="90" />				
+										
+											 <div data-ng-show="chapterForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="sorForm.chapterNumber.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{chapter_number}">Chapter Number</span>
+											</p>
+										</div>
+										
+									</div>
+									
+									
+									  <div class="form-group col-sm-4">
+									
+										<label><span th:text="#{chapter_name}">Chapter Name</span>
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											
+											<input required="required" type="text" class="form-control" data-ng-model="chapterBean.chapterName" name="chapterName"/>				
+										 <div data-ng-show="chapterForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="sorForm.chapterName.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{chapter_name}">Chapter Name</span>
+											</p>
+										</div>
+									</div>
+									 
+								</div>
+					
+					
+					<div class="row">
+									<div class="form-group col-sm-4">
+									
+										<label><span th:text="#{remarks}">Remarks</span> 
+										<!-- <span class="aestrick">&#42;</span> -->
+										</label> 
+											<textarea rows="2" cols="100" class="form-control-tex tarea" data-ng-model="chapterBean.remarks" name="remarks"></textarea>
+											<!-- <input type="text" data-ng-model="chapterBean.sor.id" value="@{{session.sorId}}" /> -->
+											
+									</div>
+									 
+					</div>
+						 
+							</div>
+							
+						<div class="card-footer text-right">
+								
+								<button type="submit" class="btn btn-sm btn-primary" data-ng-click="submit=true" > 
+									<span th:text="#{submit}">Submit</span>
+								</button>
+								
+								<button type="button" class="btn btn-sm btn-primary" data-ng-click="doTheBack()" > 
+									<span th:text="#{Cancel}">Cancel</span>
+								</button>
+					</div>
+							
+						
+						</form>
+					</div>
+				<!--/.col-->
+				</div></div>
+				</div>
+				</div>
+				</div>
+			</div>
+			</div>
+			<!--/.row-->
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</html>

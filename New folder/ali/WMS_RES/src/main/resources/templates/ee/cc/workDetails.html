@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+<style>
+#dynamic-table tr td:first-child {
+	vertical-align: baseline;
+}
+</style>
+
+
+<script type="text/javascript">
+
+function updateOfficer() {
+	angular.element("#dynamic-table").scope().loadupdateOfficer();
+};	
+
+</script>
+
+</head>
+
+<div id="StartOrFinishSpinnerId"></div>
+
+<div id="page-div">
+	<!-- Breadcrumb -->
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item active"><a href="#cc/workList"><span
+				th:text="#{Completion_Certificate_Work_List}">Completion_Certificate_Work_List</span></a></li>
+		<li class="breadcrumb-item active"><span th:text="#{workDetails}">Work
+				Details</span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+	<div class="container-fluid" data-ng-init="loadWorkDetail()">
+		<!-- fetchFullDetailsForWork -->
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<i class="fa fa-folder-open-o"></i> <span
+								th:text="#{workDetails}">Work Details</span>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div data-ng-if="responseObject.successMessage != null"
+										class="text-success">
+										<strong>Success!</strong>
+										<p>{{responseObject.successMessage}}</p>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div style="border: 1px solid #ddd;">
+										<div class="col-md-8"
+											style="float: left; margin: 10px 0 10px 0">
+											<h5>
+												<b> {{workData.workName}}
+													[{{workData.workRequisitionNo}}] </b>
+												{{workData.agencyTypeBean.agencyTypeNameE}} |
+												{{workData.gramPanchayatName ? workData.gramPanchayatName :
+												'-'}}
+											</h5>
+											<h6>
+												<b> Contractor Name </b> : {{workData.contractorName}}
+											</h6>
+											<h6>
+												<b>Current Status</b> : {{workData.status}} In Progress | <b>Current
+													Stage</b> : {{workData.physicalStageType}}
+											</h6>
+										</div>
+
+										<div class="col-md-4"
+											style="float: right; margin: 10px 0 10px 0">
+											<ul class="nav nav-pills nav-justified" role="tablist">
+												<li class="nav-item"><a class="nav-link active"
+													data-toggle="tab" href=".tab1" role="tab">Info</a></li>
+												<li class="nav-item"><a class="nav-link" data-ng-init="filesFilter='All'"
+													data-ng-click="fetchFileListForWork(filesFilter)" data-toggle="tab"
+													href=".tab2" role="tab">File &amp; Inspections</a></li>
+												<li class="nav-item"><a class="nav-link"
+													data-ng-click="fetchBillListForWork()" data-toggle="tab"
+													href=".tab3" role="tab">Bills &amp; Payments</a></li>
+											</ul>
+										</div>
+
+										<div style="clear: both;"></div>
+									</div>
+
+									<div class="tab-content">
+										<div class="tab-pane tab1 active" role="tabpanel">
+											<div class="col-md-6"
+												style="float: left; margin: 0 5px 0 5px; max-width: 49%; padding: 0">
+												<div class="card">
+													<div class="card-header">
+														<i class="fa fa-folder-open-o"></i> <span>Work
+															Details</span>
+													</div>
+													<div class="card-body">
+														<div class="row">
+															<div class="col-md-12">
+																<b>Work Details : </b>
+																<ul>
+																	<li><b>Type</b> :
+																		{{workData.workTypeBean.workTypeNameE}},
+																		{{workData.workSubTypeBean.workSubTypeNameE ?
+																		workData.workSubTypeBean.workSubTypeNameE : '-'}}</li>
+																	<li><b>Line Department</b> :
+																		{{workData.lineDepartmentBean.lineDepartmentNameE}}</li>
+																	<li><b>Received through</b> : No. {{workData.letterNo}} Dated {{workData.letterDateString}}</li>
+																	<li><b>Executed By</b> :
+																		{{workData.agencyTypeBean.agencyTypeNameE}}</li>
+																</ul>
+																<div >
+																	<b>Technical Sanction :</b>
+																	<ul>
+																		<li  data-ng-repeat="technicalSanctionBean in workData.technicalSanctionBeanList">
+																		<b>Initial TS No./Date</b> : {{technicalSanctionBean.technicalSanctionNo}} /
+																			{{technicalSanctionBean.technicalSanctionDate}} | <b>TS Amount</b> : Rs. {{technicalSanctionBean.technicalSanctionAmount}}
+																		</li>
+																	</ul>
+																</div>
+																
+																<div>
+																	<b>Administrative Sanction :</b>
+																	<ul>
+																		<li data-ng-repeat="administrationSanctionBean in workData.administrationSanctionBeanList">
+																		<b>{{administrationSanctionBean.administrationSanctionTypeBean.administrationSanctionType}}  AS No./Date</b> :
+																			{{administrationSanctionBean.administrationSanctionNo}} /
+																			{{administrationSanctionBean.administrationSanctionDate}} | <b> AS Amount</b> : Rs.
+																			{{administrationSanctionBean.administrationSanctionAmount}}
+																		</li>
+																	</ul>
+																</div>
+																
+																<div data-ng-if="workData.pacAmount">
+																	<b>Tender Details :</b>
+																	<ul>
+																		<li><b>PAC Amount</b> : Rs.
+																			{{workData.pacAmount}} | <b>Tendered Rate</b> :
+																			{{workData.tenderedRatePer}}%
+																			{{(workData.tenderedRateSign=="-")?"Below":"Above"}}</li>
+																		<li><b>Contract Amount</b> : Rs.
+																			{{workData.tenderCost}}</li>
+																	</ul>
+																</div>
+																<div data-ng-if="workData.writtenOrderDate">
+																	<b>Work Order / Agreement Details :</b>
+																	<ul>
+																		<li><b>W.O. Date</b> :
+																			{{workData.writtenOrderDate}}</li>
+																		<li><b>Agreement No.</b>
+																			{{workData.agreementNumber}} | <b>Agreement Date</b>
+																			: {{workData.agreementDateString}}</li>
+																		<li><b>Stipulated Date of Work Completion</b> :
+																			{{workData.tentativeCompletionDateString}}</li>
+																	</ul>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="card">
+													<div class="card-header">
+														<i class="fa fa-folder-open-o"></i> <span>Associate Officers Details</span>
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-refresh"></i> 
+														<a href="javascript:void(0)" onclick="updateOfficer()">Update Officer</a>
+													</div>
+													<div class="card-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="table-responsive">
+																	<table id="dynamic-table"
+																		class="table table-striped table-bordered table-hover table-outline">
+																		<thead class="thead-default">
+																			<tr>
+																				<th width="9%"><span>S. No.</span></th>
+																				<th width="43%"><span>Officer Name
+																						[Designation]</span></th>
+																				<th width="43%"><span>Association Date</span></th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																		
+																		
+																			<!-- <tr data-ng-if="workData.assistantEngineerId">
+																				<td>1.</td>
+																				<td>{{workData.executiveEngineerOfficeName}} [Exe.
+																					Office Engg.]</td>
+																				<td>{{workData.createdDateString}}</td>
+																			</tr> -->
+																			<tr data-ng-if="workData.assistantEngineerId">
+																				<td>1.</td>
+																				<td>{{workData.assistantEngineerName}} [Asst.
+																					Engg.]</td>
+																				<td>{{workData.createdDateString}}</td>
+																			</tr>
+																			<tr data-ng-if="workData.subEngineerId">
+																				<td>2.</td>
+																				<td>{{workData.subEngineerName}} [Sub Engg.]</td>
+																				<td>{{workData.createdDateString}}</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										
+				<div class="modal fade popup-lg" tabindex="-1" role="dialog"
+							aria-labelledby="myLargeModalLabel" aria-hidden="true"
+							id="officer-update-popup">
+							<div class="modal-dialog modal-lg modal-map" style="max-width:50%;margin-top:15%;">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h6 class="modal-title"><span>Update Officer </span>
+										</h6>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="col-md-12" style="margin-top:20px;">
+										<form data-ng-submit="updateOfficer(form, form.$valid)"	name="form" novalidate="novalidate">
+									
+									<input type="hidden" id="id" data-ng-model="workData.workId" name="workId"/>
+									<b>{{workData.workName}} [{{workData.workRequisitionNo}}]</b>
+									<!-- sub   {{workData.subEngineerId}}
+									Asst  {{workData.assistantEngineerId}} -->
+									
+											<div class="card-body">
+									<div class="row">
+								<div class="form-group col-sm-5">
+											<label><span th:text="#{associateEeOffice}">Associate Executive Engineer Office</span><span class="aestrick">&#42;</span></label> 
+											<input type="text"
+											
+												class="form-control" id="workEEOfficeId"
+												required="required" 
+												data-ng-model="workData.userBean.officeBean.officeName"
+												name="workExecutiveEngineerOffice"  data-ng-readonly="true" />
+												<input type="hidden" data-ng-model="workData.userBean.officeBean.id" />
+												<input type="hidden" data-ng-model="workData.userBean.officeBean.parentOffice.id" />
+												<input type="hidden" data-ng-model="workData.userBean.officeBean.chiefEngineerOfficeId" />
+										 
+										</div>
+										
+										<div class="form-group col-sm-5">
+											<label><span th:text="#{associateAe}">Associate Assistant Engineer</span>
+											
+											
+											<span th:text="#{ifAvailable}">If Available</span>
+											<span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="workAEId"
+												data-ng-model="workData.assistantEngineerId"
+												name="workAssistantEngineerName">
+												<option disabled="disabled">--Select--</option>
+												<option data-ng-show="assistantEngineers.length > 0"
+													data-ng-repeat="assistantEngineer in assistantEngineers | orderBy : 'name'"
+													value="{{assistantEngineer.id}}">{{assistantEngineer.name}}</option>
+													<option value="" >No One Associated</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAssistantEngineerName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{associateAe}">Associate Assistant Engineer</span>
+												</p>
+											</div>
+										</div>
+										
+										<div class="form-group col-sm-5">
+											<label><span th:text="#{associateSube}">Associate Sub Engineer</span>
+											
+											<span th:text="#{ifAvailable}">If Available</span>
+											<span class="aestrick">&#42;</span></label> 
+											<select
+												class="form-control" id="workSUBEId"
+												data-ng-model="workData.subEngineerId"
+												name="workSubEngineerName" >
+												<option disabled="disabled" >--Select--</option>
+												<option data-ng-show="subEngineers.length > 0"
+													data-ng-repeat="subEngineer in subEngineers | orderBy : 'name'"
+													value="{{subEngineer.id}}">{{subEngineer.name}}</option>
+													<option value="" >No One Associated</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workSubEngineerName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{associateSube}">Associate Sub Engineer</span>
+												</p>
+											</div>
+										</div>
+										
+										
+										
+									</div>
+								</div>
+								
+								<div class="form-group col-sm-12">
+													<div class="text-right">
+														<button type="submit" class="btn btn-sm btn-success">
+															<span th:text="#{submit}">Submit</span>
+														</button>												
+													</div>	
+												</div>
+										</form>
+									</div>					
+								</div>
+							</div>
+						</div>
+
+											<div class="col-md-6"
+												style="float: right; margin: 0 5px 0 5px; max-width: 49%; padding: 0">
+												<div class="card">
+													<div class="card-header">
+														<i class="fa fa-folder-open-o"></i> <span>Contractor
+															Information</span>
+													</div>
+													<div class="card-body">
+														<div class="row">
+															<div class="col-md-12">
+																<b>{{workData.contractorBean.name}} </b>
+																<ul>
+																	<li><b>Office</b> :
+																		{{workData.contractorBean.address}}</li>
+																	<li><b><i class="fa fa-phone"></i></b> :
+																		{{workData.contractorBean.contactNo}} | <b><i
+																			class="fa fa-envelope"></i></b> :
+																		{{workData.contractorBean.emailId}}</li>
+																	<li><b>PAN</b> : {{workData.contractorBean.pan}}</li>
+																	<li><b>GSTIN</b> :
+																		{{workData.contractorBean.gstin}}</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="card">
+													<div class="card-header">
+														<i class="fa fa-folder-open-o"></i> <span>Mile-Stone
+															Details</span>
+													</div>
+													<div class="card-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div style="margin-bottom: 15px">
+																	<div class="card-header">
+																		<span th:text="#{Financial_Milestone}">Financial
+																			Milestone</span>
+																	</div>
+																	<table
+																		class="table table-striped table-bordered table-hover margin0 tbl-vm">
+																		<thead class="thead-default">
+																			<tr valign="middle" align="center">
+																				<th width="10%"  >Mile Stone</th>
+																				<th width="30%">Mile Stone Description</th>
+																				<th width="30%">Completion Date</th>
+																				<th width="30%">Min. Cummulative Financial
+																					Progress</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<tr
+																				data-ng-repeat="financialStageBean in workData.workAgreementBean.workFinancialMileStoneBeanList">
+																				<td>{{$index+1}}</td>
+																				<td>{{financialStageBean.financialStageName}}</td>
+																				<td><input type="text"
+																					data-ng-model="financialStageBean.completionDate"
+																					required="required"
+																					class="form-control datepicker1"
+																					name="fcompletionDate_{{$index}}"
+																					id="fcompletionDate_{{$index}}" autocomplete="off"
+																					disabled="disabled" /></td>
+																				<td><input type="text"
+																					class="form-control digits-only"
+																					data-ng-model="financialStageBean.cumulative"
+																					maxlength="10" required="required"
+																					name="cumulative_{{$index}}"
+																					id="cumulative_{{$index}}" disabled="disabled" /></td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</div>
+
+																<div style="margin-bottom: 15px"
+																	data-ng-if="workData.workAgreementBean.workPhysicalMileStoneBeanList">
+																	<div class="card-header">
+																		<span th:text="#{Physical_Milestone}">Physical
+																			Milestone</span>
+																	</div>
+																	<table
+																		class="table table-striped table-bordered table-hover margin0 tbl-vm">
+																		<thead class="thead-default">
+																			<tr valign="middle" align="centre">
+																				<th width="10%" valign="middle" align="centre">Mile Stone</th>
+																				<th width="30%" valign="middle" align="centre">Mile Stone Description</th>
+																				<th width="30%" valign="middle" align="center">Completion Date</th>
+																				<th width="30%" valign="middle" align="center" ></th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<tr
+																				data-ng-repeat="physicalStageBean in workData.workAgreementBean.workPhysicalMileStoneBeanList">
+																				<td>{{$index+1}}</td>
+																				<td>{{physicalStageBean.physicalStageName}}</td>
+																				<td><input type="text"
+																					data-ng-model="physicalStageBean.completionDate"
+																					required="required"
+																					class="form-control datepicker2"
+																					name="pcompletionDate_{{$index}}"
+																					id="pcompletionDate_{{$index}}" autocomplete="off"
+																					disabled="disabled" /></td>
+																				<td></td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div style="clear: both;"></div>
+										</div>
+
+										<div class="tab-pane tab2" role="tabpanel">
+
+											<div class="card">
+												<div class="card-header">		
+													<div style="float: left;padding-top: 8px;">											
+														<i class="fa fa-folder-open-o"></i> <span>File and
+															Inspections</span>
+													</div>
+													<div style="float:right;">
+														<div class="form-group" style="margin-bottom:0">															 
+															<select class="form-control" data-ng-model="filesFilter" data-ng-change="fetchFileListForWork(filesFilter)" style="background:white;">																																
+									                            <option selected="selected" value="All">Select All</option>
+									                            <option value="Work Requisition">Work Requisition</option>
+									                            <option value="Work Estimation">Work Estimation</option>									                            
+									                            <option value="Technical Sanction">Technical Sanction</option>
+									                            <option value="Administrative Sanction">Administrative Sanction</option>
+									                            <option value="Work Tender and Agreement">Work Tender and Agreement</option>									                            
+									                            <option value="Bills">Bills</option>
+									                            <option value="Physical Inspection">Physical Inspection</option>
+									                            <option value="Final Inspection">Final Inspection</option>
+									                            <option value="Completion Certificate Initiated">Completion Certificate Initiated</option>
+									                            <option value="Physical Completion Certificate">Physical Completion Certificate</option>
+									                            <option value="Financial Completion Certificate">Financial Completion Certificate</option>									                            
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="card-body">
+													<div class="row">
+														<div class="col-md-12">
+															<table id="dynamic-table3"
+																class="table table-striped table-bordered table-hover table-outline">
+																<tbody>																	
+																	<tr data-ng-repeat="fileData in fileList | orderBy:'date':true">
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Work Requisition'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Work Requisition</b>
+																				</h5>
+																				<h6>
+																					Work Name : {{fileData.object.workName}} [{{fileData.object.workRequisitionNo}}] | 
+																					Received From : {{fileData.object.lineDepartmentBean.lineDepartmentNameE}} | 
+																					Letter No. : {{fileData.object.letterNo}} | Dated : {{fileData.object.letterDateString}}
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#viewLegacyDataRoute/{{fileData.object.workId}}" data-ng-if="fileData.object.isLegacy==1"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>
+																					<a target="_blank" href="#viewWorkRequisitionDataRouteForReq/{{fileData.object.workId}}" data-ng-if="fileData.object.isLegacy==0"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>
+																				</h6>
+																			</div>
+																		</td>																	
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Work Estimation'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Work Estimation</b>
+																				</h5>
+																				<h6>
+																					Estimation Type : {{fileData.object.estimationType}} | Estimated Amount : {{fileData.object.estimatedAmount}} | Approved By : {{fileData.object.estimationApprovedBy}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#viewHEstimation/{{fileData.object.estimationId}}/{{fileData.object.workId}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Technical Sanction'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Technical Sanction</b>
+																				</h5>
+																				<h6>
+																					Type : {{fileData.object.technicalSanctionTypeBean.technicalSanctionType}} | TS Number : {{fileData.object.technicalSanctionNo}} | TS Date : {{fileData.object.technicalSanctionDate}} | TS Amount : Rs. {{fileData.object.technicalSanctionAmount}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#editTechnicalSanctionRoute/{{fileData.object.workId}}/{{fileData.object.estimationId}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Administrative Sanction'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Administrative Sanction</b>
+																				</h5>
+																				<h6>
+																					Type : {{fileData.object.administrationSanctionTypeBean.administrationSanctionType}} | AS Number : {{fileData.object.administrationSanctionNo}} | AS Date : {{fileData.object.administrationSanctionDate}} | AS Amount : Rs. {{fileData.object.asAmount}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#editAdminSanctionRoute/{{fileData.object.workId}}/{{fileData.object.technicalSanctionId}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Work Tender'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Tender Details</b>
+																				</h5>
+																				<h6>
+																					PAC Amount : Rs. {{fileData.object.amountOfContract}} | Tendered Rate : {{fileData.object.tenderedRate}}% {{fileData.object.tenderedRateSign=='-'?'Below':'Above'}} | Contract Cost : Rs. {{fileData.object.tenderCost}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#viewTender/{{fileData.object.workId}}/{{fileData.object.administrationSanctionId}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>																		
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Work Agreement'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Agreement Details</b>
+																				</h5>
+																				<h6>
+																					W.O. Date : {{fileData.object.writtenOrderDate}} | Agreement No. : {{fileData.object.agreementNumber}} | Agreement Date : {{fileData.object.agreementDate}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#viewWorkAgreement/{{fileData.object.workId}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Bills'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Bills</b>
+																				</h5>
+																				<h6>
+																					Bill No. : {{fileData.object.billNo}} | Type : {{fileData.object.billType}} | Bill Amount : Rs. {{fileData.object.billAmount}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#viewBill/{{fileData.object.id}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Physical Inspection'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Physical Inspection</b>
+																				</h5>
+																				<h6>
+																					Inspected By : {{fileData.object.inspectedBy.name}} [{{fileData.object.inspectedBy.designationBean.designation}}] | Work Stage : {{fileData.object.work.physicalStageType}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#viewInspection/{{fileData.object.id}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>																		
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Final Inspection'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Final Inspection</b>
+																				</h5>
+																				<h6>
+																					Inspected By : {{fileData.object.ccInspectionInspectedBy.name}} [{{fileData.object.ccInspectionInspectedBy.designationBean.designation}}] | Work Stage : {{fileData.object.physicalStageType}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#viewInspectionCC/{{fileData.object.workId}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Completion Certificate Initiated'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Completion Certificate Initiated</b>
+																				</h5>
+																				<h6>
+																					Work Completed On : {{fileData.object.workCompletedOn}} | Taken Over On : {{fileData.object.takenOverOn}} | Status : {{fileData.object.status}} 																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<!-- <h6>
+																					<a target="_blank" href="#viewInspectionCC/{{fileData.object.workId}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6> -->
+																			</div>
+																		</td>
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Physical Completion Certificate'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Physical Completion Certificate</b>
+																				</h5>
+																				<h6>
+																					Issued By : {{fileData.object.issuedBy.name}} [{{fileData.object.issuedBy.designationBean.designation}}] | Dispatch No. : {{fileData.object.dispatchNumber}} | Remarks : {{fileData.object.remarks}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#cc/printPhysicalCC/{{fileData.object.workId}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>
+																		<td data-ng-if="fileData.objectType=='All' || fileData.objectType=='Financial Completion Certificate'">
+																			<div class="col-md-10" style="float:left;">
+																				<h5>
+																					>> <b>Financial Completion Certificate</b>
+																				</h5>
+																				<h6>
+																					Issued By : {{fileData.object.issuedBy.name}} [{{fileData.object.issuedBy.designationBean.designation}}] | Dispatch No. : {{fileData.object.dispatchNumber}} | Remarks : {{fileData.object.remarks}}																					
+																				</h6>
+																			</div>
+																			<div class="col-md-2" style="float: right;">
+																				<h5>
+																					<b>{{fileData.date | date:'dd/MM/yyyy'}}</b>
+																				</h5>
+																				<h6>
+																					<a target="_blank" href="#cc/printFinancialCC/{{fileData.object.workId}}"
+																						class="btn btn-xs btn-warning">View Details <i
+																						class="fa fa-eye"></i>
+																					</a>																					
+																				</h6>
+																			</div>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+										<div class="tab-pane tab3" role="tabpanel">
+											<div class="col-md-6"
+												style="float: left; margin: 0 5px 0 5px; max-width: 49%; padding: 0">
+												<div class="card">
+													<div class="card-header">
+														<i class="fa fa-folder-open-o"></i> <span>Bills</span>
+													</div>
+
+													<div class="card-body">
+
+														<div class="row" data-ng-repeat="billData in billList">
+															<div class="col-md-12">
+
+																<div class="card">
+																	<div class="card-header">
+																		<i class="fa fa-folder-open-o"></i> <span>{{billData.billType}}
+																			Bill</span>
+																	</div>
+																	<div class="card-body">
+																		<div class="row">
+																			<div class="col-md-12">
+																				<span style="float: left;">Bill Amount :
+																					{{billData.billAmount}}</span> <span style="float: right;">Bill
+																					Status : {{billData.status}} </span>
+																				<div style="clear: both;"></div>
+																			</div>
+
+																			<div class="col-md-12">
+																				<span style="float: left;">Paid Amount :
+																					{{billData.paidAmount}} </span> <span
+																					style="float: right;">Paid on :
+																					{{billData.paidDate}} </span>
+																				<div style="clear: both;"></div>
+																			</div>
+
+																			<div class="col-md-12">
+																				<span style="float: left;"> <a
+																					href="#printBill/{{billData.id}}"
+																					class="btn btn-xs btn-success">Print Bill <i
+																						class="fa fa-print"></i>
+																				</a>
+																				</span> <span style="float: right;"> <a
+																					href="#viewBill/{{billData.id}}"
+																					class="btn btn-xs btn-warning">View Bill <i
+																						class="fa fa-eye"></i>
+																				</a>
+																				</span>
+																				<div style="clear: both;"></div>
+																			</div>
+
+
+																		</div>
+																	</div>
+																</div>
+
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-6"
+												style="float: right; margin: 0 5px 0 5px; max-width: 49%; padding: 0">
+												<div class="card">
+													<div class="card-header">
+														<i class="fa fa-folder-open-o"></i> <span>Deduction</span>
+													</div>
+													<div class="card-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="table-responsive">
+																	<table id="dynamic-table2"
+																		class="table table-striped table-bordered table-hover table-outline">
+																		<thead class="thead-default">
+																			<tr>
+																				<th width="50%"><span>Head Name</span></th>
+																				<th width="50%"><span>Amount (in Rs.)</span></th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<tr>
+																				<td>Security Deposit (Rs.)</td>
+																				<td>{{deductionBean.totalSecurityDeposit}}</td>
+																			</tr>
+																			<tr>
+																				<td>Income Tax (Rs.)</td>
+																				<td>{{deductionBean.totalIncomeTax}}</td>
+																			</tr>
+																			<tr>
+																				<td>Upkar (Rs.)</td>
+																				<td>{{deductionBean.totalUpkar}}</td>
+																			</tr>
+																			<tr>
+																				<td>Royalty (Rs.)</td>
+																				<td>{{deductionBean.totalRoyalty}}</td>
+																			</tr>
+																			<tr>
+																				<td>Cost Of Bill Form (Rs.)</td>
+																				<td>{{deductionBean.totalCostOfBillForm}}</td>
+																			</tr>
+																			<tr>
+																				<td>Misc. Deposit (Rs.)</td>
+																				<td>{{deductionBean.totalMiscDeposit}}</td>
+																			</tr>
+																			<tr>
+																				<td>Performance Guarantee (Rs.)</td>
+																				<td>
+																					{{deductionBean.totalPerformanceGuarantee}}</td>
+																			</tr>
+																			<tr>
+																				<td>Advance Payments (Rs.)</td>
+																				<td>{{deductionBean.totalAdvancePayments}}</td>
+																			</tr>
+																			<tr>
+																				<td>Other (Rs.)</td>
+																				<td>{{deductionBean.totalOther}}</td>
+																			</tr>
+																		</tbody>
+																		<tfoot>
+																			<tr>
+																				<th>Total (Rs.)</th>
+																				<th>
+																					{{deductionBean.totalSecurityDeposit+deductionBean.totalIncomeTax+deductionBean.totalUpkar+deductionBean.totalRoyalty+deductionBean.totalCostOfBillForm+deductionBean.totalMiscDeposit+deductionBean.totalPerformanceGuarantee+deductionBean.totalAdvancePayments+deductionBean.totalOther}}
+																				</th>
+																			</tr>
+																		</tfoot>
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+
+											</div>
+
+											<div style="clear: both;"></div>
+										</div>
+
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+										<br />
+									</div>
+
+
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+
+	</div>
+	<!-- /.container-fluid -->
+</div>
+</html>

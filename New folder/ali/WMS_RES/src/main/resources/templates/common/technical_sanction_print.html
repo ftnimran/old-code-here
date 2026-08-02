@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ग्रामीण यांत्रिकी सेवा</title>
+</head>
+<style type="text/css">
+  .cover-doc{ width: 40%;margin: 0 auto;border: 1px solid #000;padding: 10px;}
+  .center-text{text-align:center;}
+  .justify-text{text-align: justify;}
+  .table-data{ width: 100%;border-spacing: 0;border-collapse: collapse;text-align: center;}
+  .table-data td{border: 1px solid #000;}
+  .right-text{text-align: right}
+  .cover-doc h4{margin-top: -15px;}
+  @media print{
+    .cover-doc{ width: 100%;padding: 0px; border:none; }
+  }
+
+</style>
+<body>
+
+<div data-ng-init="loadWorkDetailForPrintTs();"></div>
+<div class="col-md-6" align="right">
+							<div class="form-group">
+								<img th:src="@{/img/print.png}" title="Print Technical Sanction" style="cursor: pointer;" alt="Print Technical Sanction" 
+									onclick="jQuery('#technicalSanctionForm').print();" />
+							</div>
+						</div>
+
+<br/>
+<div class="cover-doc" id="technicalSanctionForm">
+
+ <br/>
+   <h4 class="center-text"><b> {{workData.approvedByUser.officeBean.officeName}} </b></h4>
+  <br/>
+  <h4 class="center-text"><b>Rural Engineering Service </b></h4>
+  <h6 class="center-text"><b> (Address - {{workData.approvedByUser.officeBean.officeAddress}} ) </b> </h6>
+  <h6>No.</h6>
+
+ <br />
+
+<h5 class="center-text">" <b>तकनीकी स्वीकृति" </b></h5>
+<br />
+<!-- 7244/ 22/वि-10/ग्रायांसे/16 letterDateString  भोपाल दिनांक 09.12.2016 -->
+  <p class="justify-text">मध्यप्रदेश शासन, पंचायत एवं ग्रामीण विकास के ज्ञापन क्र. {{workData.letterNo}} दिनांक {{workData.letterDateString}} के द्वारा प्रदत्त तकनीकी स्वीकृति के अधिकारों के अनुक्रम में  <span data-ng-show="workData.loggedInUserRole == 'ROLE_EE'">कार्यपालन यंत्री</span> <span data-ng-show="workData.loggedInUserRole == 'ROLE_SUPDT_ENGG'">अधीक्षण यंत्री</span> <span data-ng-show="workData.loggedInUserRole == 'ROLE_CE'">मुख्य अभियंता</span> , {{workData.districtName}} के द्वारा प्रस्तुत प्राक्कलन के आधार पर निम्न कार्यों की तकनीकी स्वीकृति प्रदान की जाती है:-</p>
+
+  <table class="table-data" >
+    <thead>
+    <tr>
+      <td>क्र.</td>
+      <td>तक.स्वी./पंजी क्र. एवं दिनांक</td>
+      <td>कार्य का नाम</td>
+      <td>विकासखण्ड</td>
+      <td>योजना/मद</td>
+      <td>राशि (रू. में)</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><span>{{workData.technicalSanctionBean.technicalSanctionNo}}</span> / <span> {{workData.technicalSanctionBean.technicalSanctionDate}} </span></td>
+      <td>{{workData.workName}}</td>
+      <td>{{workData.blockName}}</td>
+      <td>{{workData.accountHeadName}}</td>
+      <td>{{workData.grandTotal}}</td>
+    </tr>
+       
+  </tbody>
+  </table>
+  <br/>
+  <p class="justify-text">उपरोक्त तकनीकी स्वीकृति निम्न निर्देशों के अंतर्गत प्रसारित की जा रही है:-</p>
+  <ol>
+    <li>कार्य स्वीकृत प्राक्कलन/डी.पी.आर एवं तकनीकी मापदण्डों के अनुसार संपादित किया जावे। </li>
+    <li>निर्माण कार्य की प्रशासकीय स्वीकृति एवं आवंटन प्राप्त होने के पश्चात विभागीय निर्देश/ म.प्र. कार्य विभाग नियमावली के अनुसार प्रारंभ किया जाए।</li>
+  </ol>
+
+<br />
+<h6 class="right-text"> <b> <span data-ng-show="workData.loggedInUserRole == 'ROLE_EE'">कार्यपालन यंत्री</span> <span data-ng-show="workData.loggedInUserRole == 'ROLE_SUPDT_ENGG'">अधीक्षण यंत्री</span> <span data-ng-show="workData.loggedInUserRole == 'ROLE_CE'">मुख्य अभियंता</span>, </b></h6>
+<br />
+<h6 class="right-text"> <b>कार्यालय {{workData.districtName}} </b></h6>
+
+</div>
+<!---->
+
+</body>
+</html>

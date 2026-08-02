@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+<style>
+.grid-table th,.grid-table td{
+font-size:12px;
+}
+.no-border td{
+border:0px
+}
+  @media print
+   {
+     .table-responsive{
+     overflow: hidden;
+     }
+   }
+</style>
+</head>
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item"><a href="#viewBills"><span
+				th:text="#{viewBills}">viewBills</span></a></li>
+		<li class="breadcrumb-item active"><span th:text="#{printBill}">Print Bill</span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" href="#" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						 
+						<div class="col-md-6" align="right">
+							<div class="form-group">
+								<img th:src="@{/img/print.png}" title="Print Bill" style="cursor: pointer;" alt="Print Bill" 
+									onclick="jQuery('#billForm').print();" />
+							</div>
+						</div>
+						
+						<div class="col-md-12" id="billForm"
+							style="border: 2px solid black; margin-bottom: 10px; margin-top: 30px;">
+						
+						<form  name="billForm"   data-ng-init="loadOriginalBillDetails();" novalidate="novalidate">
+							
+							
+							
+							<div class="card-header">
+							<div class="row">
+								<div class="col-sm-3" align="center">
+								 <span th:text="#{Rural_Engineering_services_Division}"> Rural  Engineering  services  Division</span>
+								</div>
+							</div>
+							</div>
+							
+							
+							<div class="card-body">
+							<div class="row">
+								<div class="table-responsive">
+									<table 		 class="table  table-hover margin0 tbl-vm grid-table no-border grid-table" >
+										
+									 <tbody>
+										 <tr>
+											<td width="25%"> <label><span th:text="#{Cash_Book_Voucher_No_date}">Cash Book Voucher No:</span>  </label>   </td>
+											<td width="25%"> {{paymentBean.cashbookVoucherNo}}&nbsp;- &nbsp;{{paymentBean.cashbookDate}}	 </td>
+											<td  width="25%"><label><span th:text="#{billDate}">Date</span>  </label>   </td>
+											<td  width="25%">  {{billData.billDate}}	</td>
+									  </tr>
+									
+									<tr>
+											<td width="25%"> <label><span th:text="#{Name_of_Work}">Name of Work : </span>  </label>  </td>
+											<td colspan="3">  {{workData.workName}}	 [{{workData.workRequisitionNo}}]</td>
+											
+									  </tr>
+									
+									
+									  <tr>
+											<td width="25%"> <label><span th:text="#{Name_of_Contractor}">Name of Contractor:</span>  </label> 	</td>
+											<td colspan="3">   {{workData.contractorBean.name}}	</td>
+											 
+									 </tr>
+									
+									  <tr>
+											<td width="25%"> <label><span th:text="#{agreementNumber}">agreementNumber</span>  </label> 	</td>
+											<td width="25%">    {{workData.agreementNumber ? workData.agreementNumber : workData.administrationSanctionNo}}</td>
+
+											<td width="25%"><label><span th:text="#{agreementDate}">agreementNumber</span>  </label>  </td>
+											<td width="25%">    {{workData.agreementDateString ? workData.agreementDateString :  workData.administrationSanctionDate}}	</td>
+									 </tr>
+									 
+									 
+									 
+									  <tr>
+											<td width="25%">  <label><span th:text="#{Running_Bill_number}">Running Bill number </span> : </label>  </td>
+											<td width="25%">  {{ billData.billNo}}   </td>
+											<td  width="25%">    <label><span th:text="#{pacAmount}">PAC Amount</span>  </label>    </td>
+											<td  width="25%">  {{workData.pacAmount}}	</td>
+									  </tr>
+									 
+									   <tr>
+											<td width="25%">  <label><span th:text="#{No_and_Date_if_his_last_bill_for_this_work}">No and Date if his last bill for this work: </span>  </label>  </td>
+											<td width="25%">  {{lastBillData.billNo}}  -  {{lastBillData.billDate}}  </td>
+											<td  width="25%">  <label><span th:text="#{rs}">Rs.</span>  </label>   </td>
+											<td  width="25%">  {{lastBillData.billAmount}} 	</td>
+									  </tr>
+									 
+									   <tr>
+											<td width="25%"> <label><span th:text="#{Work_Order_Date}">Work Order Date</span> : </label>   </td>
+											<td width="25%">  {{workData.agreementDateString ? workData.agreementDateString : workData.administrationSanctionDate}}  </td>
+											<td  width="25%">  <label><span th:text="#{Due_date_of_completion_of_agreement}">Due date of completion of agreement</span>  </label>   </td>
+											<td  width="25%">  	{{workData.tentativeCompletionDateString}} </td>
+									  </tr>
+									     <tr>
+											<td width="25%">       </td>
+											<td width="25%">    </td>
+											<td  width="25%">  	<label><span th:text="#{Date_of_actual_completion_of_work}">Date_of_actual_completion_of_work</span>  </label>  </td>
+											<td  width="25%">  	{{workData.date ? workData.date : 'N/A'}} </td>
+									  </tr>
+							</tbody>		 
+								</table>
+									 
+								</div>
+							</div>	
+						</div>
+						
+							 
+							
+							<div class="card-body" style="    margin-top: -36px;">
+								<div class="table-responsive">
+									<!-- table -->
+									<table
+										class="table table-striped table-bordered table-hover margin0 tbl-vm grid-table" >
+										<thead class="thead-default">
+											<tr>
+												<tr>
+												<th rowspan="2">#</th>
+												<th rowspan="2" width="5%" style="text-align: center;" valign="middle">Unit</th>
+												<th rowspan="2" width="10%" style="text-align: center;" valign="middle">Quantity executed Up-to-date</th>
+												<th rowspan="2" width="45%" style="text-align: center;" valign="middle">Item of work or supply</th>
+												<th rowspan="2" width="10%" style="text-align: center;" valign="middle">Rate <span th:text="#{rs}">(Rs.)</span></th>
+												<th colspan="2" style="text-align: center;" valign="middle">Amount</th>
+												<th rowspan="2" width="5%" style="text-align: center;" valign="middle">Remark</th>
+											</tr>
+											</tr>
+											<tr>
+												<th width="10%" style="text-align: center;" valign="middle">Up to date</th>
+												<th width="10%" style="text-align: center;" valign="middle">Previous Bill</th>
+											</tr>
+											
+											<tr>
+												<th >#</th>
+												<th width="5%" style="text-align: center;">1</th>
+												<th width="10%" style="text-align: center;">2</th>
+												<th width="45%" style="text-align: center;">3</th>
+												 <th width="10%" style="text-align: center;">4</th>
+												 <th width="10%" style="text-align: center;">5</th>
+												 <th width="10%" style="text-align: center;">6</th>
+												 <th width="5%" style="text-align: center;">7</th>
+											</tr>
+										</thead>
+										
+										<tbody>
+											<tr data-ng-repeat="billItem in billData.billItems">
+												<td>{{$index+1}}</td>
+												
+												<td>{{billItem.unit}}</td>
+												<td style="text-align: center;">{{ billItem.quantityUptodate}} </td>
+												<td> {{ billItem.itemOfWork}}</td>
+												<td style="text-align: right;"> {{billItem.rate | number :2 }}	</td>
+													
+												<td style="text-align: right;" > {{billItem.amountUptodate | number :2 }} </td>
+												<td style="text-align: right;" data-ng-if="lastBillData">{{billItem.amountPreviousBill ? billItem.amountPreviousBill : 0 | number :2 }}</td>
+												<td style="text-align: right;"  data-ng-if="!lastBillData">  {{billItem.amountPreviousBill | number :2 }} </td>		
+													
+												<td> {{billItem.remark }} </td>
+											</tr>
+											
+											<tfoot>
+												<tr>
+													<td colspan="5" align="right">Total <span th:text="#{rs}">(Rs.)</span>:</td>
+													<td style="text-align: right;">{{billData.totalAmountUpToDate | number :2 }}</td>
+													<td style="text-align: right;">{{billData.totalAmountPreviousBill | number :2 }}</td>
+													<td colspan="2"></td>
+												</tr>
+												
+												<tr>
+													<td colspan="5" align="right">Tendered rate % :</td>
+													<td style="text-align: right;" >{{workData.tenderedRateSign}}{{workData.tenderedRatePer ? workData.tenderedRatePer : 0  | number :2 }} %</td>
+													<td style="text-align: right;" >{{workData.tenderedRateSign}}{{workData.tenderedRatePer ? workData.tenderedRatePer : 0  | number :2}} % </td>
+													<td colspan="2"></td>
+												</tr>
+												
+												<tr>
+													<td colspan="5" align="right">Tendered rate <span th:text="#{rs}">(Rs.)</span>:</td>
+													<td style="text-align: right;">{{workData.tenderedRateSign}}{{billData.totalAmountUpToDate * workData.tenderedRatePer/100 | number : 0}} </td>
+													<td style="text-align: right;" >
+													
+													{{workData.tenderedRateSign}}{{billData.totalAmountPreviousBill * workData.tenderedRatePer/100 | number : 0}}</td>
+													<td colspan="2"></td>
+												</tr>
+												
+												<tr>
+													<td colspan="5" align="right">Grand Total <span th:text="#{rs}">(Rs.)</span>:</td>
+													
+													<td style="text-align: right;">
+													
+													{{gt1 | number : 2}}
+													
+													
+													</td>
+													
+													<td style="text-align: right;">
+													
+													{{gt2 | number : 2}}
+													
+													</td>
+													
+													
+													<td colspan="2"></td>
+												</tr>
+												
+											</tfoot>
+											
+											<tr data-ng-show="billData.billItems.length==0">
+												<td colspan="8"><span>No data available</span></td>
+											</tr>
+										</tbody>
+									</table>
+									 
+								</div>
+								
+								<br/>
+
+					
+					 <div class="card-body" style="    margin-top: -25px;">
+							<div class="row">
+								<div class="table-responsive">
+									<table class="table table-striped table-bordered table-hover margin0 tbl-vm grid-table">
+										
+										<tbody>
+											<tr>
+											<td width="50%"> <label><span th:text="#{Total_Value_of_work_done_made_to_Date}"> Total Value of work done made to Date </span>
+											<span th:text="#{rs}"></span> : 
+											 </label> </td>
+											<td width="50%">  {{ gt1 | number:2}}  </td>
+									 </tr>
+									 
+									 <tr>
+											<td> <label><span th:text="#{Deduct_value_of_work_shown_on_Previous_bill}"> Deduct value of work shown on Previous bill </span>
+											<span th:text="#{rs}"></span> : </label> </td>
+											<td>  {{gt2 | number:2}}	</td>
+									 </tr>
+									 
+									 <tr>
+											<td> <label><span th:text="#{Net_Value_of_work_since_Previous_bill}"> Net Value of work since Previous bill </span>
+											<span th:text="#{rs}"></span> : </label>  </td>
+											<td> {{ (gt1 - gt2)  | number :2 }}	
+											 </td>
+									 </tr>
+								</tbody>		 
+							</table>
+									 
+								</div>
+							</div>	
+						</div>
+					
+					
+					</div>
+							 
+							 <div class="card-body"  style="page-break-after: always; font-size:12px; margin-top:-36px">
+								<div class="row">
+									<div class=" col-sm-12">
+										<span th:text="#{The_measurement_were_made_By}"> The measurement were made By </span>
+										<b> <u>{{billData.measurementByBill.measureByName}} [ {{billData.measurementByBill.designationBean.measuredByDesignation}}] </u></b>  
+										<span th:text="#{and_are_recorded_no_page_no}"> The measurement were made By </span>  
+										 <b> <u>{{billData.mbPageNo}} </u></b>  
+										<span th:text="#{of_Measurement_Book_No}"> of Measurement Book No </span> 
+										 <b> <u>{{billData.mbNo}} </u></b>
+										<span th:text="#{advance_payment_has_been_made_previous_without_detailed_measurement}"> advance payment has been made previous without detailed measurement.
+										</span> 
+									</div>
+								</div>
+								
+						
+										
+								<div class="row" style="margin-top:  0px;"> 
+								<table class="table  margin0 tbl-vm grid-table no-border">
+								<tbody>
+								  <tr><td colspan="2"><b> Dated signature of officer preparing the bill :</b></td> </tr>
+								  <tr style="    height: 70px;"> 
+									  <td> Signature of Contrctor </td>
+									  <td style="text-align: center;">Assistant Engineer</td> 
+								  </tr>
+								</tbody>
+								</table>
+								 </div>
+								
+								
+							</div>
+								<div class="card-header" style="margin-top:-30px">
+								<div class="row">
+									<div class="col-sm-3" align="center">
+										<span th:text="#{MEMORANDUM_OF_PAYMENT}">MEMORANDUM OF PAYMENT</span>
+									</div>
+								</div>
+							</div>
+							
+						<div class="card-body">
+							<div class="row">
+								<div class="table-responsive">
+									<table 		 class="table table-striped table-bordered table-hover margin0 tbl-vm grid-table">
+										
+										<tbody>
+											<tr>
+											<td width="50%"> <label><span th:text="#{Total_Value_of_work_done}">1. Total Value of work done</span> <span th:text="#{rs}"></span> : </label>  </td>
+											<td width="50%">  {{gt1  | number :2 }}	</td>
+									 </tr>
+									 
+									 <tr>
+											<td> <label><span th:text="#{Total_Amount_already_paid_as_per_previous_bill}">2. Total Amount already paid as per previous bill</span> <span th:text="#{rs}"></span> : </label>  </td>
+											<td>  {{gt2  | number : 2 }}	</td>
+									 </tr>
+									 
+									 <tr>
+											<td> <label><span th:text="#{Payment_now_to_be_made_as_per_detailed_below}">3. Payment now to be made as per detailed below</span> <span th:text="#{rs}"></span> : </label> <b>(A)</b>  </td>
+											<td>  {{ (gt1 - gt2)  | number :2 }}	</td>
+									 </tr>
+								</tbody>		 
+							</table>
+									 
+								</div>
+							</div>	
+						</div>
+                  
+							
+							<div class="card-header">
+								<div class="row">
+									<div class="col-sm-3" align="center">
+										<span th:text="#{Add}">Add</span>
+									</div>
+								</div>
+							</div>
+							
+						<div class="card-body">
+							<div class="row">
+								<div class="table-responsive">
+									<table 		 class="table table-striped table-bordered table-hover margin0 tbl-vm grid-table">
+										
+										<tbody>
+											<tr>
+											<td width="33%"> <label><span th:text="#{GST}">GST</span>  <span th:text="#{rs}"></span></label>  </td>
+											<td width="33%"> 	{{billData.gst ? billData.gst :0  | number :2 }}</td>
+											 
+										 </tr>
+									 	<tr>
+											<td> <label><span th:text="#{Others}">Others</span>  <span th:text="#{rs}"></span></label>   </td>
+											<td> {{billData.addOthers ? billData.addOthers : 0  | number :2 }}		</td>
+											 
+									 </tr>
+									 
+									<!-- <tr>
+											<td align="right"> <label><span>Total </span>  <span th:text="#{rs}"></span></label> <b>&nbsp;(B)</b>  </td>
+											<td> {{r1 | number : 2 }}		</td>
+									 </tr> -->
+									 
+									 <tr>
+											<td align="right"> <label><span>Total </span>  <span th:text="#{rs}"></span></label><b>&nbsp;(B)</b>   </td>
+											<td> {{addGstAndOthers | number : 2 }}		</td>
+									 </tr>
+									
+									 
+							</tbody>		 
+								</table>
+									 
+								</div>
+							</div>	
+						</div>
+						
+							<div class="card-header">
+								<div class="row">
+									<div class="col-sm-3" align="center">
+										<span th:text="#{deductions}">Deductions</span>
+									</div>
+								</div>
+							</div>
+
+
+				 <div class="card-body">
+							<div class="row">
+								<div class="table-responsive">
+									<table 		 class="table table-striped table-bordered table-hover margin0 tbl-vm grid-table">
+										
+										<tbody>
+											<tr>
+											<td width="33%"> <label><span th:text="#{securityDeposit}">Security Deposit</span> <span th:text="#{rs}"></span> </label>  </td>
+											<td width="33%"> 	{{billData.securityDeposit ? billData.securityDeposit : 0  | number :2 }}</td>
+											 
+									 </tr>
+									 <tr>
+											<td> <label><span th:text="#{incomeTax}">Income Tax</span> <span th:text="#{rs}"></span></label>    </td>
+											<td> 	{{billData.incomeTax ? billData.incomeTax : 0  | number :2 }}				</td>
+											 
+									 </tr>
+									 
+									  <tr>
+											<td> <label><span th:text="#{upkar}">Upkar</span> <span th:text="#{rs}"></span> </label>    </td>
+											<td> 	 {{billData.upkar? billData.upkar: 0  | number :2  }}		 </td>
+											 
+									 </tr>
+									 
+									  <tr>
+											<td> <label><span th:text="#{royalty}">Royalty</span> <span th:text="#{rs}"></span> </label>   </td>
+											<td> 	{{ billData.royalty? billData.royalty: 0  | number :2 }}		</td>
+											 
+									 </tr>
+									 
+									  <tr>
+											<td> <label><span th:text="#{costOfBillForm}">Cost  Of Bill Form</span><span th:text="#{rs}"></span>  </label>    </td>
+											<td> 	{{billData.costOfBillForm ? billData.costOfBillForm : 0  | number :2 }}			</td>
+											 
+									 </tr>
+									 
+									 
+									 
+									  <tr>
+											<td> <label><span th:text="#{Misc_Deposit}">Misc. Deposit</span><span th:text="#{rs}"></span>  </label>    </td>
+											<td> 	{{billData.miscDeposit ? billData.miscDeposit : 0  | number :2 }}			</td>
+											 
+									 </tr>
+									 
+									 
+									 <tr>
+											<td> <label><span th:text="#{Performance_Guarantee}">Performance_Guarantee</span><span th:text="#{rs}"></span>  </label>    </td>
+											<td> 	{{billData.performanceGuarantee ? billData.performanceGuarantee : 0  | number :2 }}			</td>
+											 
+									 </tr>
+									 
+									  <tr>
+											<td> <label><span th:text="#{Advance_Payments}">Advance_Payments</span><span th:text="#{rs}"></span>  </label>    </td>
+											<td> 	{{billData.advancePayments ? billData.advancePayments : 0  | number :2 }}			</td>
+											 
+									 </tr>
+									 
+									 
+									  <tr>
+											<td> <label><span th:text="#{other}">Other</span>  <span th:text="#{rs}"></span> </label>  </td>
+											<td> 		{{billData.other ? billData.other : 0  | number :2 }}			</td>
+											 
+									 </tr>
+									 
+									 
+									 <!-- <tr>
+											<td align="right"> <label><span>Total </span>  <span th:text="#{rs}"></span></label>   </td>
+											<td> {{ r2 | number : 2 }}		</td>
+									 </tr>
+									
+									 
+									 
+									   <tr>
+											<td align="right"> <label><span>By Cheque Rs:</span>  </label>    </td>
+											<td> 	&nbsp;</td>
+									 </tr>
+									 
+									 
+									 <tr>
+											<td align="right"> <label><span th:text="#{Total_Rs}">Total Rs:</span>  </label>    </td>
+											<td >  {{ ( (gt1 - gt2) + billData.gst + billData.addOthers ) - (billData.securityDeposit + billData.incomeTax + billData.upkar + billData.royalty  + billData.costOfBillForm +  billData.miscDeposit + billData.performanceGuarantee + billData.advancePayments + billData.other )  | number :2  }}</td>
+									 </tr> -->
+									 
+									  <tr>
+											<td align="right"> <label><span>Total </span>  <span th:text="#{rs}"></span></label> <b>&nbsp;(C)</b>   </td>
+											<td> {{ totalC | number : 2 }}		</td>
+									 </tr>
+									
+									 
+									 
+									  <tr>
+											<td align="right"> <label><span>Grand Total &nbsp;(A+B)</span>  </label>    </td>
+											<td>  {{ (gt1 - gt2)+(addGstAndOthers)  | number :2 }}	</td>
+									 </tr>
+									 
+									 
+									 <tr>
+											<td align="right"> <label><span> By Cheque Rs &nbsp;(A+B-C)</span>  </label>    </td>
+											<td >  {{ ((gt1 - gt2)+(addGstAndOthers))-(totalC)  | number :2  }}</td>
+									 </tr>
+									 
+									 
+							</tbody>		 
+								</table>
+									 
+								</div>
+							</div>	
+						</div>
+							 
+						</form>
+					</div> <!-- Print div -->	
+						
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</div>
+</html>

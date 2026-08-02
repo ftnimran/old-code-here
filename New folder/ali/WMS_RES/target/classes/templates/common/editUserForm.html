@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+</head>
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item"><a href="#manageusers"><span
+				th:text="#{manageUsers}">Manage Users</span></a></li>
+		<li class="breadcrumb-item active"><span th:text="#{editUser}">Edit
+				User</span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" href="#" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<i class="fa fa-wpforms"></i> <span th:text="#{editUser}">Edit
+								User</span>
+						</div>
+						<div class="col-md-12">
+							<div data-ng-if="responseObject.errorMessage != null"
+								class="text-danger">
+								<strong>Error!</strong>
+								<p>{{responseObject.errorMessage}}</p>
+							</div>
+						</div>
+
+						<form data-ng-submit="editUser(userForm.$valid)" name="userForm"
+							novalidate="novalidate" data-ng-init="loadUserDetailAdmin();">
+							<div class="card-body">
+								<div class="row">
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{name}">Name</span><span
+											class="aestrick">&#42;</span></label> <input type="text"
+											class="form-control" id="name" required="required"
+											data-ng-model="userData.name" name="name" maxlength="30" />
+										<div data-ng-show="userForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="userForm.name.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{name}">Name</span>
+											</p>
+										</div>
+									</div>
+
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{email}">Email</span> <!-- <span
+											class="aestrick">&#42;</span> --></label> <input type="email"
+											class="form-control" placeholder="Email" id="email"
+											data-ng-model="userData.emailId" name="email" maxlength="45"
+											disabled="disabled" />
+										<div data-ng-show="userForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="userForm.email.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{email}">Email</span>
+											</p>
+										</div>
+										<p class="help-block" style="color: red;"
+											data-ng-show="userForm.email.$error.email">
+											<span th:text="#{pleaseEnter}">Please enter</span> <span
+												th:text="#{valid}">valid</span> <span th:text="#{email}">Email</span>
+										</p>
+									</div>
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{mobileNo}">Mobile No</span><span
+											class="aestrick">&#42;</span></label> <input type="text"
+											class="form-control digits-only" id="mobileNo"
+											data-ng-pattern="/^(\+\d{1,3}[- ]?)?\d{10}$/"
+											data-ng-model="userData.mobileNo" name="mobileNo"
+											maxlength="10" required="required" placeholder="Mobile No." />
+										<div data-ng-show="userForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="userForm.mobileNo.$error.required">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{mobileNo}">Mobile No</span>
+											</p>
+										</div>
+										<p class="help-block" style="color: red;"
+											data-ng-show="userForm.mobileNo.$error.pattern">
+											<span th:text="#{pleaseEnter}">Please enter</span> <span
+												th:text="#{valid}">valid</span> <span th:text="#{mobileNo}">Mobile
+												No</span>
+										</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{designation}">Designation</span><span
+											class="aestrick">&#42;</span></label> <select class="form-control"
+											required="required" data-ng-init="loadDesignations()"
+											data-ng-model="userData.designationId" name="designation"
+											id="designation">
+											<option value="" disabled="disabled">--Select--</option>
+											<option
+												data-ng-repeat="designation in designations"
+												value="{{designation.id}}">{{designation.designation}}</option>
+										</select>
+										<div data-ng-show="userForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="userForm.designation.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{designation}">Designation</span>
+											</p>
+										</div>
+									</div>
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{officeType}">Office
+												Type</span><span class="aestrick">&#42;</span> </label> <select
+											class="form-control" required="required"
+											data-ng-init="loadOfficeTypes()"
+											data-ng-model="userData.officeTypeId" name="officeType"
+											data-ng-change="userData.officeId = '';loadOffices(userData.officeTypeId)"
+											id="officeType">
+											<option value="" disabled="disabled">--Select--</option>
+											<option
+												data-ng-repeat="officeType in officeTypes"
+												value="{{officeType.id}}">{{officeType.officeType}}</option>
+										</select>
+										<div data-ng-show="userForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="userForm.officeType.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{officeType}">Office Type</span>
+											</p>
+										</div>
+									</div>
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{office}">Office</span><span
+											class="aestrick">&#42;</span></label> <select class="form-control"
+											required="required" data-ng-model="userData.officeId"
+											name="office" id="office">
+											<option value="" disabled="disabled">--Select--</option>
+											<option
+												data-ng-repeat="office in offices | orderBy : 'officeName'"
+												value="{{office.id}}">{{office.officeName}}</option>
+										</select>
+										<div data-ng-show="userForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="userForm.office.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{office}">Office</span>
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{whetherOIC}">Whether
+												OIC ? </span><span class="aestrick">&#42;</span></label>
+										<div class="pt-2">
+											<input type="radio" name="isOIC" id="r1" value="1"
+												checked="checked" data-ng-model="userData.isOIC"
+												required="required" /> <label for="r1"
+												style="margin-right: 20px;">Yes</label> <input type="radio"
+												name="isOIC" id="r2" value="0"
+												data-ng-model="userData.isOIC" required="required" /> <label
+												for="r2">No</label>
+										</div>
+										<div data-ng-show="userForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="userForm.isOIC.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{whetherOIC}">Whether OIC ?</span>
+											</p>
+										</div>
+									</div>
+									<div class="form-group col-sm-4">
+										<label><span>Role</span><span class="aestrick">&#42;</span></label>
+										<select name="role" class="form-control"
+											data-ng-init="loadUserRoles()"
+											data-ng-model="userData.role" required="required"
+											>
+											<option value="" disabled="disabled">--Select--</option>
+											<option data-ng-repeat="role in roles | orderBy : 'order'"
+												data-ng-if="role.roleCode!='ROLE_ADMIN'"
+												value="{{role.roleCode}}">{{role.roleName}}</option>
+										</select>
+										<div data-ng-show="userForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="userForm.role.$error.required">
+												<span>Please select Role</span>
+											</p>
+										</div>
+									</div>
+									<div class="form-group col-sm-4">
+										<label><span th:text="#{status}">Status</span><span
+											class="aestrick">&#42;</span></label> <select name="status"
+											class="form-control" data-ng-model="userData.status"
+											required="required">
+											<option value="" disabled="disabled">--Select--</option>
+											<option value="Active">Active</option>
+											<option value="InActive">InActive</option>
+											<option value="Pending Activation" data-ng-if="userData.status=='Pending Activation'">Pending Activation</option>
+											<option value="Pending Verification" data-ng-if="userData.status=='Pending Verification'">Pending Verification</option>
+										</select>
+										<div data-ng-show="userForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="userForm.status.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{status}">Status</span>
+											</p>
+										</div>
+									</div>
+								</div>
+								<!--/.row-->
+							</div>
+							<div class="card-footer text-right">
+								<button type="submit" class="btn btn-sm btn-primary">
+									<span th:text="#{update}">Update</span>
+								</button>
+								<!-- <button type="reset" class="btn btn-sm btn-danger">Reset</button> -->
+							</div>
+						</form>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</div>
+</html>

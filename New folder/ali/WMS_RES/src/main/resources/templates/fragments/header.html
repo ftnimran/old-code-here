@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:fragment="header-css">
+	<title>ग्रामीण यांत्रिकी सेवा ~ Rural Engineering Service</title>
+	<!-- <title>RES - OWMS</title> -->
+	<!-- this is header-css -->
+
+	<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/simple-line-icons.css}" rel="stylesheet" />
+	<link th:href="@{/css/style.css}" rel="stylesheet" />
+	<!-- Bootstrap -->
+	<link th:href="@{/css/jquery.mCustomScrollbar.min.css}"
+		rel="stylesheet" />
+	<link th:href="@{/css/custom.css}" rel="stylesheet" />
+
+	<link th:href="@{/css/angular-loading.css}" rel="stylesheet"
+		type="text/css" />
+	<!-- <link th:href="@{/css/buttons.dataTables.min.css}" rel="stylesheet"
+		type="text/css" /> -->
+	<!-- <link th:href="@{/css/bootstrap-datetimepicker.css}" rel="stylesheet"/> -->
+	<!-- <link th:href="@{/css/jquery.datetimepicker.css}" rel="stylesheet"/> -->
+
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/DataTables-1.10.16/css/dataTables.bootstrap4.min.css}" />
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/Buttons-1.5.1/css/buttons.bootstrap4.min.css}" />
+		
+	<link th:href="@{/css/tempusdominus-bootstrap-4.min.css}" rel="stylesheet"
+		type="text/css" />
+		
+		<!-- <link th:href="@{/css/bootstrap-multiselect.css}" rel="stylesheet"
+		type="text/css" />
+	<link th:href="@{/css/bootstrap-select.min.css}" rel="stylesheet"
+		type="text/css" />
+		
+	<link th:href="@{/css/select2.min.css}" rel="stylesheet"
+		type="text/css" />
+	<link th:href="@{/css/select2-bootstrap.min.css}" rel="stylesheet"
+		type="text/css" /> -->
+		
+<link th:href="@{/css/jquery-gmaps-latlon-picker.css}" rel="stylesheet" /> 
+<!-- Rakesh -->
+
+<link th:href="@{/css/bootstrap-multiselect/bootstrap-multiselect.css}" rel="stylesheet"
+		type="text/css" />
+	
+
+<link th:href="@{/css/bootstrap-multiselect/bootstrap-multiselect.css}" rel="stylesheet"
+		type="text/css" />
+		<link th:href="@{/css/datepicker/jquery.ui.datepicker.css}" rel="stylesheet" />
+<link th:href="@{/css/datepicker/jquery-ui.min.css}" rel="stylesheet" />
+	
+
+	<!-- <link th:href="@{/css/datepicker/bootstrap-datetimepicker.css}" rel="stylesheet"/> -->
+</div>
+</head>
+<body>
+	<div th:fragment="header_after_login">
+	
+		<header class="app-header navbar">
+			<button
+				class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto"
+				type="button">
+				<i class="icon-menu"></i>
+			</button>
+			<a class="navbar-brand" href="#"></a>
+			<button class="navbar-toggler sidebar-toggler d-md-down-none"
+				type="button">
+				<i class="icon-menu"></i>
+			</button>
+			<ul class="nav navbar-nav ml-auto pr15">
+				<!-- <li class="nav-item dropdown note"><a
+					class="nav-link dropdown-toggle nav-link" data-toggle="dropdown"
+					href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						<i class="icon-bell"></i><span
+						class="badge badge-pill badge-danger">3</span>
+				</a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<a class="dropdown-item" href="#">Lorem ipsum dolor sit amet,
+							consectetur</a> <a class="dropdown-item" href="#">Lorem ipsum
+							dolor sit amet</a>
+					</div></li> -->
+				<li class="nav-item">
+				<input type="hidden" id="lang" th:value="${language}"/>
+				<a class="nav-link" id="hiLocale" style="display: none" title="हिन्दी">हिन्दी</a>
+				<a class="nav-link" id="enLocale" style="display: none" title="English">English</a>
+				</li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle nav-link" data-toggle="dropdown"
+					href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						<img th:src="@{/img/user.png}" class="img-avatar" alt="" /> <span
+						class="d-md-down-none" th:text="${loggedInUserName}">LoggedInUserName</span>
+						(<span
+						class="d-md-down-none" th:text="${roleName}">RoleName</span>)
+				</a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<!-- <a class="dropdown-item" href="#"><i class="icon-user"></i>
+							Profile</a> --> <a class="dropdown-item" href="#userchangepassword"><i
+							class="icon-settings"></i> Change Password</a> <!-- <a class="dropdown-item"
+							th:href="@{/logout}"><i class="icon-logout"></i> Logout</a> -->
+							<a class="dropdown-item"
+							onclick="document.forms['logoutForm'].submit()" href=""><i class="icon-logout"></i> Logout</a>
+					</div></li>
+			</ul>
+			<form id="logoutForm" method="POST" th:action="@{/logout}"></form>
+			<!-- <button class="navbar-toggler aside-menu-toggler" type="button">☰</button> -->
+		</header>
+
+	</div>
+</body>
+</html>

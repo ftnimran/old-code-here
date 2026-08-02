@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+</head>
+<script type="text/javascript">
+	$(function() {
+
+	});
+</script>
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item"><a href="#manageSqmInspection"><span
+				th:text="#{sqmInspection}">Sqm Inspection List</span></a></li>
+		<li class="breadcrumb-item active"><span
+			th:text="#{inspectionDetailsForSqm}"> Final Inspection Details
+				for Sqm </span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" href="#" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header top-header">
+							<i class="fa fa-wpforms"></i> <span
+								th:text="#{inspectionDetailsForSqm}"> Final Inspection
+								Details - EE </span>
+						</div>
+						<div class="col-md-12">
+							<div data-ng-if="responseObject.errorMessage != null"
+								class="text-danger">
+								<strong>Error!</strong>
+								<p>{{responseObject.errorMessage}}</p>
+							</div>
+						</div>
+						<form name="inspectionForm" novalidate="novalidate">
+							<div class="card-header">
+								<span th:text="#{inspectionDetails}">Inspection Details</span>
+							</div>
+
+							<div class="card-body"
+								data-ng-init="loadInspectionDataForSqmNew()">
+								<div class="table-responsive">
+									<table id="dynamic-table"
+										class="table table-striped table-bordered table-hover table-outline">
+
+										<tr>
+											<td width="5%"><span style="font-weight: 700;"> S
+													NO </span></td>
+											<td width="80%"><span style="font-weight: 700;">Question
+											</span></td>
+											<td width="15%"><span style="font-weight: 700;">Answer
+											</span></td>
+										</tr>
+
+										<tr data-ng-repeat="inspectionAnswer in inspectionData">
+											<td width="5%"><span style="font-weight: 700;"> </span>
+												{{ $index + 1}}</td>
+											<td width="80%"><span style="font-weight: 700;">
+											</span> {{inspectionAnswer.questionText }}</td>
+											<td width="15%"><span style="font-weight: 700;">
+											</span> {{inspectionAnswer.answer}}</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+
+							<div class="card-header">
+								<span>Inspection Images</span>
+							</div>
+
+							<div class="card-body" data-ng-init="loadInspectionImagesSqm()">
+								<div class="table-responsive">
+									<table id="dynamic-table"
+										class="table table-striped table-bordered table-hover table-outline">
+
+										<tr>
+											<td width="5%"><span style="font-weight: 700;">
+													S NO </span></td>
+											<td width="80%"><span style="font-weight: 700;">Image
+													Download </span></td>
+										</tr>
+
+										<tr data-ng-repeat="image in inspectionImageData">
+											<td width="5%"><span style="font-weight: 700;">
+											</span> {{ $index + 1}}</td>
+											<td width="80%"><span style="font-weight: 700;">
+											</span> <a style="cursor: pointer;"
+												data-ng-click="downloadDocument(image.id)"> <img
+													th:src="@{/img/download.ico}" style="width: 3%;"
+													alt="Download" />
+											</a></td>
+
+										</tr>
+									</table>
+								</div>
+
+
+							</div>
+
+							<!-- <div class="card-header">
+								<span>Inspection Files</span>
+							</div>
+
+							<div class="card-body" data-ng-init="loadInspectionFilesSqm()">
+								<div class="table-responsive">
+									<table id="dynamic-table"
+										class="table table-striped table-bordered table-hover table-outline">
+
+										<tr>
+											<td width="5%"><span style="font-weight: 700;">
+													S NO </span></td>
+											<td width="80%"><span style="font-weight: 700;">File
+													Download </span></td>
+										</tr>
+
+										<tr data-ng-repeat="file in inspectionFileData">
+											<td width="5%"><span style="font-weight: 700;">
+											</span> {{ $index + 1}}</td>
+											<td width="80%"><span style="font-weight: 700;">
+											</span> <a style="cursor: pointer;"
+												data-ng-click="downloadDocument(file.documentUpload.documentId)">
+													<img th:src="@{/img/download.ico}" style="width: 3%;"
+													alt="Download" />
+											</a></td>
+
+										</tr>
+									</table>
+								</div>
+
+
+							</div> -->
+
+
+
+
+
+						</form>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</div>
+</html>

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Built-By: panka
+Build-Jdk: 21.0.8
+Implementation-Title: res_owms
+Implementation-Version: 1.0.0
+Implementation-Vendor-Id: com.res
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://projects.spring.io/spring-boot/res_owms/
+Main-Class: com.res.ResOwmsApplication
+Created-By: Maven Integration for Eclipse
+

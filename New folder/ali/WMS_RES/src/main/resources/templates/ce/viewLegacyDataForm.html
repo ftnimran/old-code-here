@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> -->
+
+<script th:src="@{/js/language.js}"></script>
+
+	 	<script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+	 	<script th:src="@{/js/jquery-gmaps-latlon-picker.js}"></script>
+	 	<!-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script> -->
+		
+		
+		<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Y988QZZ7WxIF2Zb5EcLExMuBl9Lqhkk"></script> -->
+		 
+<!-- <script src="jquery-2.2.3.min.js"></script> -->
+
+<!-- <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC_Y988QZZ7WxIF2Zb5EcLExMuBl9Lqhkk"></script>  -->
+
+</head>
+<div th:fragment="entrepreneurPopupScript">
+	<script type="text/javascript">
+		$(function() {
+
+			$('#workContractorId').select2({
+				theme : "bootstrap"
+			});
+
+			$('#datetimepicker1').datetimepicker({
+				//viewMode : 'days',
+				//maxDate : moment(),
+				//useCurrent: false,
+				//format : 'DD/MM/YYYY',
+				format : 'DD/MM/YYYY'
+				//useCurrent : false
+			});
+			/* $("#dateOfRegistration").keypress(function(event) {
+				event.preventDefault();
+			}); */
+
+			$('#datetimepicker2').datetimepicker({
+				//viewMode : 'days',
+				//maxDate : moment(),
+				//useCurrent: false,
+				//format : 'DD/MM/YYYY',
+				format : 'DD/MM/YYYY'
+				//useCurrent : false
+			});
+			
+			$('#datetimepicker3').datetimepicker({
+				//viewMode : 'days',
+				//maxDate : moment(),
+				//useCurrent: false,
+				//format : 'DD/MM/YYYY',
+				format : 'DD/MM/YYYY'
+				//useCurrent : false
+			});
+			
+			$('#datetimepicker4').datetimepicker({
+				//viewMode : 'days',
+				//maxDate : moment(),
+				//useCurrent: false,
+				//format : 'DD/MM/YYYY',
+				format : 'DD/MM/YYYY'
+				//useCurrent : false
+			});
+			
+			/* $("#startingDate").keypress(function(event) {
+				event.preventDefault();
+			}); */
+
+		/*	$("#datetimepicker1").on("change.datetimepicker", function(e) {
+				$('#datetimepicker2').datetimepicker('minDate', e.date);
+			});
+			$("#datetimepicker2").on("change.datetimepicker", function(e) {
+				$('#datetimepicker1').datetimepicker('maxDate', e.date);
+			}); */
+		});
+	</script>
+</div>
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item"><a href="#manageLegacyDataRoute"><span
+				th:text="#{manageLegacyData}">Manage Legacy Data</span></a></li>
+		<li class="breadcrumb-item active"><span th:text="#{viewLegacyData}">Edit Legacy Data</span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" href="#" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header top-header">
+							<i class="fa fa-wpforms"></i><span th:text="#{viewLegacyData}">Edit
+								Legacy Data</span>
+						</div>
+						<div class="col-md-12">
+							<div data-ng-if="responseObject.errorMessage != null"
+								class="text-danger">
+								<strong>Error!</strong>
+								<p>{{responseObject.errorMessage}}</p>
+							</div>
+						</div>
+
+						<form data-ng-submit="editWorkData(workFormName.$valid, asPdfFile, tsPdfFile, acPdfFile, dcPdfFile, ecPdfFile)"
+							name="workFormName" id="workFormId" data-ng-init="loadWorkDetailInCe();"
+							novalidate="novalidate" >
+							<div th:fragment="entrepreneurPopup">
+								<div class="card-header">
+									<span th:text="#{workDetails}">Work Details</span>
+								</div>
+								<div class="card-body">
+									<div class="row">
+									<div class="form-group col-sm-3">
+											<label><span th:text="#{workName}">Work Name</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control" id="workNameId"
+												required="required" 
+												data-ng-model="workData.workName"
+												name="workName" data-ng-readonly="true" />
+												<input type="hidden"  data-ng-model="workData.workId" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{workName}">Work Name</span>
+												</p>
+											</div>
+										</div>
+									
+									<!-- <div class="form-group col-sm-3">
+											<label><span th:text="#{workTypeId}">Work Type ID</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control" id="workWorkTypeId"
+												required="required" 
+												data-ng-model="workData.workTypeId"
+												name="workWorkTypeName" maxlength="100" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workWorkTypeName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{workTypeId}">Work Type ID</span>
+												</p>
+											</div>
+										</div> -->
+									
+										<div class="form-group col-sm-3">
+											<label><span th:text="#{workType}">Work Type
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="workTypeId" required="required"
+												data-ng-model="workData.workTypeId" data-ng-readonly="true"
+												data-ng-init="loadWorkType()" 
+												data-ng-change="loadWorkSubTypeByWorkTypeId(workData.workTypeId);loadPhysicalStageByWorkTypeId(workData.workTypeId);workData.workSubTypeId='';workData.distance=null;workData.completeddistance=null"
+												name="workWorkTypeName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="workType in workTypes"
+													value="{{workType.workTypeId}}">{{workType.workTypeNameE}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workWorkTypeName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{workType}">Work Type</span>
+												</p>
+											</div>
+										</div>
+										
+										<div class="form-group col-sm-3" data-ng-show="workSubTypes.length > 0">
+											<label><span th:text="#{workSubType}">Work Sub Type
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="workWorkSubTypeId" data-ng-required="workSubTypes.length > 0"
+												data-ng-model="workData.workSubTypeId" data-ng-readonly="true"
+												name="workSubTypeName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="workSubType in workSubTypes | orderBy : 'workSubTypeNameE'"
+													value="{{workSubType.workSubTypeId}}">{{workSubType.workSubTypeNameE}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workSubTypeName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{workSubType}">Work Sub Type</span>
+												</p>
+											</div>
+										</div>
+										
+										
+										<div class="form-group col-sm-3" data-ng-show="(workData.workTypeId==3)">
+											<label><span th:text="#{distanceInMeter}">Distance (In Meter)
+											</span><span class="aestrick" >&#42;</span></label> <input type="text"
+												class="form-control number-OnlyTwoDecimal" id=""
+												data-ng-model="workData.distance" data-ng-readonly="true"
+												name="distance" 
+												data-ng-required="(workData.workTypeId==3)"
+												maxlength="13"
+												/>
+												<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.distance.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{distanceInMeter}">Distance (In Meter)</span>
+												</p>
+											</div>
+										</div>
+										<div class="form-group col-sm-3" data-ng-show="(workData.workTypeId==3)">
+											<label><span th:text="#{completeddistanceInMeter}">Distance (In Meter)
+											</span><span class="aestrick" >&#42;</span></label> <input type="text"
+												class="form-control number-OnlyTwoDecimal" id=""
+												data-ng-model="workData.completeddistance" data-ng-readonly="true"
+												name="completeddistance" 
+												data-ng-required="(workData.workTypeId==3)"
+												maxlength="13"
+												/>
+												<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.completeddistance.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{completeddistanceInMeter}">Distance (In Meter)</span>
+												</p>
+											</div>
+										</div>
+										
+										
+										
+										
+										</div>
+									<!--/.row-->
+										
+										<!-- 2nd Row start -->
+										<div class="row">
+										
+										<div class="form-group col-sm-3">
+											<label><span th:text="#{lineDepartment}">Line Department 
+											</span><span class="aestrick">&#42;</span></label>
+											<select
+												class="form-control" id="workLineDepartmentId" required="required"												
+												data-ng-model="workData.lineDepartmentId" data-ng-readonly="true"
+												data-ng-init="loadLineDepartment()" 
+												name="workLineDepartmentName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="lineDepartment in lineDepartments | orderBy : 'lineDepartmentNameE'"
+													value="{{lineDepartment.lineDepartmentId}}">{{lineDepartment.lineDepartmentNameE}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workLineDepartmentName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{lineDepartment}">Line Department</span>
+												</p>
+											</div>
+										</div>
+										
+										
+										<div class="form-group col-sm-3">
+											<label><span th:text="#{accountHead}">Account head
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="accountHeadId" required="required"
+												data-ng-model="workData.accountHeadId" data-ng-readonly="true"
+												data-ng-init="loadAccountHead()"
+												name="workAccountHeadName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="accountHead in accountHeads"
+													value="{{accountHead.accountHeadId}}">{{accountHead.accountHeadNameE}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAccountHeadName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{accountHead}">Account Head</span>
+												</p>
+											</div>
+										</div>
+										
+										
+										
+										
+										
+										<!-- <div class="form-group col-sm-3">
+											<label><span th:text="#{accountHead}">Account head</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control" id="workAccountHeadId"
+												required="required" 
+												data-ng-model="workData.accountHead"
+												name="workAccountHeadName" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAccountHeadName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{accountHead}">Account Head</span>
+												</p>
+											</div>
+										</div> -->
+										
+										<div class="form-group col-sm-3">
+											<label><span th:text="#{executionAgency}">Execution Agency
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="agencyTypeId" required="required"
+												data-ng-init="loadAgencyType()" 
+												data-ng-model="workData.agencyTypeId" data-ng-readonly="true"
+												name="workAgencyTypeName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="agencyType in agencyTypes | orderBy : 'agencyTypeNameE'"
+													value="{{agencyType.agencyTypeId}}">{{agencyType.agencyTypeNameE}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAgencyTypeName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{executionAgency}">Execution Agency</span>
+												</p>
+											</div>
+										</div>
+										
+										<div class="form-group col-sm-3" data-ng-show="workData.agencyTypeId==1">
+											<label><span th:text="#{contractor}">Contractor
+											</span></label> 
+											<input type="text" name="indentorText" id="indentorText"
+												class="form-control" data-ng-model="contractorName" data-ng-readonly="true"
+												placeholder="Enter at least 4 words to search in Contractor List" data-ng-change="loadContractors(contractorName);workData.contractorId=''"/>
+											<select
+												class="form-control" id="workContractorId"
+												data-ng-model="workData.contractorId"
+												name="workContractorName">
+												<option value="">--No Contractor--</option>
+												<option
+													data-ng-repeat="contractor in contractors | orderBy : 'name'"
+													value="{{contractor.id}}">{{contractor.name}}</option>
+											</select>
+											
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workContractorName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{contractor}">Contractor</span>
+												</p>
+											</div>
+										</div>
+										
+										
+										  <!-- <div class="form-group col-sm-3" data-ng-show="workData.agencyTypeId==2">
+											<label><span th:text="#{agencyName}">Agency Name</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control" id="workAgencyNameId"
+												data-ng-model="workData.agencyName"
+												name="workAgencyName" 
+												data-ng-required="workData.agencyTypeId==2"
+												/>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAgencyName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{agencyName}">Agency Name</span>
+												</p>
+											</div>
+										</div> -->   
+										
+									</div>
+										
+										<!-- 3rd Row Started -->
+										<div class="row">
+									
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{totalExpenditureTill31March2018includingContingency}">Total Expenditure Till 31 March 2018 including Contingency</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control digits-only" id="workTotalExpenditureId"
+												required="required" 
+												data-ng-model="workData.totalExpenditureTill31March2018String" data-ng-readonly="true"
+												data-ng-change="compareTotalExpenditureAmount(workData.totalExpenditureTill31March2018String,workData.totalExpenditureOnContingencyTill31March2018);"
+												name="workTotalExpenditureName"
+												maxlength="9" autocomplete="off" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workTotalExpenditureName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{totalExpenditureTill31March2018}">Total Expenditure Till 31 March 2018</span>
+												</p>
+											</div>
+												<label class="amount-color"><!-- <span th:text="#{amount}">Amount</span> <span
+														th:text="#{inWords}">In Words</span>:  -->{{workData.totalExpenditureTill31March2018String | inWords}}</label>	
+										</div>
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{workStatus}">Work Status
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="workStatusId" required="required"
+												data-ng-init="loadWorkStatusType()"
+												data-ng-model="workData.workStatusId" data-ng-readonly="true"
+												data-ng-change="workData.physicalStageId=''"
+												name="workStatusName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="workStatusType in workStatusTypes | orderBy : 'workStatusNameE'"
+													value="{{workStatusType.workStatusid}}">{{workStatusType.workStatusNameE}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workStatusName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{workStatus}">Work Status</span>
+												</p>
+											</div>
+										</div>
+										
+										
+										<div class="form-group col-sm-4" data-ng-show="(workData.workStatusId==2 || workData.workStatusId==3) &amp;&amp; workData.workTypeId!=null">
+											<label><span th:text="#{physicalStageAsOn31March2018}">Physical Stage As On 31 March 2018
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="workPhysicalStageTypeId" data-ng-required="workData.workStatusId==2 || workData.workStatusId==3"
+												
+												data-ng-model="workData.physicalStageId" data-ng-readonly="true"
+												name="workPhysicalStageTypeName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="physicalStageType in physicalStageTypes | orderBy : 'order'"
+													value="{{physicalStageType.physicalStageId}}">{{physicalStageType.physicalStageNameE}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workPhysicalStageTypeName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{physicalStageAsOn31March2018}">Physical Stage As On 31 March 2018</span>
+												</p>
+											</div>
+										</div>
+										
+										</div>
+										
+										<!-- 4th row started -->
+									<div class="row">
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{stipulatedDateOfCompletion}">
+											Stipulated Date Of Completion
+											</span><span class="aestrick">&#42;</span></label>
+											<div class="input-group date" id="datetimepicker1"
+												data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input"
+													data-target="#datetimepicker1" name="workTentativeCompletionDateName"
+													required="required" placeholder="DD/MM/YYYY"
+													data-ng-model="workData.tentativeCompletionDateString" data-ng-readonly="true"
+													id="startingDate" autocomplete="off"  />
+													<!--  data-ng-change="validateStartingDate();validateSubAcctStartingDate();" 
+													ye wali line upar autocomplete ke baad aayegi
+													-->
+													
+												<div class="input-group-append input-group-addon"
+													data-target="#datetimepicker1" data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
+												</div>
+											</div>
+										
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workTentativeCompletionDateName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{tentativeCompletionDate}">Tentative Completion Date</span>
+												</p>
+											</div>
+											
+										</div>
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{totalAmountRecievedFromLineDeptTill31March2018}">Total Amount Recieved Till 31 March 2018</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control digits-only" id="workTotalExpenditureId"
+												required="required" 
+												data-ng-model="workData.totalAmountRecievedTill31March2018String" data-ng-readonly="true"
+												
+												name="workTotalAmountRecievedName"
+												maxlength="9" autocomplete="off" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workTotalAmountRecievedName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{totalAmountRecievedTill31March2018}">Total Amount Recieved Till 31 March 2018</span>
+												</p>
+											</div>
+											<label class="amount-color"><!-- <span th:text="#{amount}">Amount</span> <span
+														th:text="#{inWords}">In Words</span>:  -->{{workData.totalAmountRecievedTill31March2018String | inWords}}</label>
+										</div>
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{totalExpenditureOnContingencyTill31March2018}">Total Expenditure On Contingency Till 31 March 2018</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control digits-only" id="workTotalExpenditureId"
+												required="required" 
+												data-ng-model="workData.totalExpenditureOnContingencyTill31March2018" data-ng-readonly="true"
+												data-ng-change="compareTotalExpenditureAmount(workData.totalExpenditureTill31March2018String,workData.totalExpenditureOnContingencyTill31March2018);"
+												maxlength="9" autocomplete="off"
+												name="workTotalExpenditureOnContingency" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workTotalExpenditureOnContingency.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{totalExpenditureOnContingencyTill31March2018}">Total Expenditure On Contingency Till 31 March 2018</span>
+												</p>
+											</div>
+											<label class="amount-color"><!-- <span th:text="#{amount}">Amount</span> <span
+														th:text="#{inWords}">In Words</span>:  -->{{workData.totalExpenditureOnContingencyTill31March2018 | inWords}}</label>
+										</div>
+										
+										
+									</div>
+									<!-- 5th row started -->
+									
+										
+									
+								</div>
+								<div class="card-header">
+									<span th:text="#{workLocation}">Work Location</span>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="form-group col-sm-3">
+										<!-- data-ng-init="loadDistrictsOfMPNew()"
+										<select
+												class="form-control" id="workDistrictId" required="required"
+												 
+												data-ng-model="workData.district.districtId"
+												data-ng-change="loadBlocksByDistrictNew(workData.district.districtId)"
+												
+												name="workDistrictName">
+												<option value="" disabled="disabled">Select</option>
+												<option
+													data-ng-repeat="district in districtsMP | orderBy : 'districtName'"
+													value="{{district.districtId}}">{{district.districtName}}</option>
+											</select>
+										 -->
+											<label><span th:text="#{district}">District
+											</span><span class="aestrick">&#42;</span></label> 
+											<input type="text"
+												class="form-control" id="workDistrictOfficeId"
+												required="required"  
+												data-ng-model="workData.districtName" 
+												name="workDistrictOffice"  data-ng-readonly="true" />
+												<input type="hidden" data-ng-model="workData.districtId"/>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workDistrictOffice.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{district}">District</span>
+												</p>
+											</div>
+										</div>
+										
+										<div class="form-group col-sm-3">
+											<label><span th:text="#{block}">Block</span><span
+												class="aestrick">&#42;</span></label> <select class="form-control"
+												id="workBlockId" required="required"
+												data-ng-model="workData.blockId" data-ng-readonly="true"
+												data-ng-change="loadGramPanchayatByBlockCode(workData.blockId);workData.gramPanchayatId='';workData.villageId=''"
+												name="workBlockName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="block in blocks | orderBy : 'blockName'"
+													value="{{block.blockId}}">{{block.blockName}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workBlockName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{block}">Block</span>
+												</p>
+											</div>
+										</div>
+										
+										
+										<div class="form-group col-sm-3">
+											<label><span th:text="#{gramPanchayat}">Gram Panchayat
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="workGramPanchayatId" 												
+												data-ng-model="workData.gramPanchayatId" data-ng-readonly="true"
+												data-ng-change="loadVillageByGramPanchayatCode(workData.gramPanchayatId);workData.villageId=''"
+												name="workGramPanchayatName" required="required">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="gp in gramPanchayats | orderBy : 'gpName'"
+													value="{{gp.gramPanchayatId}}">{{gp.gpNameH}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workGramPanchayatName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{gramPanchayat}">Gram Panchayat</span>
+												</p>
+											</div>
+										</div>
+										<div class="form-group col-sm-3">
+											<label><span th:text="#{village}">Village
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="agencyTypeId"
+												data-ng-model="workData.villageId" data-ng-readonly="true"
+												name="workVillageName" 
+												data-ng-change="onVillageChangeDuringEdit();">
+												
+												<option
+													data-ng-repeat="village in villages | orderBy : 'villageName'"
+													value="{{village.villageId}}">{{village.villageName}}</option>
+													<option value="">--No Village associated--</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workVillageName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{village}">Village</span>
+												</p>
+											</div>
+										</div>
+										
+									<!-- 	<modal visible="showModal">
+     										 Any Modal additional data / buttons
+ 															 </modal> -->
+ 															 
+ 										<div class="form-group col-sm-4">
+											<label><span th:text="#{locationAddress}">Location Address</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control" id="workLocationAddressId"
+												required="required" 
+												data-ng-model="workData.locationAddress" data-ng-readonly="true"
+												name="workLocAddressName" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workLocAddressName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{locationAddress}">Location Address</span>
+												</p>
+											</div>
+										</div>				 
+ 															 
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{workLocationLatitude}">Work Location Latitude</span></label> <input type="text"
+												class="form-control" id="workLocationLatitudeId"
+												
+												data-ng-model="workData.workLocationLatitude" data-ng-readonly="true"
+												name="workLatitudeName" 
+												
+												/>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workLatitudeName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{workLocationLatitude}">Work Location Latitude</span>
+												</p>
+											</div>
+										</div>
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{workLocationLongitude}">work Location Longitude</span></label> <input type="text"
+												class="form-control" id="workLongitudeId"
+												
+												data-ng-model="workData.workLocationLongitude" data-ng-readonly="true"
+												name="workLongitudeName" 
+												
+												/>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workLongitudeName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{workLocationLongitude}">work Location Longitude</span>
+												</p>
+											</div>
+										</div>
+										
+										<!-- <div class="form-group col-sm-4">
+											<label><span th:text="#{locationGeometery}">Location Geometery</span></label> <input type="text"
+												class="form-control" id="workLocationGeometeryId"
+												data-ng-model="workData.locationGeometery"
+												name="workLocationGeometeryName" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workWorkName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{locationGeometery}">Location Geometery</span>
+												</p>
+											</div>
+										</div> -->
+										
+									<!-- 	<button class="btn btn-secondary" type="button"
+														data-toggle="modal" data-target="#add-entrepreneur-popup"></button> -->
+										
+										
+									</div>
+								</div>
+								
+								<div class="card-header">
+									<div class="row">
+										<div class="col-sm-3">
+											<span th:text="#{officeDetails}">
+											Office Details
+											</span>
+										</div>										
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="row">
+								<div class="form-group col-sm-5">
+											<label><span th:text="#{associateEeOffice}">Associate Executive Engineer Office</span><span class="aestrick">&#42;</span></label> 
+											<input type="text"
+											
+												class="form-control" id="workEEOfficeId"
+												required="required" 
+												data-ng-model="workData.executiveEngineerOfficeName"
+												name="workExecutiveEngineerOffice"  data-ng-readonly="true" />
+												<input type="hidden" data-ng-model="workData.executiveEngineerOfficeId" />
+											<!-- <div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAccountHeadName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{accountHead}">Account Head</span>
+												</p>
+											</div> -->
+										</div>
+										
+										<div class="form-group col-sm-5">
+											<label><span th:text="#{associateAe}">Associate Assistant Engineer
+											</span>
+											<span th:text="#{ifAvailable}">If Available</span>
+											<span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="workAEId"
+												data-ng-model="workData.assistantEngineerId" data-ng-readonly="true"
+												name="workAssistantEngineerName">
+												<option  disabled="disabled">--Select--</option>
+												<option data-ng-show="assistantEngineers.length > 0"
+													data-ng-repeat="assistantEngineer in assistantEngineers | orderBy : 'name'"
+													value="{{assistantEngineer.id}}">{{assistantEngineer.name}}</option>
+													<option value="">No One Associated</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAssistantEngineerName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{associateAe}">Associate Assistant Engineer</span>
+												</p>
+											</div>
+										</div>
+										
+										<div class="form-group col-sm-5">
+											<label><span th:text="#{associateSube}">Associate Sub Engineer
+											</span>
+											<span th:text="#{ifAvailable}">If Available</span>
+											<span class="aestrick">&#42;</span></label> 
+											<select
+												class="form-control" id="workSUBEId"
+												data-ng-model="workData.subEngineerId" data-ng-readonly="true"
+												name="workSubEngineerName" >
+												<option disabled="disabled" >--Select--</option>
+												<option data-ng-show="subEngineers.length > 0"
+													data-ng-repeat="subEngineer in subEngineers | orderBy : 'name'"
+													value="{{subEngineer.id}}">{{subEngineer.name}}</option>
+													<option value=""  >No One Associated</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workSubEngineerName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{associateSube}">Associate Sub Engineer</span>
+												</p>
+											</div>
+										</div>
+										
+										
+										
+									</div>
+								</div>
+								
+								<div class="card-header">
+									<div class="row">
+										<div class="col-sm-3">
+											<span th:text="#{technicalSanctionDetails}">
+											Technical Sanction Details
+											</span>
+										</div>										
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{technicalSanctionType}">Technical Sanction Type
+											</span><span class="aestrick" data-ng-show="workData.agencyTypeId==1">&#42;</span></label> <select
+												class="form-control" id="workTechnicalSanctionTypeId" data-ng-required="workData.agencyTypeId==1"
+												data-ng-init="loadTechnicalSanctionType()"
+												data-ng-model="workData.technicalSanctionTypeId" data-ng-readonly="true"
+												name="workTechnicalSanctionTypeName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="technicalSanctionType in technicalSanctionTypes | orderBy : 'technicalSanctionType'"
+													value="{{technicalSanctionType.technicalSanctionTypeId}}">{{technicalSanctionType.technicalSanctionType}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workTechnicalSanctionTypeName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> 
+													<span th:text="#{technicalSanctionType}">Technical Sanction Type</span>
+												</p>
+											</div>
+										</div>
+									
+									
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{technicalSanctionNo}">Technical Sanction No.</span>
+											<span class="aestrick" data-ng-show="workData.agencyTypeId==1">&#42;</span></label> <input type="text"
+												class="form-control" id="workTsNoId"
+												data-ng-required="workData.agencyTypeId==1"
+												data-ng-model="workData.technicalSanctionNo" data-ng-readonly="true"
+												name="workTechnicalSanctionNoName" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workTechnicalSanctionNoName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{technicalSanctionNo}">Technical Sanction No</span>
+												</p>
+											</div>
+										</div>
+										
+										<!-- data-ng-change="compareDatesDuringEdit(workData.administrationSanctionDate,workData.technicalSanctionDate);" -->
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{technicalSanctionDate}">Technical sanction 
+													Date</span><span class="aestrick" data-ng-show="workData.agencyTypeId==1">&#42;</span></label>
+											<div class="input-group date" id="datetimepicker2"
+												data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input"
+													data-target="#datetimepicker2" name="workTechnicalSanctionDateName"
+													data-ng-required="workData.agencyTypeId==1" placeholder="DD/MM/YYYY"
+													data-ng-model="workData.technicalSanctionDate" data-ng-readonly="true"
+													
+													id="startingDate" autocomplete="off"  />
+													<!--  data-ng-change="validateStartingDate();validateSubAcctStartingDate();" 
+													ye wali line upar autocomplete ke baad aayegi
+													-->
+													
+												<div class="input-group-append input-group-addon"
+													data-target="#datetimepicker2" data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
+												</div>
+											</div>
+										
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workTechnicalSanctionDateName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{technicalSanctionDate}">Technical Sanction Date</span>
+												</p>
+											</div>
+											<!-- <div data-ng-show="isStartingDateSmaller">
+												<p class="help-block" style="color: red;">
+													<span th:text="#{isStartingDateSmaller}">Starting
+														Date must be after Date of Registration</span>
+												</p>
+											</div> -->
+											<!-- <div data-ng-show="isSubAcctStartingDateSmaller">
+												<p class="help-block" style="color: red;">
+													<span th:text="#{isSubAcctStartingDateSmaller}">Starting
+														Date of Sub Acct must be equal or after Starting Date of
+														Parent Acct</span> ({{parentAcctStartingDate}})
+												</p>
+											</div> -->
+										</div>
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{estimatedCostAsPerTS}">Estimated Cost As Per Technical Sanction</span>
+											<span class="aestrick" data-ng-show="workData.agencyTypeId==1">&#42;</span></label> <input type="text"
+												class="form-control digits-only" id="workEstimatedCostId"
+												data-ng-required="workData.agencyTypeId==1" 
+												data-ng-model="workData.estimatedCostString" data-ng-readonly="true"
+												name="workEstimatedCostName"
+												maxlength="9" autocomplete="off" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workEstimatedCostName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{estimatedCostAsPerTS}">Estimated Cost As Per Technical Sanction</span>
+												</p>
+											</div>
+											<label class="amount-color"><!-- <span th:text="#{amount}">Amount</span> <span
+														th:text="#{inWords}">In Words</span>:  -->{{workData.estimatedCostString | inWords}}</label>	
+										</div>
+										
+										<div class="form-group col-sm-4">
+                   							<div class="form-group">
+                       						<label>
+                                             <span th:text="#{uploadTechnicalSanctionFile}">Upload Technical Sanction File</span>
+                                              </label>
+                                              <input required="required" type='file' accept=".pdf" class="form-control" file-model="tsPdfFile" name="tsPdfFile" id="tsPdfFile" data-ng-readonly="true"/>
+                                              (<span th:text="#{allowedPdfFormatOnly}"></span>)
+                                              <p class="help-block" data-ng-show="workData.technicalSanctionFileId!=null">
+                                              <span th:text="#{downloadCurrentFile}"></span>
+                                              <a style="cursor: pointer;" data-ng-click="downloadDocument(workData.technicalSanctionFileId)">
+                                              <img th:src="@{/img/download.ico}" style="width: 7%;" alt="" />
+                                              </a>
+                                              </p>
+                                              											  
+                                           <!--    <p class="help-block" style="color: red;" data-ng-show="noFileError">
+                                                  <span th:text="#{pleaseUploadAdministrationSanctionFile}">Please upload Administration Sanction File</span>
+                                              </p> -->
+                                              <p class="help-block" style="color: red;" data-ng-show="maxSizeErrorTs">
+                                                   <span th:text="#{uploadedFileExceedSize}">Uploaded File Exceed Maximum Allowed Size</span>
+                                              </p>
+                                              
+                                           	  <p class="help-block" style="color: red;" data-ng-show="fileExtentionErrorTs">
+                                                   <span th:text="#{uploadedFileFormatDoesNotSupported}">Uploaded File Format does not supported</span>
+                                              </p>
+                                              
+                                             </div>
+                                          </div>
+										
+										<div class="form-group col-sm-4">
+                   							<div class="form-group">
+                       						<label>
+                                             <span th:text="#{uploadDrawingCopyFile}">Upload Drawing Copy File</span>
+                                              </label>
+                                              <input required="required" type='file' accept=".pdf" class="form-control" file-model="dcPdfFile" name="dcPdfFile" id="dcPdfFile" data-ng-readonly="true"/>
+                                              (<span th:text="#{allowedPdfFormatOnly}"></span>)
+                                              <p class="help-block" data-ng-show="workData.latestDrawingCopyId!=null">
+                                              <span th:text="#{downloadCurrentFile}"></span>
+                                              <a style="cursor: pointer;" data-ng-click="downloadDocument(workData.latestDrawingCopyId)">
+                                              <img th:src="@{/img/download.ico}" style="width: 7%;" alt="" />
+                                              </a>
+                                              </p>
+                                              											  
+                                           <!--    <p class="help-block" style="color: red;" data-ng-show="noFileError">
+                                                  <span th:text="#{pleaseUploadAdministrationSanctionFile}">Please upload Administration Sanction File</span>
+                                              </p> -->
+                                               <p class="help-block" style="color: red;" data-ng-show="maxSizeErrorDc">
+                                                   <span th:text="#{uploadedFileExceedSize}">Uploaded File Exceed Maximum Allowed Size</span>
+                                              </p>
+                                              
+                                           	  <p class="help-block" style="color: red;" data-ng-show="fileExtentionErrorDc">
+                                                   <span th:text="#{uploadedFileFormatDoesNotSupported}">Uploaded File Format does not supported</span>
+                                              </p>
+                                              
+                                             </div>
+                                          </div>
+										
+										<div class="form-group col-sm-4">
+                   							<div class="form-group">
+                       						<label>
+                                             <span th:text="#{uploadEstimateCopyFile}">Upload Estimate Copy File</span>
+                                              </label>
+                                              <input required="required" type='file' accept=".pdf" class="form-control" file-model="ecPdfFile" name="ecPdfFile" id="ecPdfFile" data-ng-readonly="true"/>
+                                              (<span th:text="#{allowedPdfFormatOnly}"></span>)
+                                              <p class="help-block" data-ng-show="workData.estimateFileId!=null">
+                                              <span th:text="#{downloadCurrentFile}"></span>
+                                              <a style="cursor: pointer;" data-ng-click="downloadDocument(workData.estimateFileId)">
+                                              <img th:src="@{/img/download.ico}" style="width: 7%;" alt="" />
+                                              </a>
+                                              </p>											  
+                                           <!--    <p class="help-block" style="color: red;" data-ng-show="noFileError">
+                                                  <span th:text="#{pleaseUploadAdministrationSanctionFile}">Please upload Administration Sanction File</span>
+                                              </p> -->
+                                              
+                                               <p class="help-block" style="color: red;" data-ng-show="maxSizeErrorEc">
+                                                   <span th:text="#{uploadedFileExceedSize}">Uploaded File Exceed Maximum Allowed Size</span>
+                                              </p>
+                                              
+                                           	  <p class="help-block" style="color: red;" data-ng-show="fileExtentionErrorEc">
+                                                   <span th:text="#{uploadedFileFormatDoesNotSupported}">Uploaded File Format does not supported</span>
+                                              </p>
+                                              
+                                             </div>
+                                          </div>
+                                          
+                                          <div class="form-group col-sm-4">
+                                          	<div class="form-group">
+											<label><span th:text="#{issuingAuthority}">Issuing Authority
+											</span><!-- <span class="aestrick">&#42;</span> --></label> <select
+												class="form-control" id="" 
+												data-ng-init="loadTSIssuingAuthority()"
+												data-ng-model="workData.tsIssuingAuthorityId" data-ng-readonly="true"
+												name="tsAuthorityName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="tsIssuingAuthority in tsIssuingAuthorities | orderBy : 'designation'"
+													value="{{tsIssuingAuthority.id}}">{{tsIssuingAuthority.designation}}</option>
+											</select>
+											<!-- <div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.tsAuthorityName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> 
+													<span th:text="#{issuingAuthority}">Issuing Authority</span>
+												</p>
+											</div> -->
+											</div>
+										</div>
+                                          
+									
+									<div class="form-group col-sm-4">
+										<div class="form-group">
+											<label><span th:text="#{authorityName}">Authority Name</span>
+											
+											<!-- <span class="aestrick">&#42;</span> -->
+											
+											</label>
+											
+											<input type="text"
+												class="form-control" id=""
+												data-ng-model="workData.tsAuthorityName" data-ng-readonly="true"
+												name="tsAuthorityName" />
+											<!-- <div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.tsAuthorityName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{tsAuthorityName}">Technical Sanction Authority Name</span>
+												</p>
+											</div> -->
+										</div>
+									</div>
+                                          
+										
+									
+									
+								</div>
+							</div>
+							
+							<div class="card-header">
+									<div class="row">
+										<div class="col-sm-4">
+											<span th:text="#{administrativeSanctionDetails}">
+											Administrative Sanction Details
+											</span>
+										</div>										
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{administrativeSanctionType}">Administrative Sanction Type
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="workAdministrationSanctionTypeId" required="required"
+												data-ng-init="loadAdministrationSanctionType()"
+												data-ng-model="workData.administrationSanctionTypeId" data-ng-readonly="true"
+												name="workAdministrativeSanctionTypeName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="administrationSanctionType in administrationSanctionTypes | orderBy : 'administrationSanctionType'"
+													value="{{administrationSanctionType.administrationSanctionTypeId}}">{{administrationSanctionType.administrationSanctionType}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAdministrativeSanctionTypeName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> 
+													<span th:text="#{administrativeSanctionType}">Administrative Sanction Type</span>
+												</p>
+											</div>
+										</div>
+									
+									
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{administrativeSanctionNo}">Administrative sanction No.</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control" id="workAsNoId"
+												required="required" 
+												data-ng-model="workData.administrationSanctionNo" data-ng-readonly="true"
+												name="workAdministrativeSanctionNoName"  />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAdministrativeSanctionNoName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{administrativeSanctionNo}">Administrative Sanction No</span>
+												</p>
+											</div>
+										</div>
+										
+										<!-- data-ng-change="compareDatesDuringEdit(workData.administrationSanctionDate,workData.technicalSanctionDate);" -->
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{administrativeSanctionDate}">Administrative sanction 
+													Date</span><span class="aestrick">&#42;</span></label>
+											<div class="input-group date" id="datetimepicker3"
+												data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input"
+													data-target="#datetimepicker3" name="workAdministrativeSanctionDateName"
+													required="required" placeholder="DD/MM/YYYY"
+													data-ng-model="workData.administrationSanctionDate" data-ng-readonly="true"
+													
+													id="startingDate" autocomplete="off"  />
+													<!--  data-ng-change="validateStartingDate();validateSubAcctStartingDate();" 
+													ye wali line upar autocomplete ke baad aayegi
+													-->
+													
+												<div class="input-group-append input-group-addon"
+													data-target="#datetimepicker3" data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
+												</div>
+											</div>
+										
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAdministrativeSanctionDateName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{administrativeSanctionDate}">Administrative Sanction Date</span>
+												</p>
+											</div>
+											
+										</div>
+											
+											<div class="form-group col-sm-4">
+											<label><span th:text="#{administrationSanctionAmountIncludingContingency}">Approved Cost AS Per Administrative Sanction</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control digits-only" id="workTotalCostId"
+												required="required" 
+												data-ng-model="workData.totalCostString" data-ng-readonly="true"
+												data-ng-change="calculateTenderCost(workData.pacAmount,workData.tenderedRatePer,workData.tenderedRateSign,workData.totalCostString);compareAdminAmount(workData.totalCostString,workData.contingencyAmount);calculatePawAmount(workData.totalCostString,workData.contingencyAmount,workData.tenderedRatePer,workData.tenderedRateSign);"
+												name="workTotalCostName"
+												maxlength="9" autocomplete="off" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workTotalCostName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{approvedCostAsPerAS}">Approved Cost AS Per Administrative Sanction</span>
+												</p>
+											</div>
+											<label class="amount-color"><!-- <span th:text="#{amount}">Amount</span> <span
+														th:text="#{inWords}">In Words</span>:  -->{{workData.totalCostString | inWords}}</label>
+											</div>
+											
+											
+											<div class="form-group col-sm-4" data-ng-show="workData.agencyTypeId==2">
+											<label><span th:text="#{issuingAuthority}">Issuing Authority
+											</span><span class="aestrick">&#42;</span></label> <select
+												class="form-control" id="workIssuingAuthorityId" data-ng-required="workData.agencyTypeId==2"
+												data-ng-init="loadIssuingAuthority()"
+												data-ng-model="workData.issuingAuthorityId" data-ng-readonly="true"
+												name="workIssuingAuthorityName">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="issuingAuthority in issuingAuthorities | orderBy : 'issuingAuthorityName'"
+													value="{{issuingAuthority.issuingAuthorityId}}">{{issuingAuthority.issuingAuthorityName}}</option>
+											</select>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workIssuingAuthorityName.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> 
+													<span th:text="#{issuingAuthority}">Issuing Authority</span>
+												</p>
+											</div>
+										</div>
+										<!-- <div class="form-group col-sm-4">
+                   							<div class="form-group">
+                       						<label>
+                                             <span th:text="#{uploadAdministrationSanctionFile}">Upload Administration Sanction File</span>
+                                              <span class="aestrick">&#42;</span>
+                                              </label>
+                                              <input type='file' accept=".pdf,.jpg,.png,.gif" class="form-control" file-model="mapImage" name="mapImage" id="mapImage"/>
+                                              (<span th:text="#{application.page.allowedFormatSize}"></span>)
+                                              <div data-ng-show="industrialAreaCreationForm.$submitted">                                                                        
+                                              <p class="help-block" style="color: red;" data-ng-show="noFileError">
+                                                  <span th:text="#{application.id.validation.uploadMap}">Please upload Map Image</span>
+                                              </p>
+                                            <p class="help-block" style="color: red;" data-ng-show="maxSizeError">
+                                               <span th:text="#{application.page.maxSizeError}">Uploaded file exceeding allowed file size</span>
+                                             </p>
+                                            <p class="help-block" style="color: red;" data-ng-show="fileExtentionError">
+                                                   <span th:text="#{application.page.fileFormatError}">Uploaded file format does not supported</span>
+                                            </p>
+                                               </div>
+                                             </div>
+                                          </div> -->
+                                          
+                                          <div class="form-group col-sm-4">
+                   							<div class="form-group">
+                       						<label>
+                                             <span th:text="#{uploadAdministrationSanctionFile}">Upload Administration Sanction File</span>
+                                              </label>
+                                              <input type="file" accept=".pdf" class="form-control" file-model="asPdfFile" />
+                                              (<span th:text="#{allowedPdfFormatOnly}"></span>)
+                                              <p class="help-block" data-ng-show="workData.administrationSanctionFileId!=null">
+                                              <span th:text="#{downloadCurrentFile}"></span>
+                                              <a style="cursor: pointer;" data-ng-click="downloadDocument(workData.administrationSanctionFileId)">
+                                              <img th:src="@{/img/download.ico}" style="width: 7%;" alt="" />
+                                              </a>
+                                              </p>											  
+                                             <!--  <p class="help-block" style="color: red;" data-ng-show="noFileError">
+                                                  <span th:text="#{pleaseUploadAdministrationSanctionFile}">Please upload Administration Sanction File</span>
+                                              </p> -->
+                                              
+                                              <p class="help-block" style="color: red;" data-ng-show="maxSizeErrorAs">
+                                                   <span th:text="#{uploadedFileExceedSize}">Uploaded File Exceed Maximum Allowed Size</span>
+                                              </p>
+                                           	  <p class="help-block" style="color: red;" data-ng-show="fileExtentionErrorAs">
+                                                   <span th:text="#{uploadedFileFormatDoesNotSupported}">Uploaded File Format does not supported</span>
+                                              </p>
+                                              
+                                             </div>
+                                          </div>
+                                          
+                                           <div class="form-group col-sm-4">
+											<label><span th:text="#{authorityName}">Authority Name</span>
+											<!-- <span class="aestrick">&#42;</span> -->
+											
+											</label> <input type="text"
+												class="form-control" id="workNameId"
+												
+												data-ng-model="workData.asAuthorityName" data-ng-readonly="true"
+												name="asAuthorityName" />
+											<!-- <div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.asAuthorityName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{asAuthorityName}">Administration Sanction Authority Name</span>
+												</p>
+											</div> -->
+										</div>
+                                          
+                                          </div>
+                                          
+                                          <div class="row">
+											<div class="form-group col-sm-4">
+											<label><span th:text="#{contingencyAmount}">Contingency Amount (in Rs.)</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control digits-only" id="workTotalCostId"
+												required="required" 
+												data-ng-model="workData.contingencyAmount" data-ng-readonly="true"
+												name="contingencyAmount"
+												data-ng-change="compareAdminAmount(workData.totalCostString,workData.contingencyAmount);calculatePawAmount(workData.totalCostString,workData.contingencyAmount,workData.tenderedRatePer,workData.tenderedRateSign);"
+												maxlength="9" autocomplete="off" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.contingencyAmount.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{contingencyAmount}">Contingency Amount (in Rs.)</span>
+												</p>
+											</div>
+											<label class="amount-color"><!-- <span th:text="#{amount}">Amount</span> <span
+														th:text="#{inWords}">In Words</span>:  -->{{workData.contingencyAmount | inWords}}</label>
+											
+											</div>
+											</div>
+                                          
+                                          
+									</div>
+									
+									 <div class="card-header" data-ng-show="workData.agencyTypeId==1">
+									<div class="row">
+										<div class="col-sm-4">
+											<span th:text="#{tenderDetails}">
+											Tender Details
+											</span>
+										</div>										
+									</div>
+								</div>
+								
+								<div class="card-body" data-ng-show="workData.agencyTypeId==1">
+								<div class="row">
+								
+                                          
+                                          <div class="form-group col-sm-4">
+											<label><span th:text="#{agreementNumber}">Agreement Number</span><span class="aestrick" data-ng-show="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1 &amp;&amp; workData.lineDepartmentId!=28">&#42;</span></label> <input type="text"
+												class="form-control" 
+												data-ng-required="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1 &amp;&amp; workData.lineDepartmentId!=28"
+												data-ng-model="workData.agreementNumber" data-ng-readonly="true"
+												name="agreementNumber" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.agreementNumber.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{agreementNumber}">Agreement Number</span>
+												</p>
+											</div>
+										</div>
+                                          
+                                          
+                                          <div class="form-group col-sm-4">
+											<label><span th:text="#{agreementDate}">Agreement Date</span>
+											<span class="aestrick" data-ng-show="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1 &amp;&amp; workData.lineDepartmentId!=28">&#42;</span></label>
+											<div class="input-group date" id="datetimepicker4"
+												data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input"
+													data-target="#datetimepicker4" name="workAgreementDateName"
+													data-ng-required="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1 &amp;&amp; workData.lineDepartmentId!=28" placeholder="DD/MM/YYYY"
+													data-ng-model="workData.agreementDateString" data-ng-readonly="true"
+													id="agreementDate" autocomplete="off"  />
+													<!--  data-ng-change="validateStartingDate();validateSubAcctStartingDate();" 
+													ye wali line upar autocomplete ke baad aayegi
+													-->
+													
+												<div class="input-group-append input-group-addon"
+													data-target="#datetimepicker4" data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
+												</div>
+											</div>
+										
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.workAgreementDateName.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{agreementDate}">Agreement Date</span>
+												</p>
+											</div>
+											
+										</div>
+										
+										<div class="form-group col-sm-4">
+                   							<div class="form-group">
+                       						<label>
+                                             <span th:text="#{uploadAgreementCopyFile}">Upload Agreement Copy File</span>
+                                              </label>
+                                              <input required="required" type='file' accept=".pdf" class="form-control" file-model="acPdfFile" name="acPdfFile" id="acPdfFile" data-ng-readonly="true"/>
+                                              (<span th:text="#{allowedPdfFormatOnly}"></span>)
+                                              <p class="help-block" data-ng-show="workData.agreementCopyId!=null">
+                                              <span th:text="#{downloadCurrentFile}"></span>
+                                              <a style="cursor: pointer;" data-ng-click="downloadDocument(workData.agreementCopyId)">
+                                              <img th:src="@{/img/download.ico}" style="width: 7%;" alt="" />
+                                              </a>
+                                              </p>
+                                              											  
+                                             <!--  <p class="help-block" style="color: red;" data-ng-show="noFileError">
+                                                  <span th:text="#{pleaseUploadAdministrationSanctionFile}">Please upload Administration Sanction File</span>
+                                              </p> -->
+                                              <p class="help-block" style="color: red;" data-ng-show="fileExtentionErrorAc">
+                                                   <span th:text="#{uploadedFileFormatDoesNotSupported}">Uploaded File Format does not supported</span>
+                                              </p>
+                                              
+                                           	  <p class="help-block" style="color: red;" data-ng-show="fileExtentionErrorAc">
+                                                   <span th:text="#{uploadedFileFormatDoesNotSupported}">Uploaded File Format does not supported</span>
+                                              </p>
+                                              
+                                             </div>
+                                          </div>
+										
+										
+                                          
+                                          
+											</div>
+											
+											<div class="row">
+									
+										
+											<div class="form-group col-sm-1">
+											<label><span th:text="#{plusOrMinus}">+/-
+											</span><span class="aestrick" data-ng-show="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1">&#42;</span></label> <select
+												class="form-control" id="tenderedRateSign"
+												data-ng-model="workData.tenderedRateSign" data-ng-readonly="true"
+												data-ng-change="calculateTenderCost(workData.pacAmount,workData.tenderedRatePer,workData.tenderedRateSign,workData.totalCostString);calculatePawAmount(workData.totalCostString,workData.contingencyAmount,workData.tenderedRatePer,workData.tenderedRateSign);"
+												name="tenderedRateSign"
+												data-ng-required="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1"
+												>
+												<option value="" disabled="disabled">...</option>
+												<option value="-">-</option>
+												<option value="+">+</option>
+											</select>
+											 <div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.tenderedRateSign.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span>
+												</p>
+											</div> 
+										</div>
+										<div class="form-group col-sm-3">
+											<label><span th:text="#{tenderedRatePer}">Tendered Rate (%)
+											</span><span class="aestrick" data-ng-show="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1">&#42;</span></label> <input type="text"
+												class="form-control number-OnlyTwoDecimal" id="tenderedRatePer"
+												data-ng-model="workData.tenderedRatePer" data-ng-readonly="true"
+												data-ng-change="calculateTenderCost(workData.pacAmount,workData.tenderedRatePer,workData.tenderedRateSign,workData.totalCostString);calculatePawAmount(workData.totalCostString,workData.contingencyAmount,workData.tenderedRatePer,workData.tenderedRateSign);"
+												name="tenderedRatePer" maxlength="5"
+												data-ng-required="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1"
+												/>
+												<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.tenderedRatePer.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{tenderedRatePer}">Tendered Rate (%)</span>
+												</p>
+											</div>
+										</div>
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{pacAmount}">PAC Amount</span><span class="aestrick" data-ng-show="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1">&#42;</span></label> <input type="text"
+												class="form-control digits-only" 
+												data-ng-required="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1"
+												maxlength="9" autocomplete="off"
+												data-ng-model="workData.pacAmount" data-ng-readonly="true"
+												data-ng-change="calculateTenderCost(workData.pacAmount,workData.tenderedRatePer,workData.tenderedRateSign,workData.totalCostString);"
+												name="pacAmount" />
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.pacAmount.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{pacAmount}">PAC Amount</span>
+												</p>
+											</div>
+											<label class="amount-color"><!-- <span th:text="#{amount}">Amount</span> <span
+														th:text="#{inWords}">In Words</span>:  -->{{workData.pacAmount | inWords}}</label>
+										</div>
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{tenderCost}">Tender Cost</span><span class="aestrick" data-ng-show="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1">&#42;</span></label> <input type="text"
+												class="form-control"  id="tenderCostId"
+												data-ng-required="(workData.workStatusId==2 || workData.workStatusId==4) &amp;&amp; workData.agencyTypeId==1"
+												data-ng-model="workData.tenderCost" data-ng-readonly="true"
+												name="tenderCost" 
+												
+												
+												/>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.tenderCost.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{tenderCost}">Tender Cost</span>
+												</p>
+											</div>
+										</div>
+										
+										</div>
+										
+										<div class="row">
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{probableAmountOfWork}">Probable Amount Of Work</span><span class="aestrick" data-ng-show="workData.agencyTypeId==1">&#42;</span></label> <input type="text"
+												class="form-control" 
+												data-ng-required="workData.agencyTypeId==1" id="pawId"
+												data-ng-model="workData.probableAmountOfWork" 
+												name="paw" 
+												data-ng-readonly="true"
+												/>
+											<div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.paw.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{probableAmountOfWork}">Probable Amount Of Work</span>
+												</p>
+											</div>
+										</div>
+										
+										</div>
+										
+										
+										
+											</div>
+											
+											<div class="card-body">
+											<div class="row">
+										<div class="form-group col-sm-12">
+											<label><span th:text="#{remarks}">Remarks</span></label> 
+											<textarea 
+												class="form-control" 
+												style="min-height: 120px;"
+												data-ng-model="workData.remarks" data-ng-readonly="true"
+												name="remarkName"
+												maxlength="1500" autocomplete="off"
+												 ></textarea>
+												 <div>
+												<p class="help-block" style="color: red;">
+													<span th:text="#{*(characterLimitIs}">* ( character limit is</span>
+													<span th:text="#{1500}">1500 )</span>
+													
+												</p>
+											</div>
+												 
+											<!-- <div data-ng-show="workFormName.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="workFormName.pacAmount.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{pacAmount}">PAC Amount</span>
+												</p>
+											</div> -->
+											
+										</div>
+										
+										</div>
+											</div>
+									
+									
+									
+									
+							</div>
+                                          
+											
+											<!-- <div data-ng-show="isStartingDateSmaller">
+												<p class="help-block" style="color: red;">
+													<span th:text="#{isStartingDateSmaller}">Starting
+														Date must be after Date of Registration</span>
+												</p>
+											</div> -->
+											<!-- <div data-ng-show="isSubAcctStartingDateSmaller">
+												<p class="help-block" style="color: red;">
+													<span th:text="#{isSubAcctStartingDateSmaller}">Starting
+														Date of Sub Acct must be equal or after Starting Date of
+														Parent Acct</span> ({{parentAcctStartingDate}})
+												</p>
+											</div> -->
+										
+										
+										
+										
+										
+									
+									
+										<!-- <div class="form-group col-sm-4">
+											<label><span th:text="#{state}">State</span><span
+												class="aestrick">&#42;</span></label> <select class="form-control"
+												id="stateRA" required="required" data-ng-init="loadStates()"
+												data-ng-model="entrepreneurData.registeredAddress.stateId"
+												data-ng-change="loadDistrictsByState(entrepreneurData.registeredAddress.stateId)"
+												name="stateRA">
+												<option value="" disabled="disabled">Select</option>
+												<option
+													data-ng-repeat="state in states | orderBy : 'stateName'"
+													value="{{state.stateId}}">{{state.stateName}}</option>
+											</select>
+											<div data-ng-show="entrepreneurForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="entrepreneurForm.stateRA.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{state}">State</span>
+												</p>
+											</div>
+										</div>
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{district}">District</span><span
+												class="aestrick">&#42;</span></label> <select class="form-control"
+												id="districtRA" required="required"
+												data-ng-model="entrepreneurData.registeredAddress.districtId"
+												data-ng-change="loadBlocksByDistrict(entrepreneurData.registeredAddress.districtId)"
+												name="districtRA">
+												<option value="" disabled="disabled">Select</option>
+												<option
+													data-ng-repeat="district in districts | orderBy : 'districtName'"
+													value="{{district.districtId}}">{{district.districtName}}</option>
+											</select>
+											<div data-ng-show="entrepreneurForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="entrepreneurForm.districtRA.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{district}">District</span>
+												</p>
+											</div>
+										</div>
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{block}">Block</span><span
+												class="aestrick">&#42;</span></label> <select class="form-control"
+												id="districtRA" required="required"
+												data-ng-model="entrepreneurData.registeredAddress.blockId"
+												name="blockRA">
+												<option value="" disabled="disabled">Select</option>
+												<option
+													data-ng-repeat="block in blocks | orderBy : 'blockName'"
+													value="{{block.blockId}}">{{block.blockName}}</option>
+											</select>
+											<div data-ng-show="entrepreneurForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="entrepreneurForm.blockRA.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{block}">Block</span>
+												</p>
+											</div>
+										</div>
+										
+										<div class="form-group col-sm-4">
+											<label><span th:text="#{cityVillage}">City/Village
+											</span><span class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control" id="cityVillageRA" required="required"
+												data-ng-model="entrepreneurData.registeredAddress.cityVillage"
+												name="cityVillageRA" maxlength="45" />
+											<div data-ng-show="entrepreneurForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="entrepreneurForm.cityVillageRA.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{cityVillage}">City/Village</span>
+												</p>
+											</div>
+										</div> -->
+									
+							 <!-- <div class="gllpLatlonPicker">
+							<div class="gllpMap"></div>
+							<p>	<input type="text" id="mapLatitude" class="gllpLatitude" value="" size="10"/>
+ <input type="text" id="mapLongitude" class="gllpLongitude" value="" size="10"/>
+<input type="text" class="gllpZoom" value="15" size="3"/></p>
+<input type="button" id="mapUpdateButton" class="gllpUpdateButton" value="Update" style="display: none"/>
+</div>  -->
+					<!-- 		<fieldset class="gllpLatlonPicker">
+<input type="text" class="gllpSearchField"><input type="button" class="gllpSearchButton" value="search"></p>
+<div class="gllpMap">Google Maps</div>
+size means input type text box ki rectangular width
+<p>	Latitude: <input type="text" id="mapLatitude" class="gllpLatitude" value="28.5172" size="10"/>
+ / Longitude: <input type="text" id="mapLongitude" class="gllpLongitude" value="77.2391" size="10"/>
+, zoom: <input type="text" class="gllpZoom" value="7" size="3"/>
+<input type="button" id="mapUpdateButton1" class="gllpUpdateButton" value="update map"><br />
+<input type="button" value="Reset Lat/Long" onclick="resetLatLong()" />
+</fieldset> -->
+							<div class="card-footer text-right" data-ng-show="workData.workRequestStatusId==1">
+							<button type="submit" class="btn btn-sm btn-primary" data-ng-click="saveAsDraft=true;finalSubmit=false">
+									<span th:text="#{saveAsDraft}">Save As Draft</span>
+								</button>
+								
+								<button type="submit" class="btn btn-sm btn-primary" data-ng-click="finalSubmit=true;saveAsDraft=false">
+									<span th:text="#{updateAndSubmit}">Update And Submit</span>
+								</button>
+							
+								<!-- <button type="reset" class="btn btn-sm btn-danger">Reset</button> ng-disabled="workFormName.$invalid" -->
+							</div>
+						</form>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</div>
+
+<div class="modal fade popup-lg" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel" aria-hidden="true"
+		id="google-map-popup">
+		<div class="modal-dialog modal-lg" style="width: 63%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title">
+						<span th:text="#{dragGoogleMarkerToSelectLatLong}">Drag Google Marker To Select Latitude And Longitude</span>
+					</h6>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="gllpLatlonPicker">
+					<div class="gllpMap"></div>
+					<p style="margin-top: 10px;">
+					<span th:text="#{latitude}">Latitude : </span>	<input type="text" id="mapLatitude" class="gllpLatitude" value=""
+							size="10" /> 
+							
+						<span th:text="#{longitude}">Longitude : </span>	<input type="text" id="mapLongitude"
+							class="gllpLongitude" value="" size="10" /> 
+							
+						<span th:text="#{zoom}">Zoom : </span>	<input type="text"
+							class="gllpZoom" value="15" size="3" />
+					</p>
+					<input type="button" id="mapUpdateButton" class="gllpUpdateButton"
+						value="Update" style="display: none" />
+				</div>
+		</div>
+		</div>
+	</div>
+
+
+</html>

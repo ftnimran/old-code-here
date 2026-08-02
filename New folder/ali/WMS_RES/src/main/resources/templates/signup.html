@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" data-ng-app="res" xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}"
+	type="image/x-icon" />
+<link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+
+<title>RES - OWMS - Sign Up</title>
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<link th:href="@{/css/simple-line-icons.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+<link th:href="@{/css/custom.css}" rel="stylesheet" />
+
+<link th:href="@{/css/angular-loading.css}" rel="stylesheet"
+	type="text/css" />
+
+<script type="text/javascript">
+	//<![CDATA[
+	function check_pass() {
+		if (document.getElementById('password').value
+				&& document.getElementById('confirmPassword').value) {
+			if (document.getElementById('password').value == document
+					.getElementById('confirmPassword').value) {
+				document.getElementById('submit').disabled = false;
+				document.getElementById('passwordError').style.display = 'none';
+			} else {
+				document.getElementById('submit').disabled = true;
+				document.getElementById('passwordError').style.display = 'block';
+			}
+		}
+	}
+	//]]>
+</script>
+</head>
+
+<body data-ng-controller="SignUpController" dw-loading="sample-1"
+	dw-loading-options="{text: 'Loading....'}">
+	<div class="app flex-column align-items-center login-bg">
+		<div class="container flex1">
+			<div class="row justify-content-center align-items-center h100">
+				<div class="signup-box">
+					<div class="card-group mb-0">
+						<div class="card p-4">
+							<div class="card-body">
+								<div class="logo d-flex">
+									<img th:src="@{/img/logo-symbol.png}" alt="Logo" height="70px" />
+									<h3>
+										Rural Engineering Service<span>Online Works mgmt.
+											system</span>
+									</h3>
+								</div>
+								<h4 class="mb-3">Sign Up</h4>
+								<form data-ng-submit="doSignUp(signUpForm.$valid)"
+									name="signUpForm" method="post">
+									<!-- <form th:action="@{/doSignUp}"
+									th:object="${signUpBean}" method="post"> -->
+									<!-- <div class="col-md-12"> -->
+									<div data-ng-if="responseObject.errorMessage != null"
+										class="text-danger">
+										<strong>Error!</strong>
+										<p>{{responseObject.errorMessage}}</p>
+									</div>
+									<!-- </div> -->
+									<!-- <div class="text-success" th:if="${message != null}">
+										<strong>Success!</strong>
+										<p th:text="${message}">Success message!</p>
+									</div>
+
+									<div class="text-danger" th:if="${error != null}">
+										<strong>Error!</strong>
+										<p th:text="${error}">Error message!</p>
+									</div> -->
+									<div class="row">
+										<div class="form-group mb-3 col-sm-6">
+											<label><span th:text="#{name}">Name</span><span
+												class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control" placeholder="Name" required="required"
+												data-ng-model="signUpData.name" name="name" maxlength="30"
+												id="name" />
+											<div data-ng-show="signUpForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="signUpForm.name.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{name}">Name</span>
+												</p>
+											</div>
+										</div>
+										<div class="form-group mb-3 col-sm-6">
+											<label><span th:text="#{designation}">Designation</span><span
+												class="aestrick">&#42;</span></label> <select class="form-control"
+												required="required" data-ng-init="loadDesignations()"
+												data-ng-change= "signUpData.subDivionOfficeId=''; signUpData.officeId='';"
+												data-ng-model="signUpData.designationId" name="designation"
+												id="designation" >
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="designation in designations"
+													value="{{designation.id}}">{{designation.designation}}</option>
+											</select>
+											<div data-ng-show="signUpForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="signUpForm.designation.$error.required">
+													<span th:text="#{pleaseSelect}">Please select</span> <span
+														th:text="#{designation}">Designation</span>
+												</p>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group mb-3 col-sm-6">
+											<label><span th:text="#{email}">Email</span> (<span th:text="#{userId}">User Id</span>)<span
+												class="aestrick">&#42;</span></label> <input type="email"
+												class="form-control" placeholder="Email" id="email"
+												data-ng-model="signUpData.emailId" name="email"
+												maxlength="45" required="required" />
+											<div data-ng-show="signUpForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="signUpForm.email.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{email}">Email</span>
+												</p>
+											</div>
+											<p class="help-block" style="color: red;"
+												data-ng-show="signUpForm.email.$error.email">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{valid}">valid</span> <span th:text="#{email}">Email</span>
+											</p>
+										</div>
+										<div class="form-group mb-3 col-sm-6">
+											<label><span th:text="#{mobileNo}">Mobile No</span><span
+												class="aestrick">&#42;</span></label> <input type="text"
+												class="form-control digits-only" id="mobileNo"
+												data-ng-pattern="/^(\+\d{1,3}[- ]?)?\d{10}$/"
+												data-ng-model="signUpData.mobileNo" name="mobileNo"
+												maxlength="10" required="required" placeholder="Mobile No."/>
+											<div data-ng-show="signUpForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="signUpForm.mobileNo.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{mobileNo}">Mobile No</span>
+												</p>
+											</div>
+											<p class="help-block" style="color: red;"
+												data-ng-show="signUpForm.mobileNo.$error.pattern">
+												<span th:text="#{pleaseEnter}">Please enter</span> <span
+													th:text="#{valid}">valid</span> <span th:text="#{mobileNo}">Mobile
+													No</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group mb-3 col-sm-6">
+											<label><span th:text="#{password}">Password</span><span
+												class="aestrick">&#42;</span></label> <input required="required"
+												class="form-control" type="password"
+												data-ng-model="signUpData.password" name="password"
+												maxlength="20" id="password" onkeyup="check_pass();" placeholder="Password"  AUTOCOMPLETE="off"/>
+											<div data-ng-show="signUpForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="signUpForm.password.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{password}">Password</span>
+												</p>
+											</div>
+										</div>
+										<div class="form-group mb-3 col-sm-6">
+											<label><span th:text="#{confirmPassword}">Confirm
+													Password</span><span class="aestrick">&#42;</span></label> <input
+												required="required" class="form-control" type="password"
+												data-ng-model="signUpData.confirmPassword"
+												name="confirmPassword" maxlength="20" id="confirmPassword"
+												onkeyup="check_pass();"  placeholder="Confirm Password"   AUTOCOMPLETE="off"/>
+											<div data-ng-show="signUpForm.$submitted">
+												<p class="help-block" style="color: red;"
+													data-ng-show="signUpForm.confirmPassword.$error.required">
+													<span th:text="#{pleaseEnter}">Please enter</span> <span
+														th:text="#{confirmPassword}">Confirm Password</span>
+												</p>
+											</div>
+											<p class="help-block" style="color: red; display: none;"
+												id="passwordError">
+												<span th:text="#{passwordError}">Password and Confirm
+													Password doesn't match</span>
+											</p>
+										</div>
+									</div>
+									<!-- <div class="d-flex justify-content-around bg-light form-group">
+										<label style="margin-top: 0.5em;"><span th:text="#{whetherOIC}">Whether
+												Office In Charge? </span><span class="aestrick">&#42;</span></label>
+										<div class="pt-2">
+											<input type="radio" name="isOIC" id="r1" value="1"
+												checked="checked" data-ng-model="signUpData.isOIC"
+												required="required" data-ng-disabled="signUpData.designationId == 6"/> <label for="r1">Yes</label>
+										</div>
+										<div class="pt-2">
+											<input type="radio" name="isOIC" id="r2" value="0"
+												data-ng-model="signUpData.isOIC" required="required" data-ng-disabled="signUpData.designationId == 6"/> <label
+												for="r2">No</label>
+										</div>
+										<div data-ng-show="signUpForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="signUpForm.isOIC.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{whetherOIC}">Whether OIC ?</span>
+											</p>
+										</div>
+									</div> -->
+									
+									<div class="d-flex justify-content-around bg-light form-group">
+										<label style="margin-top: 0.5em;"><span th:text="#{whetherOIC}">Whether
+												Office In Charge? </span><span class="aestrick">&#42;</span></label>
+										<div class="pt-2">
+											<input type="radio" name="isOIC" id="r1" value="1"
+												checked="checked" data-ng-model="signUpData.isOIC"
+												required="required"/> <label for="r1">Yes</label>
+										</div>
+										<div class="pt-2">
+											<input type="radio" name="isOIC" id="r2" value="0"
+												data-ng-model="signUpData.isOIC" required="required"/> <label
+												for="r2">No</label>
+										</div>
+										<div data-ng-show="signUpForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="signUpForm.isOIC.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{whetherOIC}">Whether OIC ?</span>
+											</p>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="" class="col-sm-4 col-form-label"><span
+											th:text="#{officeType}">Office Type</span><span
+											class="aestrick">&#42;</span> </label>
+										<div class="col-sm-8">
+											<select class="form-control" required="required"
+												data-ng-init="loadOfficeTypes()"
+												data-ng-model="signUpData.officeTypeId" name="officeType"
+												data-ng-change="subDivionOffices=null; signUpData.subDivionOfficeId=''; signUpData.officeId='';loadOffices(signUpData.officeTypeId)"
+												id="officeType">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="officeType in officeTypes"
+													value="{{officeType.id}}">{{officeType.officeType}}</option>
+											</select>
+										</div>
+										<div data-ng-show="signUpForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="signUpForm.officeType.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{officeType}">Office Type</span>
+											</p>
+										</div>
+									</div>
+									
+									<div class="form-group row">
+										<label for="" class="col-sm-4 col-form-label"><span
+											th:text="#{office}">Office</span><span class="aestrick">&#42;</span></label>
+										<div class="col-sm-8">
+											<select class="form-control" required="required"
+												data-ng-model="signUpData.officeId" name="office"
+												data-ng-change="signUpData.subDivionOfficeId='';loadSubDivisionalOffices(signUpData.officeId, signUpData.designationId)"
+												id="office">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="office in offices | orderBy : 'officeName'"
+													value="{{office.id}}">{{office.officeName}}</option>
+											</select>
+										</div>
+										<div data-ng-show="signUpForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="signUpForm.office.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{office}">Office</span>
+											</p>
+										</div>
+									</div>
+									
+									<div class="form-group row" data-ng-if="subDivionOffices.length>0 &amp;&amp; signUpData.officeId!=null &amp;&amp; signUpData.designationId== 9">
+										<label for="" class="col-sm-4 col-form-label"><span
+											th:text="#{subDivisionalOffice}">Sub Divisional Office</span><span class="aestrick">&#42;</span></label>
+										<div class="col-sm-8">
+											<select class="form-control" required="required"
+												data-ng-model="signUpData.subDivionOfficeId" name="office"
+												id="office">
+												<option value="" disabled="disabled">--Select--</option>
+												<option
+													data-ng-repeat="suboffice in subDivionOffices | orderBy : 'officeName'"
+													value="{{suboffice.id}}">{{suboffice.officeName}}</option>
+											</select>
+										</div>
+										<div data-ng-show="signUpForm.$submitted">
+											<p class="help-block" style="color: red;"
+												data-ng-show="signUpForm.office.$error.required">
+												<span th:text="#{pleaseSelect}">Please select</span> <span
+													th:text="#{office}">Office</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="mb-3 col-sm-4">
+											<div class="input-group">
+												<img id="captcha_id" name="imgCaptcha"
+													th:src="@{/captcha?type=signup}" /> <a href="#"><img
+													th:src="@{/img/refresh.ico}"
+													onclick="document.getElementById('captcha_id').src = 'captcha?' + Math.random() + '&amp;type=signup';  return false" /></a>
+											</div>
+										</div>
+										<div class="mb-3 col-sm-8">
+											<input name="captchaText" id="captchaText" type="text"
+												maxlength="6" style="text-transform: uppercase;"
+												autocomplete="off" required="required" class="form-control"
+												placeholder="Captcha" data-ng-model="signUpData.captchaText" />
+
+										</div>
+
+									</div>
+									<sec:csrfInput />
+									<div class="row">
+										<div class="col-6">
+											<!-- <button type="button" class="btn btn-main px-4">Submit</button> -->
+											<input type="submit" class="btn btn-main px-4"
+												value="Sign Up" id="submit" />
+										</div>
+										<div class="col-6 text-right">
+											<!-- <button type="button" class="btn btn-link px-0">Back to Login</button> -->
+											<a th:href="@{/login}" class="btn btn-link px-0"> <span>Back
+													to Home Page</span></a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div th:replace="fragments/loginfooter :: footer" /> -->
+		<div class="home-footer">
+			<div class="container-fluid">
+				<div class="float-right">
+					<a target="_blank" href="https://mp.mygov.in"><img
+						th:src="@{/img/logo2.png}" alt="Image" width="160px" /></a>
+				</div>
+				<div class="float-left mt-2">
+					Rural Engineering Service &copy; 2020. All rights reserved. <br />
+					Designed &amp; Developed by <a target="_blank"
+						href="http://www.mapit.gov.in/coedetails.aspx"
+						style="color: wheat">Center of Excellence (CoE)</a>, <a
+						target="_blank" href="http://www.mapit.gov.in"
+						style="color: wheat">MAP_IT</a>.
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap and necessary plugins -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/common.js}"></script>
+	<script th:src="@{/angular/angular.min.js}"></script>
+	<script th:src="@{/angular/angular-route.min.js}"></script>
+	<script th:src="@{/angular/angular-idle.min.js}"></script>
+	<script th:src="@{/js/ui-bootstrap-tpls-2.5.0.min.js}"></script>
+	<script th:src="@{/js/spin.js}"></script>
+	<script th:src="@{/angular/angular-loading.js}"></script>
+
+	<script th:src="@{/angular/SignUpController.js}"></script>
+	<script th:src="@{/js/sha256.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+		function hash(val) {
+	
+			var hashObj = new jsSHA("SHA-256", "TEXT", "1");
+			hashObj.update(val);
+			return hashObj.getHash("HEX");
+		}
+	</script>
+</body>
+</html>

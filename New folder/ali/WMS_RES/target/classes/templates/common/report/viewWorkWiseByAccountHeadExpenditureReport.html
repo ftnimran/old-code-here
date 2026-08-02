@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+</head>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	//Plug-in to fetch page data 
+	jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
+		return {
+			"iStart" : oSettings._iDisplayStart,
+			"iEnd" : oSettings.fnDisplayEnd(),
+			"iLength" : oSettings._iDisplayLength,
+			"iTotal" : oSettings.fnRecordsTotal(),
+			"iFilteredTotal" : oSettings.fnRecordsDisplay(),
+			"iPage" : oSettings._iDisplayLength === -1 ? 0 : Math
+					.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+			"iTotalPages" : oSettings._iDisplayLength === -1 ? 0 : Math
+					.ceil(oSettings.fnRecordsDisplay()
+							/ oSettings._iDisplayLength)
+		};
+	};
+	var t = null;
+	function fetchWorkWiseExpenditureListByAccHead(monthYear, eeId, accHead) {
+
+		t = $("#dynamic-table")
+				.DataTable(
+						{
+							"footerCallback": function ( row, data, start, end, display ) {
+					            var api = this.api(), data;
+					 
+					            // converting to interger to find total
+					            var intVal = function ( i ) {
+					                return typeof i === 'string' ?
+					                    i.replace(/[\$,]/g, '')*1 :
+					                    typeof i === 'number' ?
+					                        i : 0;
+					            };
+							
+							// computing column Total of the complete result 
+				            var twoTotal = api
+				                .column( 2 )
+				                .data()
+				                .reduce( function (a, b) {
+				                    return intVal(a) + intVal(b);
+				                }, 0 );
+								
+					    var threeTotal = api
+				                .column( 3 )
+				                .data()
+				                .reduce( function (a, b) {
+				                    return intVal(a) + intVal(b);
+				                }, 0 );
+								
+				            // Update footer by showing the total with the reference of the column index 
+					    	$( api.column( 1 ).footer() ).html('Total');
+				            $( api.column( 2 ).footer() ).html(twoTotal);
+				            $( api.column( 3 ).footer() ).html(threeTotal);
+				             
+				        },	
+							
+							"processing" : true,
+							"serverSide" : true,
+							"sort" : "position",
+							 "bInfo" : false,
+							//bStateSave variable you can use to save state on client cookies: set value "true" 
+							"bStateSave" : false,
+							//Default: Page display length
+							"iDisplayLength" : 10,
+							"paging":   false,
+							 "ordering": false,
+							//We will use below variable to track page number on server side(For more information visit: http://legacy.datatables.net/usage/options#iDisplayStart)
+							"iDisplayStart" : 0,
+							// For Not Displaying 10 , 20, 50 , ALL Filter use below code 
+							 /* "bLengthChange" : false, */
+							"pagingType" : "full_numbers",
+							"aaSorting" : [ ],
+							/* "dom" : 'Blrtip', */
+							"dom" : "<'row'<'col-12 datatbl-top'lB>>"
+									+ "<'row'<'col-md-6'r><'col-md-6'>>"
+									+ "<'row'<'col-md-12't>><'row'<'col-md-6'i><'col-md-6'p>>",
+							"buttons" : [
+									{
+										extend : 'excelHtml5',
+										title : 'Status Wise Work Report',
+										text : '<span class="fa fa-file-excel-o"></span> Excel Export',
+										exportOptions : {
+											columns : [ 0, 1, 2, 3]
+										}
+									}, ],
+							"lengthMenu" : [ [ 10, 25, 50, 100000 ],
+									[ 10, 25, 50, "All" ] ],
+
+							"fnDrawCallback" : function() {
+
+								angular.element('#StartOrFinishSpinnerId')
+										.scope().startOrStopSpinner(false);
+
+								//Get page numer on client. Please note: number start from 0 So
+								//for the first page you will see 0 second page 1 third page 2...
+								//Un-comment below alert to see page number
+								//alert("Current page number: "+this.fnPagingInfo().iPage);
+								var oSettings = this.fnSettings();
+								var iTotalRecords = oSettings.fnRecordsTotal();
+								$('#total').val(iTotalRecords)
+							},
+							
+							"fnCreatedRow" : function(nRow, aData, iDataIndex) {
+								
+								$('td:eq(1)', nRow)
+								.html('<a   data-toggle="tooltip" target="_blank" data-placement="top" title="View" href="#cc/workDetails/'+aData.id+'">'+ aData.name +'</a>');
+								
+							},
+							"fnServerParams" : function(aoData) {
+								aoData.push({
+									"name" : "financialYearId",
+									"value" : $("#financialYearId option:selected").html()
+								});
+								
+							},
+							"fnRowCallback" : function(nRow, aData,
+									iDisplayIndex, iDisplayIndexFull) {
+								
+								$('td:eq(0)', nRow).html((this.fnPagingInfo().iPage
+								 * this.fnPagingInfo().iLength + (iDisplayIndex + 1))); 
+							},
+
+							"language" : {
+								searchPlaceholder : ""
+							},
+							"sAjaxSource" : "fetchWorkExpenditureByAccHeadList/"+monthYear+"/"+ eeId +"/"+accHead,
+
+							"columns" : [ 
+							
+							{
+								"data" : null,
+								"bSortable" : false
+							}, {
+								"data" : null
+							},{
+								"data" : "count1"
+							},{
+								"data" : "count2"
+								}],
+
+						});
+	}
+	
+	function deleteWork(id) {
+
+		/* return angular.element(document.getElementById('CommonController')).scope()
+				.deleteInward(id); */
+			return $('#page-div').scope().deleteWork(id);
+	}
+	function reDraw() {
+		t.draw();
+	}
+
+	
+
+	/*]]>*/
+</script>
+
+<div id="StartOrFinishSpinnerId"></div>
+
+<div id="page-div">
+	<!-- Breadcrumb -->
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item active"><span>Expenditure Report</span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row" data-ng-init="fetchWorkWiseExpenditureListByAccHead()">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<i class="fa fa-folder-open-o"></i> <span
+								>Expenditure Report</span>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div data-ng-if="responseObject.successMessage != null"
+										class="text-success">
+										<strong>Success!</strong>
+										<p>{{responseObject.successMessage}}</p>
+									</div>
+								</div>
+							</div>
+									 
+							<div class="table-responsive">
+							
+							 <div style='color:rgb(16, 99, 99);align:center'> Expenditure Report for <b> {{monthYear}}  </b> and <b> {{eeId}}  </b> and  <b> {{accHead}}  </b>  </div>
+								<table id="dynamic-table"
+									class="table table-striped table-bordered table-hover table-outline">
+									<thead class="thead-default">
+										<tr>
+											<th><span>#</span></th>
+											<th><span>Work Requisition No</span></th>
+											<th><span>Expenditure during FY - On Works</span></th>
+											<th><span>Expenditure during FY - On Contingency</span></th>
+										</tr>
+									</thead>
+									<tfoot align="right">
+									<tr>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+									 
+									</tr>
+									</tfoot>
+								</table>
+							</div>
+						
+							
+						</div>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+
+	</div>
+	<!-- /.container-fluid -->
+</div>
+</html>

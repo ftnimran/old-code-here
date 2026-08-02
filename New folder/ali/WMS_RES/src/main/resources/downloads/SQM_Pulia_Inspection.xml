@@ -1,0 +1,948 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+  <h:head>
+    <h:title>pulia</h:title>
+    <model>
+      <instance>
+        <data id="build_pulia_1539914442">
+          <meta>
+            <instanceID/>
+          </meta>
+          <group6>
+            <jila/>
+            <vikaskhand/>
+            <gramPanchayat/>
+            <gram/>
+            <inspectionDate/>
+            <adhikariNameNPost/>
+          </group6>
+          <group1>
+            <karyaName/>
+            <yojnaName/>
+            <prashaskiyaSwikratRashi/>
+            <swikratVarsh/>
+            <vartmanstithi/>
+          </group1>
+          <group2>
+            <sthalChayan/>
+            <hydrolicDesign/>
+            <samgriQuality/>
+            <workmanship/>
+            <foundationDesign/>
+            <samgriTest/>
+          </group2>
+          <group3>
+            <samgriQuality1/>
+            <pipeCulvert/>
+            <pipeCushion/>
+            <fillingCompaction/>
+            <samgriTest1/>
+            <slaveCulvert/>
+            <rccWorkQuality/>
+            <reinforcementQuality/>
+            <rccSamgriQuality/>
+          </group3>
+          <group4>
+            <protection/>
+            <wheelGuard/>
+            <cautionBoard/>
+            <approaches/>
+          </group4>
+          <group5>
+            <suggestion/>
+            <error/>
+            <lastGrading/>
+            <officerName/>
+            <officerMobileNo/>
+            <physicalStage/>
+          </group5>
+          <overallObservation>
+            <overallObservationGrading/>
+            <overallObservationGradingRemarks/>
+          </overallObservation>
+          <group7>
+            <imageStr1/>
+            <imageStr2/>
+            <imageStr3/>
+            <imageStr4/>
+            <imageStr5/>
+            <fileStr/>
+          </group7>
+        </data>
+      </instance>
+      <itext>
+        <translation lang="English">
+          <text id="/data/group6:label">
+            <value>निरीक्षण</value>
+          </text>
+          <text id="/data/group6/jila:label">
+            <value>जिला</value>
+          </text>
+          <text id="/data/group6/vikaskhand:label">
+            <value>विकास खंड</value>
+          </text>
+          <text id="/data/group6/gramPanchayat:label">
+            <value>ग्राम पंचायत</value>
+          </text>
+          <text id="/data/group6/gram:label">
+            <value>ग्राम</value>
+          </text>
+          <text id="/data/group6/inspectionDate:label">
+            <value>निरिक्षण की दिनांक</value>
+          </text>
+          <text id="/data/group6/adhikariNameNPost:label">
+            <value>उपस्थित अधिकारी का नाम एवं पद</value>
+          </text>
+          <text id="/data/group1:label">
+            <value>पुलिया निर्माण कार्य </value>
+          </text>
+          <text id="/data/group1/karyaName:label">
+            <value>कार्य का नाम</value>
+          </text>
+          <text id="/data/group1/yojnaName:label">
+            <value>योजना का नाम</value>
+          </text>
+          <text id="/data/group1/prashaskiyaSwikratRashi:label">
+            <value>प्रशासकीय स्वीकृत राशि (Rs लाख में)</value>
+          </text>
+          <text id="/data/group1/swikratVarsh:label">
+            <value>स्वीकृत वर्ष</value>
+          </text>
+          <text id="/data/group1/vartmanstithi:label">
+            <value>वर्तमान स्थिति</value>
+          </text>
+          <text id="/data/group1/vartmanstithi:option0">
+            <value>पूर्ण</value>
+          </text>
+          <text id="/data/group1/vartmanstithi:option1">
+            <value>अपूर्ण</value>
+          </text>
+          <text id="/data/group1/vartmanstithi:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group2:label">
+            <value>सबस्ट्रक्चर कार्य</value>
+          </text>
+          <text id="/data/group2/sthalChayan:label">
+            <value>स्थल चयन उपयुक्त है?</value>
+          </text>
+          <text id="/data/group2/sthalChayan:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group2/sthalChayan:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group2/sthalChayan:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group2/hydrolicDesign:label">
+            <value>स्थल अनुसार हाईड्रोलिक डिजाईन की गई है</value>
+          </text>
+          <text id="/data/group2/hydrolicDesign:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group2/hydrolicDesign:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group2/hydrolicDesign:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group2/samgriQuality:label">
+            <value>सामग्री की गुणवत्ता</value>
+          </text>
+          <text id="/data/group2/samgriQuality:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group2/samgriQuality:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group2/samgriQuality:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group2/samgriQuality:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group2/workmanship:label">
+            <value>कार्य की वर्कमेनशिप </value>
+          </text>
+          <text id="/data/group2/workmanship:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group2/workmanship:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group2/workmanship:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group2/workmanship:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group2/foundationDesign:label">
+            <value>फाउन्डेशन डिजाईन अनुसार उपयुक्त है </value>
+          </text>
+          <text id="/data/group2/foundationDesign:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group2/foundationDesign:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group2/foundationDesign:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group2/samgriTest:label">
+            <value>सामग्री की आवष्यक टेस्ट कराए गए हैं एवं अभिलेख रखा गया है </value>
+          </text>
+          <text id="/data/group2/samgriTest:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group2/samgriTest:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group2/samgriTest:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3:label">
+            <value>सुपर स्ट्रक्चर</value>
+          </text>
+          <text id="/data/group3/samgriQuality1:label">
+            <value>सामग्री की गुणवत्ता</value>
+          </text>
+          <text id="/data/group3/samgriQuality1:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group3/samgriQuality1:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group3/samgriQuality1:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group3/samgriQuality1:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/pipeCulvert:label">
+            <value>यदि पाईप कलवर्ट है तो क्या पाईप ISI/Confirming to ISI  मार्क है एवं न्यूनतम व्यास 1000 मिमी है</value>
+          </text>
+          <text id="/data/group3/pipeCulvert:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group3/pipeCulvert:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group3/pipeCulvert:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/pipeCushion:label">
+            <value>पाईप के ऊपर कुषन मानक अनुसार है</value>
+          </text>
+          <text id="/data/group3/pipeCushion:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group3/pipeCushion:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group3/pipeCushion:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/fillingCompaction:label">
+            <value>फिलिंग सामग्री का काम्पेकशन ठीक है ?</value>
+          </text>
+          <text id="/data/group3/fillingCompaction:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group3/fillingCompaction:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group3/fillingCompaction:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/samgriTest1:label">
+            <value>सामग्री परीक्षण कर आवष्यक टेस्ट किए है एवं अभिलेख संधारित हैं </value>
+          </text>
+          <text id="/data/group3/samgriTest1:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group3/samgriTest1:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group3/samgriTest1:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/slaveCulvert:label">
+            <value>स्लेव कलवर्ट की स्थिति में स्लेव की डिजाईन स्थल अनुसार उपयुक्त है </value>
+          </text>
+          <text id="/data/group3/slaveCulvert:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group3/slaveCulvert:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group3/slaveCulvert:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/rccWorkQuality:label">
+            <value>आर.सी.सी. कार्य की गुणवत्ता</value>
+          </text>
+          <text id="/data/group3/rccWorkQuality:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group3/rccWorkQuality:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group3/rccWorkQuality:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group3/rccWorkQuality:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/reinforcementQuality:label">
+            <value>रिन्फोर्समेन्ट की गुणवत्ता </value>
+          </text>
+          <text id="/data/group3/reinforcementQuality:hint">
+            <value></value>
+          </text>
+          <text id="/data/group3/reinforcementQuality:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group3/reinforcementQuality:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group3/reinforcementQuality:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group3/reinforcementQuality:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group3/rccSamgriQuality:label">
+            <value>आर.सी.सी कार्य में उपयोग सामग्री की गुणवत्ता </value>
+          </text>
+          <text id="/data/group3/rccSamgriQuality:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/group3/rccSamgriQuality:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/group3/rccSamgriQuality:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/group3/rccSamgriQuality:option3">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group4:label">
+            <value>फिनिशिंग / प्रोटेकशन</value>
+          </text>
+          <text id="/data/group4/protection:label">
+            <value>आवश्यक्तानुसार प्रोटेकशन कार्य पिचिंग, अप-स्ट्रीम, डाउन-स्ट्रीम एप्रोन बनाए हैं </value>
+          </text>
+          <text id="/data/group4/protection:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group4/protection:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group4/protection:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group4/wheelGuard:label">
+            <value>व्हील गार्ड मानक अनुसार लगाए हैं, उन पर पेंट किया गया है </value>
+          </text>
+          <text id="/data/group4/wheelGuard:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group4/wheelGuard:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group4/wheelGuard:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group4/cautionBoard:label">
+            <value>सबमर्सिबल पुलिया होने की स्थिति में काशन बोर्ड लगाया है</value>
+          </text>
+          <text id="/data/group4/cautionBoard:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group4/cautionBoard:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group4/cautionBoard:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group4/approaches:label">
+            <value>पुलिया की एप्रोचेस मानक अनुसार ग्रेडिएन्ट देकर बनाई हैं, हम्प नहीं है </value>
+          </text>
+          <text id="/data/group4/approaches:option0">
+            <value>हाँ</value>
+          </text>
+          <text id="/data/group4/approaches:option1">
+            <value>नहीं</value>
+          </text>
+          <text id="/data/group4/approaches:option2">
+            <value>N/A</value>
+          </text>
+          <text id="/data/group5:label">
+            <value></value>
+          </text>
+          <text id="/data/group5/suggestion:label">
+            <value>सुधार संबंधी सुझाव</value>
+          </text>
+          <text id="/data/group5/error:label">
+            <value>यदि कार्य में गंभीर त्रुटि हो तो विवरण</value>
+          </text>
+          <text id="/data/group5/lastGrading:label">
+            <value>अंतिम ग्रेडिंग</value>
+          </text>
+          <text id="/data/group5/officerName:label">
+            <value>निरीक्षण करने वाले अधिकारी का नाम </value>
+          </text>
+          <text id="/data/group5/officerMobileNo:label">
+            <value>निरीक्षण करने वाले अधिकारी का मोबाईल नंबर</value>
+          </text>
+          <text id="/data/group5/physicalStage:label">
+            <value>Physical Stage</value>
+          </text>
+          <text id="/data/group5/physicalStage:option0">
+            <value>प्रथम स्टेज : वेड लेवल तक</value>
+          </text>
+          <text id="/data/group5/physicalStage:option1">
+            <value>द्वितीय स्टेज : पाइप लेइंग / अवटमेन्ट के टाप स्तर पर</value>
+          </text>
+          <text id="/data/group5/physicalStage:option2">
+            <value>अंतिम स्टेज :  कार्य पूर्णता पर</value>
+          </text>
+          <text id="/data/overallObservation:label">
+            <value>Overall Observation of Inspection</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:label">
+            <value>Overall Observation - Grading</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:requiredMsg">
+            <value>Please select Overall Observation Grading</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:option0">
+            <value>S</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:option1">
+            <value>SRI</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGrading:option2">
+            <value>U</value>
+          </text>
+          <text id="/data/overallObservation/overallObservationGradingRemarks:label">
+            <value>If this item is graded U, write clear reasons and suggestions for improvement:</value>
+          </text>
+          <text id="/data/group7:label">
+            <value></value>
+          </text>
+          <text id="/data/group7/imageStr1:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group7/imageStr2:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group7/imageStr3:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group7/imageStr4:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group7/imageStr5:label">
+            <value>Please upload image</value>
+          </text>
+          <text id="/data/group7/fileStr:label">
+            <value>Please upload report in image format</value>
+          </text>
+        </translation>
+      </itext>
+      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" calculate="concat('uuid:', uuid())"/>
+      <bind nodeset="/data/group6/jila" type="string"/>
+      <bind nodeset="/data/group6/vikaskhand" type="string"/>
+      <bind nodeset="/data/group6/gramPanchayat" type="string"/>
+      <bind nodeset="/data/group6/gram" type="string"/>
+      <bind nodeset="/data/group6/inspectionDate" type="date"/>
+      <bind nodeset="/data/group6/adhikariNameNPost" type="string" required="true()"/>
+      <bind nodeset="/data/group1/karyaName" type="string"/>
+      <bind nodeset="/data/group1/yojnaName" type="string"/>
+      <bind nodeset="/data/group1/prashaskiyaSwikratRashi" type="string"/>
+      <bind nodeset="/data/group1/swikratVarsh" type="string"/>
+      <bind nodeset="/data/group1/vartmanstithi" type="select1" required="true()"/>
+      <bind nodeset="/data/group2/sthalChayan" type="select1" required="true()"/>
+      <bind nodeset="/data/group2/hydrolicDesign" type="select1" required="true()"/>
+      <bind nodeset="/data/group2/samgriQuality" type="select1" required="true()"/>
+      <bind nodeset="/data/group2/workmanship" type="select1" required="true()"/>
+      <bind nodeset="/data/group2/foundationDesign" type="select1" required="true()"/>
+      <bind nodeset="/data/group2/samgriTest" type="select1"/>
+      <bind nodeset="/data/group3/samgriQuality1" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/pipeCulvert" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/pipeCushion" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/fillingCompaction" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/samgriTest1" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/slaveCulvert" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/rccWorkQuality" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/reinforcementQuality" type="select1" required="true()"/>
+      <bind nodeset="/data/group3/rccSamgriQuality" type="select1" required="true()"/>
+      <bind nodeset="/data/group4/protection" type="select1" required="true()"/>
+      <bind nodeset="/data/group4/wheelGuard" type="select1" required="true()"/>
+      <bind nodeset="/data/group4/cautionBoard" type="select1" required="true()"/>
+      <bind nodeset="/data/group4/approaches" type="select1" required="true()"/>
+      <bind nodeset="/data/group5/suggestion" type="string"/>
+      <bind nodeset="/data/group5/error" type="string"/>
+      <bind nodeset="/data/group5/lastGrading" type="string"/>
+      <bind nodeset="/data/group5/officerName" type="string" required="true()"/>
+      <bind nodeset="/data/group5/officerMobileNo" type="string" required="true()"/>
+      <bind nodeset="/data/group5/physicalStage" type="select1" required="true()"/>
+      <bind nodeset="/data/overallObservation/overallObservationGrading" type="select1" required="true()" jr:requiredMsg="jr:itext('/data/overallObservation/overallObservationGrading:requiredMsg')"/>
+      <bind nodeset="/data/overallObservation/overallObservationGradingRemarks" type="string"/>
+      <bind nodeset="/data/group7/imageStr1" type="binary" required="true()"/>
+      <bind nodeset="/data/group7/imageStr2" type="binary"/>
+      <bind nodeset="/data/group7/imageStr3" type="binary"/>
+      <bind nodeset="/data/group7/imageStr4" type="binary"/>
+      <bind nodeset="/data/group7/imageStr5" type="binary"/>
+      <bind nodeset="/data/group7/fileStr" type="binary"/>
+    </model>
+  </h:head>
+  <h:body>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group6:label')"/>
+      <input ref="/data/group6/jila">
+        <label ref="jr:itext('/data/group6/jila:label')"/>
+      </input>
+      <input ref="/data/group6/vikaskhand">
+        <label ref="jr:itext('/data/group6/vikaskhand:label')"/>
+      </input>
+      <input ref="/data/group6/gramPanchayat">
+        <label ref="jr:itext('/data/group6/gramPanchayat:label')"/>
+      </input>
+      <input ref="/data/group6/gram">
+        <label ref="jr:itext('/data/group6/gram:label')"/>
+      </input>
+      <input ref="/data/group6/inspectionDate">
+        <label ref="jr:itext('/data/group6/inspectionDate:label')"/>
+      </input>
+      <input ref="/data/group6/adhikariNameNPost">
+        <label ref="jr:itext('/data/group6/adhikariNameNPost:label')"/>
+      </input>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group1:label')"/>
+      <input ref="/data/group1/karyaName">
+        <label ref="jr:itext('/data/group1/karyaName:label')"/>
+      </input>
+      <input ref="/data/group1/yojnaName">
+        <label ref="jr:itext('/data/group1/yojnaName:label')"/>
+      </input>
+      <input ref="/data/group1/prashaskiyaSwikratRashi">
+        <label ref="jr:itext('/data/group1/prashaskiyaSwikratRashi:label')"/>
+      </input>
+      <input ref="/data/group1/swikratVarsh">
+        <label ref="jr:itext('/data/group1/swikratVarsh:label')"/>
+      </input>
+      <select1 ref="/data/group1/vartmanstithi">
+        <label ref="jr:itext('/data/group1/vartmanstithi:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group1/vartmanstithi:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group1/vartmanstithi:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group1/vartmanstithi:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group2:label')"/>
+      <select1 ref="/data/group2/sthalChayan">
+        <label ref="jr:itext('/data/group2/sthalChayan:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group2/sthalChayan:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/sthalChayan:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/sthalChayan:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group2/hydrolicDesign">
+        <label ref="jr:itext('/data/group2/hydrolicDesign:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group2/hydrolicDesign:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/hydrolicDesign:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/hydrolicDesign:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group2/samgriQuality">
+        <label ref="jr:itext('/data/group2/samgriQuality:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group2/samgriQuality:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/samgriQuality:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/samgriQuality:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/samgriQuality:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group2/workmanship">
+        <label ref="jr:itext('/data/group2/workmanship:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group2/workmanship:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/workmanship:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/workmanship:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/workmanship:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group2/foundationDesign">
+        <label ref="jr:itext('/data/group2/foundationDesign:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group2/foundationDesign:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/foundationDesign:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/foundationDesign:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group2/samgriTest">
+        <label ref="jr:itext('/data/group2/samgriTest:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group2/samgriTest:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/samgriTest:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group2/samgriTest:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group3:label')"/>
+      <select1 ref="/data/group3/samgriQuality1">
+        <label ref="jr:itext('/data/group3/samgriQuality1:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriQuality1:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriQuality1:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriQuality1:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriQuality1:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/pipeCulvert">
+        <label ref="jr:itext('/data/group3/pipeCulvert:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/pipeCulvert:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/pipeCulvert:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/pipeCulvert:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/pipeCushion">
+        <label ref="jr:itext('/data/group3/pipeCushion:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/pipeCushion:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/pipeCushion:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/pipeCushion:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/fillingCompaction">
+        <label ref="jr:itext('/data/group3/fillingCompaction:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/fillingCompaction:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/fillingCompaction:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/fillingCompaction:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/samgriTest1">
+        <label ref="jr:itext('/data/group3/samgriTest1:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriTest1:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriTest1:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/samgriTest1:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/slaveCulvert">
+        <label ref="jr:itext('/data/group3/slaveCulvert:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/slaveCulvert:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/slaveCulvert:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/slaveCulvert:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/rccWorkQuality">
+        <label ref="jr:itext('/data/group3/rccWorkQuality:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/rccWorkQuality:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/rccWorkQuality:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/rccWorkQuality:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/rccWorkQuality:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/reinforcementQuality">
+        <label ref="jr:itext('/data/group3/reinforcementQuality:label')"/>
+        <hint ref="jr:itext('/data/group3/reinforcementQuality:hint')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/reinforcementQuality:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/reinforcementQuality:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/reinforcementQuality:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/reinforcementQuality:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group3/rccSamgriQuality">
+        <label ref="jr:itext('/data/group3/rccSamgriQuality:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group3/rccSamgriQuality:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/rccSamgriQuality:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/rccSamgriQuality:option2')"/>
+          <value>3</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group3/rccSamgriQuality:option3')"/>
+          <value>4</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group4:label')"/>
+      <select1 ref="/data/group4/protection">
+        <label ref="jr:itext('/data/group4/protection:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group4/protection:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/protection:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/protection:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group4/wheelGuard">
+        <label ref="jr:itext('/data/group4/wheelGuard:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group4/wheelGuard:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/wheelGuard:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/wheelGuard:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group4/cautionBoard">
+        <label ref="jr:itext('/data/group4/cautionBoard:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group4/cautionBoard:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/cautionBoard:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/cautionBoard:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+      <select1 ref="/data/group4/approaches">
+        <label ref="jr:itext('/data/group4/approaches:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group4/approaches:option0')"/>
+          <value>1</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/approaches:option1')"/>
+          <value>2</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group4/approaches:option2')"/>
+          <value>3</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group5:label')"/>
+      <input ref="/data/group5/suggestion">
+        <label ref="jr:itext('/data/group5/suggestion:label')"/>
+      </input>
+      <input ref="/data/group5/error">
+        <label ref="jr:itext('/data/group5/error:label')"/>
+      </input>
+      <input ref="/data/group5/lastGrading">
+        <label ref="jr:itext('/data/group5/lastGrading:label')"/>
+      </input>
+      <input ref="/data/group5/officerName">
+        <label ref="jr:itext('/data/group5/officerName:label')"/>
+      </input>
+      <input ref="/data/group5/officerMobileNo">
+        <label ref="jr:itext('/data/group5/officerMobileNo:label')"/>
+      </input>
+      <select1 ref="/data/group5/physicalStage">
+        <label ref="jr:itext('/data/group5/physicalStage:label')"/>
+        <item>
+          <label ref="jr:itext('/data/group5/physicalStage:option0')"/>
+          <value>4</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/physicalStage:option1')"/>
+          <value>5</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/group5/physicalStage:option2')"/>
+          <value>6</value>
+        </item>
+      </select1>
+    </group>
+    <group ref="/data/overallObservation" appearance="field-list">
+      <label ref="jr:itext('/data/overallObservation:label')"/>
+      <select1 ref="/data/overallObservation/overallObservationGrading">
+        <label ref="jr:itext('/data/overallObservation/overallObservationGrading:label')"/>
+        <item>
+          <label ref="jr:itext('/data/overallObservation/overallObservationGrading:option0')"/>
+          <value>s</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/overallObservation/overallObservationGrading:option1')"/>
+          <value>sri</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/overallObservation/overallObservationGrading:option2')"/>
+          <value>u</value>
+        </item>
+      </select1>
+      <input ref="/data/overallObservation/overallObservationGradingRemarks">
+        <label ref="jr:itext('/data/overallObservation/overallObservationGradingRemarks:label')"/>
+      </input>
+    </group>
+    <group appearance="field-list">
+      <label ref="jr:itext('/data/group7:label')"/>
+      <upload ref="/data/group7/imageStr1" mediatype="image/*">
+        <label ref="jr:itext('/data/group7/imageStr1:label')"/>
+      </upload>
+      <upload ref="/data/group7/imageStr2" mediatype="image/*">
+        <label ref="jr:itext('/data/group7/imageStr2:label')"/>
+      </upload>
+      <upload ref="/data/group7/imageStr3" mediatype="image/*">
+        <label ref="jr:itext('/data/group7/imageStr3:label')"/>
+      </upload>
+      <upload ref="/data/group7/imageStr4" mediatype="image/*">
+        <label ref="jr:itext('/data/group7/imageStr4:label')"/>
+      </upload>
+      <upload ref="/data/group7/imageStr5" mediatype="image/*">
+        <label ref="jr:itext('/data/group7/imageStr5:label')"/>
+      </upload>
+      <upload ref="/data/group7/fileStr" mediatype="image/*">
+        <label ref="jr:itext('/data/group7/fileStr:label')"/>
+      </upload>
+    </group>
+  </h:body>
+</h:html>

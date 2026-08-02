@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<script th:src="@{/js/language.js}"></script>
+</head>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	//Plug-in to fetch page data 
+	jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
+		return {
+			"iStart" : oSettings._iDisplayStart,
+			"iEnd" : oSettings.fnDisplayEnd(),
+			"iLength" : oSettings._iDisplayLength,
+			"iTotal" : oSettings.fnRecordsTotal(),
+			"iFilteredTotal" : oSettings.fnRecordsDisplay(),
+			"iPage" : oSettings._iDisplayLength === -1 ? 0 : Math
+					.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+			"iTotalPages" : oSettings._iDisplayLength === -1 ? 0 : Math
+					.ceil(oSettings.fnRecordsDisplay()
+							/ oSettings._iDisplayLength)
+		};
+	};
+	var t = null;
+	function loadBillsForInspection() {
+
+		t = $("#dynamic-table")
+				.DataTable(
+						{
+							"processing" : true,
+							"serverSide" : true,
+							"sort" : "position",
+							//bStateSave variable you can use to save state on client cookies: set value "true" 
+							"bStateSave" : false,
+							//Default: Page display length
+							"iDisplayLength" : 10,
+							//We will use below variable to track page number on server side(For more information visit: http://legacy.datatables.net/usage/options#iDisplayStart)
+							"iDisplayStart" : 0,
+							"pagingType" : "full_numbers",
+							"aaSorting" : [],
+							/* "dom" : 'Blrtip', */
+							"dom" : "<'row'<'col-12 datatbl-top'lB>>"
+									+ "<'row'<'col-md-6'r><'col-md-6'>>"
+									+ "<'row'<'col-md-12't>><'row'<'col-md-6'i><'col-md-6'p>>",
+							"buttons" : [
+									{
+										extend : 'excelHtml5',
+										title : 'Work_data',
+										text : '<span class="fa fa-file-excel-o"></span> Excel Export',
+										exportOptions : {
+											columns : [ 0, 1, 2, 3, 4, 5, 6 ]
+										}
+									}, ],
+							"lengthMenu" : [ [ 10, 25, 50, 100000 ],
+									[ 10, 25, 50, "All" ] ],
+
+							"fnDrawCallback" : function() {
+
+								angular.element('#StartOrFinishSpinnerId')
+										.scope().startOrStopSpinner(false);
+
+								//Get page numer on client. Please note: number start from 0 So
+								//for the first page you will see 0 second page 1 third page 2...
+								//Un-comment below alert to see page number
+								//alert("Current page number: "+this.fnPagingInfo().iPage);    
+							},
+							"fnServerParams" : function(aoData) {
+								aoData.push({
+									"name" : "searchBoxVal",
+									"value" : $('#searchBox').val()
+								});
+								aoData.push({
+									"name" : "billDateFrom",
+									"value" : $('#billDateFrom').val()
+								});
+								aoData.push({
+									"name" : "billDateTo",
+									"value" : $('#billDateTo').val()
+								});
+								aoData.push({
+									"name" : "status",
+									"value" : $('#status').val()
+								});
+							},
+							"fnCreatedRow" : function(nRow, aData, iDataIndex) {
+
+								$('td:eq(8)', nRow)
+										.html( (aData.statusId >= 5  ? '<a class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" title="View Inspection" href="#viewInspection/'+aData.id+'"><i class="fa fa-eye"></i></a>'
+												: ""));
+												
+								},
+							
+							"fnRowCallback" : function(nRow, aData,
+									iDisplayIndex, iDisplayIndexFull) {
+								/* $('td:eq(0)', nRow)
+										.html(
+												(this.fnPagingInfo().iPage
+								 * this.fnPagingInfo().iLength + (iDisplayIndex + 1))); */
+							},
+
+							"language" : {
+								searchPlaceholder : ""
+							},
+							"sAjaxSource" : "fetchInspectionBills",
+
+							"columns" : [ {
+								"data" : "index",
+								"bSortable" : false
+							}, {
+								"data" : "billNo"
+							}, {
+								"data" : "billDate"
+							}, {
+								"data" : "billType"
+							}, {
+								"data" : "work.workName"
+							},
+							{
+								"data" : "work.workRequisitionNo"
+							},
+							 
+							{
+								"data" : "status"
+							}, 
+							{
+								"data" : null,
+								"bSortable" : false, 
+								mRender: function (nRow, aData, iDataIndex) {
+								    var name = "-";
+
+								    if (nRow.inspectedBy && nRow.inspectedBy.name) {
+								        name = nRow.inspectedBy.name;
+								    } else if(nRow.inspectedBySubEngg && nRow.inspectedBySubEngg.name){
+								    	name = nRow.inspectedBySubEngg.name;
+								    } else if(nRow.inspectedBySDO && nRow.inspectedBySDO.name){
+								    	name = nRow.inspectedBySDO.name;
+								    } 
+
+								    return name;
+								}
+							},
+							
+							{
+								"data" : null,
+								"bSortable" : false
+							} ],
+
+						});
+	}
+	
+	function deleteBill(id) {
+
+		return $('#page-div').scope().deleteBill(id);
+	}
+	
+	function reDraw() {
+		t.draw();
+	}
+
+	$('#filter-btn').click(function() {
+		$('#filters').fadeToggle(300);
+	});
+	$('.filter-close').click(function(e) {
+		e.preventDefault();
+		$(this).parent('#filters').fadeOut(300);
+	});
+	/* $('#applyFilters').click(function(e) {
+		e.preventDefault();
+		$(this).parent('#filters').fadeOut(300);
+		$('#searchForm').submit();
+	}); */
+	var filter_box = $('#filters');
+	$(document).mouseup(function(e) {
+		if (!filter_box.is(e.target) && filter_box.has(e.target).length === 0) {
+			$('#filters:visible').fadeOut('300');
+		}
+	});
+	$(function() {
+		
+		$('#datetimepicker1').datetimepicker({
+			//viewMode : 'days',
+			//useCurrent: false,
+			maxDate : moment(),
+			format : 'DD/MM/YYYY'
+		});
+		
+		$('#datetimepicker2').datetimepicker({
+			//viewMode : 'days',
+			//useCurrent: false,
+			maxDate : moment(),
+			format : 'DD/MM/YYYY'
+		});
+		
+		$("#datetimepicker1").on("change.datetimepicker", function (e) {
+	        $('#datetimepicker2').datetimepicker('minDate', e.date);
+        });
+        $("#datetimepicker2").on("change.datetimepicker", function (e) {
+            $('#datetimepicker1').datetimepicker('maxDate', e.date);
+        });
+	});
+
+	/*]]>*/
+</script>
+
+<div id="StartOrFinishSpinnerId"></div>
+
+<div id="page-div">
+	<!-- Breadcrumb -->
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="#dashboard"><span
+				th:text="#{home}">Home</span></a></li>
+		<li class="breadcrumb-item active"><span th:text="#{Inspection_List}">Inspection List</span></li>
+
+		<!-- Breadcrumb Menu-->
+		<li class="breadcrumb-menu d-md-down-none">
+			<div class="btn-group" role="group" aria-label="Button group">
+				<a class="btn" data-ng-click="doTheBack()"><i
+					class="icon-arrow-left-circle"></i> &nbsp;<span th:text="#{back}">Back</span></a>
+			</div>
+		</li>
+	</ol>
+	<div class="container-fluid">
+		<div class="animated fadeIn">
+			<div class="row" data-ng-init="loadBillsForInspection()">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<i class="fa fa-folder-open-o"></i> <span
+								th:text="#{Inspection_List}">Inspection List</span>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div data-ng-if="responseObject.successMessage != null"
+										class="text-success">
+										<strong>Success!</strong>
+										<p>{{responseObject.successMessage}}</p>
+									</div>
+								</div>
+							</div>
+							<div class="pr">
+								<form name="searchForm" novalidate="novalidate" id="searchForm"
+									data-ng-submit="searchByBillNoWorkNameOrAnyFilters()">
+									<div class="row">
+										<div class="input-group mb-3 col-md-8 filter-box">
+											<input type="text" class="form-control" id="searchBox"
+												placeholder="Search by Work Name [Please enter atleast four characters]"
+												data-ng-model="searchBox" maxlength="100" />
+											<div class="btn-group pr">
+												<button class="btn btn-secondary" type="submit"
+													title="Search">
+													<i class="fa fa-search"></i>
+												</button>
+												<button class="btn btn-secondary" type="reset"
+													data-ng-click="resetFunction()" title="Reset">
+													<i class="fa fa-refresh"></i>
+												</button>
+												<button class="btn btn-secondary" id="filter-btn"
+													title="Filter" type="button">
+													<i class="fa fa-filter"></i>
+												</button>
+												<div id="filters">
+													<a href="" class="filter-close"><i
+														class="icon-close icons"></i></a>
+													<div class="form-group">
+														<label><span th:text="#{billDate}">Bill Date</span></label><br/>
+														<label>-<span th:text="#{from}">From</span></label>
+														<div class="input-group date" id="datetimepicker1"
+															data-target-input="nearest">
+															<input type="text" 
+																class="form-control datetimepicker-input"
+																data-target="#datetimepicker1" name="billDateFrom"
+																data-ng-model="billDateFrom" placeholder="DD/MM/YYYY"
+																id="billDateFrom" autocomplete="off"/>
+															<div class="input-group-append input-group-addon"
+																data-target="#datetimepicker1"
+																data-toggle="datetimepicker">
+																<div class="input-group-text">
+																	<i class="fa fa-calendar"></i>
+																</div>
+															</div>
+														</div>
+														<label>-<span th:text="#{to}">To</span></label>
+														<div class="input-group date" id="datetimepicker2"
+															data-target-input="nearest">
+															<input type="text" 
+																class="form-control datetimepicker-input"
+																data-target="#datetimepicker2" name="billDateTo"
+																data-ng-model="billDateTo" placeholder="DD/MM/YYYY"
+																id="billDateTo" autocomplete="off"/>
+															<div class="input-group-append input-group-addon"
+																data-target="#datetimepicker2"
+																data-toggle="datetimepicker">
+																<div class="input-group-text">
+																	<i class="fa fa-calendar"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label><span th:text="#{status}">Status</span></label> <select
+															class="form-control" data-ng-model="status" id="status">
+															<option value="">Select</option>
+															<option value="1">Saved As Draft</option>
+															<option value="3">Fowarded For Inspection</option>
+															<option value="4">Fowarded For Payment</option>
+														</select>
+													</div>
+													<div class="form-group text-right">
+														<button class="btn btn-sm btn-success" type="submit"
+															id="applyFilters">
+															<span th:text="#{applyFilters}">Apply Filters</span>
+														</button>
+														&nbsp;
+														<button class="btn btn-sm btn-secondary" type="button"
+															data-ng-click="designation = '';status='';">
+															<span th:text="#{clear}">Clear </span>
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="table-responsive">
+								<table id="dynamic-table"
+									class="table table-striped table-bordered table-hover table-outline">
+									<thead class="thead-default">
+										<tr>
+											<th><span>#</span></th>
+											<th width="5%"><span th:text="#{billNo}">Bill No.</span></th>
+											<th width="10%"><span th:text="#{billDate}">Bill Date</span></th>
+											<th width="10%"><span th:text="#{billType}">Bill Type</span></th>
+											<th width="15%"><span th:text="#{workName}">Work Name</span></th>
+											<th width="15%">  Work Requisition No </th>
+											<th  width="10%"><span th:text="#{status}">Status</span></th>
+											<th width="10%"><span>Inspected By</span></th>
+											<th width="10%"><span th:text="#{action}">Action</span></th>
+										</tr>
+									</thead>
+								</table>
+								<div align="center">
+								<a class="btn btn-secondary" href="#searchWorkForBill">
+									<span th:text="#{addNewBill}">Add New Bill</span>
+								</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--/.col-->
+			</div>
+			<!--/.row-->
+		</div>
+
+	</div>
+	<!-- /.container-fluid -->
+</div>
+</html>

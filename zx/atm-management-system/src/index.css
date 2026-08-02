@@ -1,0 +1,296 @@
+:root {
+  --primary: #007bff;
+  --primary-hover: #0056b3;
+  --bg-color: #081b29;
+  --atm-bg: #1e293b;
+  --screen-bg: #0f172a;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent: #38bdf8;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --font-family: "Inter", sans-serif;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+} /* ATM Container (The Physical Machine Look) */
+.atm-container {
+  width: 480px; /* 100% ki jagah fixed width */
+  max-width: 95vw; /* Mobile screens ke liye safe margin */
+  height: 650px; /* 85vh ki jagah fixed height */
+  background-color: var(--atm-bg);
+  border-radius: 20px;
+  box-shadow: 0 0 20px #0ef;
+  overflow: hidden;
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+} /* Header */
+.atm-header {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+.logo span {
+  color: var(--accent);
+}
+.time {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+} /* Main Screen Area */
+main {
+  flex: 1;
+  position: relative;
+  padding: 20px;
+  background: var(--screen-bg); /* The digital screen */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+} /* Screen Visibility */
+.screen {
+  display: flex; /* Default flex for centering content in many screens */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.screen.hidden {
+  display: none;
+}
+.screen.active {
+  display: flex;
+} /* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(56, 189, 248, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+  }
+}
+h1,
+h2 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+p {
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  text-align: center;
+  line-height: 1.5;
+} /* Inputs & Buttons */
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  outline: none;
+  transition: all 0.2s;
+}
+.btn-primary {
+  background-color: var(--accent);
+  color: #000;
+  font-weight: 600;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+.btn-primary:hover {
+  background-color: #0ea5e9;
+  transform: translateY(-2px);
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--text-muted);
+  color: var(--text-main);
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.btn-secondary:hover {
+  border-color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+.pulse {
+  animation: pulse 2s infinite;
+} /* Keypad & Login */
+input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+  width: 100%;
+  max-width: 200px;
+  margin-bottom: 20px;
+  outline: none;
+}
+input:focus {
+  border-color: var(--accent);
+}
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 10px;
+}
+.keypad button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.keypad button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.keypad .btn-clear {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--danger);
+}
+.keypad .btn-enter {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--success);
+} /* Dashboard Menu */
+.grid-menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+}
+.grid-menu button {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  color: var(--text-main);
+  padding: 20px 10px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.grid-menu button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent);
+}
+.grid-menu .btn-exit {
+  grid-column: span 2;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.3);
+} /* Balance Display */
+.balance-display {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--success);
+  margin: 20px 0;
+}
+.currency {
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  margin-right: 5px;
+} /* Statement Table */
+.statement-container {
+  width: 100%;
+  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+}
+.statement-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.statement-table th {
+  text-align: left;
+  padding: 8px;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.statement-table td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.statement-table td:last-child {
+  text-align: right;
+  font-weight: 600;
+} /* Action Buttons Group */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+}
+.quick-cash {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.quick-cash button {
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 5px;
+}
+.error-msg {
+  color: var(--danger);
+  margin-top: 10px;
+  font-size: 0.9rem;
+  height: 24px; /* min-height hata kar fixed height kar di */
+  line-height: 24px; /* Text ko vertically center rakhne ke liye */
+}
+
+.info-msg {
+  color: var(--success);
+  margin-top: 10px;
+  font-size: 0.9rem;
+  height: 24px; /* min-height hata kar fixed height kar di */
+  line-height: 24px;
+} /* Footer Status */
+footer {
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+}

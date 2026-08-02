@@ -1,0 +1,170 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+  <h:head>
+    <h:title>Verify Bill </h:title>
+    <model>
+      <instance>
+        <data id="build_Verify-Bill-_1577959359">
+          <meta>
+            <instanceID/>
+          </meta>
+          <workDetails>
+            <workName/>
+            <executionAgency/>
+            <workType/>
+            <workSubType/>
+          </workDetails>
+          <bill>
+            <billNo/>
+            <billType/>
+          </bill>
+          <billItems jr:template="">
+            <unit/>
+            <quantityUptodate/>
+            <itemOfWork/>
+          </billItems>
+          <overallGradingAndRemarks>
+            <overallGrading/>
+            <overallRemarks/>
+          </overallGradingAndRemarks>
+        </data>
+      </instance>
+      <itext>
+        <translation lang="English">
+          <text id="/data/workDetails:label">
+            <value>Work Details</value>
+          </text>
+          <text id="/data/workDetails/workName:label">
+            <value>Work Name</value>
+          </text>
+          <text id="/data/workDetails/executionAgency:label">
+            <value>Execution Agency</value>
+          </text>
+          <text id="/data/workDetails/workType:label">
+            <value>Work Type</value>
+          </text>
+          <text id="/data/workDetails/workSubType:label">
+            <value>Work Sub Type</value>
+          </text>
+          <text id="/data/workDetails/workSubType:hint">
+            <value></value>
+          </text>
+          <text id="/data/bill:label">
+            <value>Bill Details</value>
+          </text>
+          <text id="/data/bill/billNo:label">
+            <value>Bill No</value>
+          </text>
+          <text id="/data/bill/billType:label">
+            <value>Bill Type</value>
+          </text>
+          <text id="/data/billItems:label">
+            <value>Bill Item Details</value>
+          </text>
+          <text id="/data/billItems/unit:label">
+            <value>Unit</value>
+          </text>
+          <text id="/data/billItems/quantityUptodate:label">
+            <value>Quantity Uptodate</value>
+          </text>
+          <text id="/data/billItems/itemOfWork:label">
+            <value>Item Of Work</value>
+          </text>
+          <text id="/data/billItems/itemOfWork:hint">
+            <value></value>
+          </text>
+          <text id="/data/overallGradingAndRemarks:label">
+            <value>Overall Remarks</value>
+          </text>
+          <text id="/data/overallGradingAndRemarks/overallGrading:label">
+            <value>Action</value>
+          </text>
+          <text id="/data/overallGradingAndRemarks/overallGrading:requiredMsg">
+            <value>Action is required!</value>
+          </text>
+          <text id="/data/overallGradingAndRemarks/overallGrading:option0">
+            <value>Approve</value>
+          </text>
+          <text id="/data/overallGradingAndRemarks/overallGrading:option1">
+            <value>Reject and Revise</value>
+          </text>
+          <text id="/data/overallGradingAndRemarks/overallRemarks:label">
+            <value>Overall Remarks</value>
+          </text>
+        </translation>
+      </itext>
+      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" calculate="concat('uuid:', uuid())"/>
+      <bind nodeset="/data/workDetails/workName" type="string" readonly="true()"/>
+      <bind nodeset="/data/workDetails/executionAgency" type="string" readonly="true()"/>
+      <bind nodeset="/data/workDetails/workType" type="string" readonly="true()"/>
+      <bind nodeset="/data/workDetails/workSubType" type="string" readonly="true()"/>
+      <bind nodeset="/data/bill/billNo" type="string" readonly="true()"/>
+      <bind nodeset="/data/bill/billType" type="string" readonly="true()"/>
+      <bind nodeset="/data/billItems/unit" type="string" readonly="true()"/>
+      <bind nodeset="/data/billItems/quantityUptodate" type="int" readonly="true()"/>
+      <bind nodeset="/data/billItems/itemOfWork" type="string" readonly="true()"/>
+      <bind nodeset="/data/overallGradingAndRemarks/overallGrading" type="select1" required="true()" jr:requiredMsg="jr:itext('/data/overallGradingAndRemarks/overallGrading:requiredMsg')"/>
+      <bind nodeset="/data/overallGradingAndRemarks/overallRemarks" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+    <group ref="/data/workDetails" appearance="field-list">
+      <label ref="jr:itext('/data/workDetails:label')"/>
+      <input ref="/data/workDetails/workName">
+        <label ref="jr:itext('/data/workDetails/workName:label')"/>
+      </input>
+      <input ref="/data/workDetails/executionAgency">
+        <label ref="jr:itext('/data/workDetails/executionAgency:label')"/>
+      </input>
+      <input ref="/data/workDetails/workType">
+        <label ref="jr:itext('/data/workDetails/workType:label')"/>
+      </input>
+      <input ref="/data/workDetails/workSubType">
+        <label ref="jr:itext('/data/workDetails/workSubType:label')"/>
+        <hint ref="jr:itext('/data/workDetails/workSubType:hint')"/>
+      </input>
+    </group>
+    <group ref="/data/bill" appearance="field-list">
+      <label ref="jr:itext('/data/bill:label')"/>
+      <input ref="/data/bill/billNo">
+        <label ref="jr:itext('/data/bill/billNo:label')"/>
+      </input>
+      <input ref="/data/bill/billType">
+        <label ref="jr:itext('/data/bill/billType:label')"/>
+      </input>
+    </group>
+    <group ref="/data/billItems">
+      <label ref="jr:itext('/data/billItems:label')"/>
+      <repeat nodeset="/data/billItems">
+        <group appearance="field-list">
+          <input ref="/data/billItems/unit">
+            <label ref="jr:itext('/data/billItems/unit:label')"/>
+          </input>
+          <input ref="/data/billItems/quantityUptodate">
+            <label ref="jr:itext('/data/billItems/quantityUptodate:label')"/>
+          </input>
+          <input ref="/data/billItems/itemOfWork">
+            <label ref="jr:itext('/data/billItems/itemOfWork:label')"/>
+            <hint ref="jr:itext('/data/billItems/itemOfWork:hint')"/>
+          </input>
+        </group>
+      </repeat>
+    </group>
+    <group ref="/data/overallGradingAndRemarks" appearance="field-list">
+      <label ref="jr:itext('/data/overallGradingAndRemarks:label')"/>
+      <select1 ref="/data/overallGradingAndRemarks/overallGrading">
+        <label ref="jr:itext('/data/overallGradingAndRemarks/overallGrading:label')"/>
+        <item>
+          <label ref="jr:itext('/data/overallGradingAndRemarks/overallGrading:option0')"/>
+          <value>Approve</value>
+        </item>
+        <item>
+          <label ref="jr:itext('/data/overallGradingAndRemarks/overallGrading:option1')"/>
+          <value>RR</value>
+        </item>
+      </select1>
+      <input ref="/data/overallGradingAndRemarks/overallRemarks">
+        <label ref="jr:itext('/data/overallGradingAndRemarks/overallRemarks:label')"/>
+      </input>
+    </group>
+  </h:body>
+</h:html>
